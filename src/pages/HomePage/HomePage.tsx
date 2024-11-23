@@ -4,7 +4,7 @@ import P from '@/components/typography/P';
 
 const HomePage = () => {
   return (
-    <div>
+    <div className="h-[100vh]">
       <P>HomePage</P>
     </div>
   );
