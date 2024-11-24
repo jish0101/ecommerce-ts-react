@@ -5,6 +5,7 @@ import { Route, Routes } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallBack, { errorResetHandler } from './ErrorFallback';
 
+const NotFound = lazy(() => import('./NotFound')) ;
 const HomePage = lazy(() => import('@/pages/HomePage/HomePage'));
 const ProductPage = lazy(() => import('@/pages/ProductPage/ProductPage'));
 
@@ -18,6 +19,9 @@ function App() {
           </Route>
           <Route element={<SuspenseWrapper />}>
             <Route path="/products" element={<ProductPage />} />
+          </Route>
+          <Route element={<SuspenseWrapper />}>
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Route>
       </Routes>

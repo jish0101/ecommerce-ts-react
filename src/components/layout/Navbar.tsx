@@ -1,8 +1,7 @@
 import logoSrc from '/logo.svg';
-import { cn } from '@/lib/utils';
 import { Link } from 'react-router-dom';
-import NavOptions from '../Navbar/NavOptions';
 import NavExtras from '../Navbar/NavExtras';
+import NavOptions from '../Navbar/NavOptions';
 
 export type ListOption = {
   href: string;
@@ -59,9 +58,7 @@ const Navbar = () => {
   ];
 
   return (
-    <div
-      className={cn(`flex items-center justify-between p-3 shadow-sm h-[70px]`)}
-    >
+    <div className={`flex items-center justify-between p-3 shadow-sm h-[70px]`}>
       <Link to={'/'}>
         <img src={logoSrc} className="w-12 md:mx-2" loading="eager" />
       </Link>

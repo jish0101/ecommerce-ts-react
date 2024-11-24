@@ -11,7 +11,6 @@ type Props = {};
 const NavExtras = ({}: Props) => {
   return (
     <div className="flex gap-1 items-center">
-      <div>
         <Tooltip>
           <TooltipTrigger asChild>
             <Link
@@ -28,8 +27,6 @@ const NavExtras = ({}: Props) => {
             <p>Cart</p>
           </TooltipContent>
         </Tooltip>
-      </div>
-      <div>
         <Tooltip>
           <TooltipTrigger asChild>
             <Link
@@ -46,13 +43,9 @@ const NavExtras = ({}: Props) => {
             <p>Wishlist</p>
           </TooltipContent>
         </Tooltip>
-      </div>
-      <div>
+        
         <ThemeToggle />
-      </div>
-      <div>
         <UserAvatar />
-      </div>
     </div>
   );
 };
