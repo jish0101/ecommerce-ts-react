@@ -20,8 +20,7 @@ function App() {
     <ErrorBoundary onReset={errorResetHandler} fallbackRender={ErrorFallBack}>
       <Routes>
         <Route element={<Layout />}>
-
-          <Route element={<CheckAuth roles={["USER"]} />}>
+          <Route element={<CheckAuth roles={['USER']} />}>
             <Route element={<SuspenseWrapper />}>
               <Route path="/" element={<HomePage />} />
             </Route>
@@ -43,7 +42,6 @@ function App() {
           <Route element={<SuspenseWrapper />}>
             <Route path="*" element={<NotFound />} />
           </Route>
-
         </Route>
       </Routes>
     </ErrorBoundary>

@@ -22,7 +22,12 @@ const UserAvatar = ({}: Props) => {
       <Tooltip>
         <TooltipTrigger>
           <DropdownMenuTrigger asChild>
-            <Avatar className={cn(buttonVariants({variant: "ghost", size: "icon"}), "w-10 h-10 rounded-full")}>
+            <Avatar
+              className={cn(
+                buttonVariants({ variant: 'ghost', size: 'icon' }),
+                'w-10 h-10 rounded-full'
+              )}
+            >
               <AvatarFallback>J</AvatarFallback>
               <AvatarImage src={''} />
             </Avatar>

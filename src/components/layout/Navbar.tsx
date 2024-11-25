@@ -58,7 +58,9 @@ const Navbar = () => {
   ];
 
   return (
-    <div className={`flex items-center justify-between p-3 shadow-sm border h-[70px]`}>
+    <div
+      className={`flex items-center justify-between p-3 shadow-sm border h-[70px]`}
+    >
       <Link to={'/'}>
         <img src={logoSrc} className="w-12 md:mx-2" loading="eager" />
       </Link>
