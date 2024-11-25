@@ -7,11 +7,12 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { Button } from '../ui/button';
+import { buttonVariants } from '../ui/button';
 import { Link } from 'react-router-dom';
 import { Settings, UserPen } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { cn } from '@/lib/utils';
 
 type Props = {};
 
@@ -20,17 +21,11 @@ const UserAvatar = ({}: Props) => {
     <DropdownMenu>
       <Tooltip>
         <TooltipTrigger>
-          <DropdownMenuTrigger className="w-10 h-10 rounded-full">
-            <Button
-              className="w-10 h-10 rounded-full"
-              variant="ghost"
-              size="icon"
-            >
-              <Avatar className="text-foreground border-none">
-                <AvatarFallback>J</AvatarFallback>
-                <AvatarImage src={''} />
-              </Avatar>
-            </Button>
+          <DropdownMenuTrigger asChild>
+            <Avatar className={cn(buttonVariants({variant: "ghost", size: "icon"}), "w-10 h-10 rounded-full")}>
+              <AvatarFallback>J</AvatarFallback>
+              <AvatarImage src={''} />
+            </Avatar>
           </DropdownMenuTrigger>
         </TooltipTrigger>
         <TooltipContent>

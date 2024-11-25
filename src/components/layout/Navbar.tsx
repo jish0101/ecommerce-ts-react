@@ -31,25 +31,25 @@ const Navbar = () => {
       listOptions: [
         {
           label: 'Categories',
-          href: '/product-categories',
+          href: '/product-categories1',
           description:
             'Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere fuga pariatur fugit dolor, aliquid nesciunt '
         },
         {
           label: 'Categories',
-          href: '/product-categories',
+          href: '/product-categories2',
           description:
             'Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere fuga pariatur fugit dolor, aliquid nesciunt '
         },
         {
           label: 'Categories',
-          href: '/product-categories',
+          href: '/product-categories3',
           description:
             'Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere fuga pariatur fugit dolor, aliquid nesciunt '
         },
         {
           label: 'Categories',
-          href: '/product-categories',
+          href: '/product-categories4',
           description:
             'Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere fuga pariatur fugit dolor, aliquid nesciunt '
         }

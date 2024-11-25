@@ -4,7 +4,6 @@ import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle
@@ -20,37 +19,31 @@ const NavOptions = ({ navOptions }: Props) => {
     <NavigationMenu>
       <NavigationMenuList>
         {navOptions.map((opt) => (
-          <>
+          <div key={opt.label}>
             {opt.listOptions ? (
-              <NavigationMenuItem key={opt.label}>
+              <NavigationMenuItem>
                 <NavigationMenuTrigger>{opt.label}</NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <div className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2">
                     {opt.listOptions.map((op) => (
-                      <Link key={op.href} to={op.href}>
-                        <NavigationMenuLink
-                          className={`${navigationMenuTriggerStyle()} h-auto flex-col max-w-fit`}
-                        >
-                          <div className="space-y-1">
-                            <span className="font-medium">{op.label}</span>
-                            <MutedPara>{op.description}</MutedPara>
-                          </div>
-                        </NavigationMenuLink>
+                      <Link className={`${navigationMenuTriggerStyle()} h-auto flex-col max-w-fit`} key={op.href} to={op.href}>
+                        <div className="space-y-1">
+                          <span className="font-medium">{op.label}</span>
+                          <MutedPara>{op.description}</MutedPara>
+                        </div>
                       </Link>
                     ))}
                   </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
             ) : (
-              <NavigationMenuItem key={opt.href}>
-                <Link to={opt.href}>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    {opt.label}
-                  </NavigationMenuLink>
+              <NavigationMenuItem>
+                <Link className={navigationMenuTriggerStyle()} to={opt.href}>
+                  {opt.label}
                 </Link>
               </NavigationMenuItem>
             )}
-          </>
+          </div>
         ))}
       </NavigationMenuList>
     </NavigationMenu>
