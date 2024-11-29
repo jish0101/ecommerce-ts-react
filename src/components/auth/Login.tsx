@@ -27,6 +27,8 @@ import H2 from '../typography/H2';
 import { Link } from 'react-router-dom';
 import P from '../typography/P';
 import { cn } from '@/lib/utils';
+import { useState } from 'react';
+import { Eye, EyeClosed } from 'lucide-react';
 
 const formSchema = z.object({
   email: z
@@ -42,14 +44,23 @@ const formSchema = z.object({
     .max(1000, 'This is too long!!')
 });
 
+const defaultValues = {
+  email: '',
+  password: ''
+}
+
 function Login() {
+  const [inputType, setInputType] = useState<"password"|"text">("password")
   const form = useForm({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: '',
-      password: ''
-    }
+    defaultValues
   });
+
+  const handlePasswordView = () => {
+    setInputType((prev) => {
+      return prev === "text" ? "password":"text"
+    })
+  }
 
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (data) => {
     console.log('Form submitted with:', data);
@@ -57,7 +68,7 @@ function Login() {
 
   return (
     <main>
-      <div className="flex justify-center items-center min-h-[calc(100vh-70px)]">
+      <div className="flex justify-center items-center mt-24 md:mt-0 md:min-h-[100vh]">
         <Card className="md:min-w-[375px] min-w-[calc(100%-2rem)]">
           <CardHeader>
             <CardTitle>
@@ -81,7 +92,7 @@ function Login() {
                     <FormItem>
                       <FormLabel>Email</FormLabel>
                       <FormControl>
-                        <Input placeholder="Email" {...field} />
+                        <Input type='email' placeholder="Email" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -96,11 +107,16 @@ function Login() {
                     <FormItem>
                       <FormLabel>Password</FormLabel>
                       <FormControl>
-                        <Input
-                          type="password"
-                          placeholder="Password"
-                          {...field}
-                        />
+                        <div className='relative'>
+                          <Input
+                            type={inputType}
+                            placeholder="Password"
+                            {...field}
+                          />
+                          <Button type='button' variant={'link'} className='absolute top-0 right-0' onClick={handlePasswordView}>
+                            {inputType === "password" ? <Eye />:<EyeClosed />}
+                          </Button>
+                        </div>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -117,8 +133,8 @@ function Login() {
             <div className="flex gap-2 justify-center w-full items-center">
               <P>Does not have an account yet ?</P>
               <Link
-                className={cn(buttonVariants({ variant: 'link' }), 'p-0')}
                 to={'/auth/signup'}
+                className={cn(buttonVariants({ variant: 'link' }), 'p-0 text-xs font-semibold')}
               >
                 Click here
               </Link>

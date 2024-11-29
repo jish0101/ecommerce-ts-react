@@ -28,6 +28,7 @@ function App() {
               <Route path="/products" element={<ProductPage />} />
             </Route>
           </Route>
+        </Route>
 
           <Route element={<SuspenseWrapper />}>
             <Route path="/auth/login" element={<Login />} />
@@ -38,10 +39,8 @@ function App() {
           <Route element={<SuspenseWrapper />}>
             <Route path="/auth/unauthorised" element={<UnAuthorised />} />
           </Route>
-
-          <Route element={<SuspenseWrapper />}>
-            <Route path="*" element={<NotFound />} />
-          </Route>
+        <Route element={<SuspenseWrapper />}>
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </ErrorBoundary>

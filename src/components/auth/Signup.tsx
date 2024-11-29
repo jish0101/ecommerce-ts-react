@@ -69,7 +69,7 @@ function Signup() {
 
   return (
     <main>
-      <div className="flex justify-center items-center my-10 min-h-[calc(100vh-70px)]">
+      <div className="flex justify-center items-center mt-24 md:mt-0 md:min-h-[100vh]">
         <Card className="md:min-w-[375px] min-w-[calc(100%-2rem)]">
           <CardHeader>
             <CardTitle>
@@ -125,7 +125,7 @@ function Signup() {
                     <FormItem>
                       <FormLabel>Email</FormLabel>
                       <FormControl>
-                        <Input placeholder="Enter email" {...field} />
+                        <Input type="email" placeholder="Enter email" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -161,8 +161,8 @@ function Signup() {
             <div className="flex gap-2 justify-center w-full items-center">
               <P>Already have an account ?</P>
               <Link
-                className={cn(buttonVariants({ variant: 'link' }), 'p-0')}
                 to={'/auth/login'}
+                className={cn(buttonVariants({ variant: 'link' }), 'p-0 text-xs font-semibold')}
               >
                 Click here
               </Link>
