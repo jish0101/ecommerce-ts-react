@@ -17,7 +17,6 @@ import {
   CollapsibleContent,
   CollapsibleTrigger
 } from '../ui/collapsible';
-import P from '../typography/P';
 import NavExtras from './NavExtras';
 import { ChevronDown } from 'lucide-react';
 
