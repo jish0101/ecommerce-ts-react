@@ -1,10 +1,4 @@
-'use client';
-
 import { z } from 'zod';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-
-import { Button, buttonVariants } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -13,7 +7,6 @@ import {
   FormLabel,
   FormMessage
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
 import {
   Card,
   CardContent,
@@ -22,15 +15,19 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card';
-import MutedPara from '../typography/MutedPara';
-import H2 from '../typography/H2';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
 import P from '../typography/P';
-import { asyncWrapper, cn } from '@/lib/utils';
 import { useState } from 'react';
+import H2 from '../typography/H2';
+import { login } from '@/api/auth';
 import { Eye, EyeClosed } from 'lucide-react';
-import { login } from '@/api/auth/login';
+import { Input } from '@/components/ui/input';
+import { asyncWrapper, cn } from '@/lib/utils';
+import MutedPara from '../typography/MutedPara';
 import useUserState from '@/store/user/useUserState';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { Button, buttonVariants } from '@/components/ui/button';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const formSchema = z.object({
   email: z

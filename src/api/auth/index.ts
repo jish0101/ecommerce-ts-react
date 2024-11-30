@@ -8,3 +8,9 @@ export const login = async (
 ): Promise<AxiosResponse<CreateResponse<PayloadUser>>> => {
   return await axiosInstance.post('/auth/login', payload);
 };
+
+export const verifyUser = async (
+  payload: Record<string, any>
+): Promise<AxiosResponse<CreateResponse<true>>> => {
+  return await axiosInstance.post('/auth/verify-user', payload);
+}

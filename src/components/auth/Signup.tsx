@@ -1,10 +1,4 @@
-'use client';
-
 import { z } from 'zod';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-
-import { Button, buttonVariants } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -13,7 +7,6 @@ import {
   FormLabel,
   FormMessage
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
 import {
   Card,
   CardContent,
@@ -22,12 +15,19 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card';
-import MutedPara from '../typography/MutedPara';
-import H2 from '../typography/H2';
-import { Link } from 'react-router-dom';
 import P from '../typography/P';
-import { cn } from '@/lib/utils';
+import { asyncWrapper, cn } from '@/lib/utils';
+import { useState } from 'react';
+import H2 from '../typography/H2';
+import { Input } from '@/components/ui/input';
+import { Eye, EyeClosed } from 'lucide-react';
+import MutedPara from '../typography/MutedPara';
 import { PASSWORD_REGEX } from '@/lib/regexHelpers';
+import { Link, useNavigate } from 'react-router-dom';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { Button, buttonVariants } from '@/components/ui/button';
+import { createUser } from '@/api/user';
 
 const formSchema = z.object({
   firstName: z
@@ -52,11 +52,13 @@ const formSchema = z.object({
     .min(1, 'This is required*')
     .regex(
       PASSWORD_REGEX,
-      'Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character'
+      `Minimum 8 chars, one uppercase, lowercase, number and a special char`
     )
 });
 
 function Signup() {
+  const navigate = useNavigate();
+  const [inputType, setInputType] = useState<'password' | 'text'>('password');
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -67,8 +69,25 @@ function Signup() {
     }
   });
 
-  const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (data) => {
-    console.log('Form submitted with:', data);
+  const handlePasswordView = () => {
+    setInputType((prev) => {
+      return prev === 'text' ? 'password' : 'text';
+    });
+  };
+
+  const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (body) => {
+    const {response, error} = await asyncWrapper(() => createUser(body))
+
+    if (error) {
+      return console.log("Server error: ", error.message)
+    }
+
+    const {data: {status, message, details: {otp}}} = response!;
+
+    if (status === 200) {
+      console.log(message)
+      navigate(`/auth/verify-user?userId=${otp.user}&otpId=${otp._id}`);
+    }
   };
 
   return (
@@ -148,13 +167,23 @@ function Signup() {
                     <FormItem>
                       <FormLabel>Password</FormLabel>
                       <FormControl>
-                        <Input
-                          type="password"
-                          placeholder="Enter password"
-                          {...field}
-                        />
+                        <div className="relative">
+                          <Input
+                            type={inputType}
+                            placeholder="Password"
+                            {...field}
+                          />
+                          <Button
+                            type="button"
+                            variant={'link'}
+                            className="absolute top-0 right-0"
+                            onClick={handlePasswordView}
+                          >
+                            {inputType === 'password' ? <Eye /> : <EyeClosed />}
+                          </Button>
+                        </div>
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="max-w-[30rem]" />
                     </FormItem>
                   )}
                 />

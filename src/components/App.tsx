@@ -10,6 +10,7 @@ const NotFound = lazy(() => import('./NotFound'));
 
 const Login = lazy(() => import('./auth/Login'));
 const Signup = lazy(() => import('./auth/Signup'));
+const VerifyUser = lazy(() => import('./auth/VerifyUser'));
 const UnAuthorised = lazy(() => import('./auth/UnAuthorised'));
 
 const HomePage = lazy(() => import('@/pages/HomePage/HomePage'));
@@ -35,6 +36,9 @@ function App() {
         </Route>
         <Route element={<SuspenseWrapper />}>
           <Route path="/auth/signup" element={<Signup />} />
+        </Route>
+        <Route element={<SuspenseWrapper />}>
+          <Route path="/auth/verify-user" element={<VerifyUser />} />
         </Route>
         <Route element={<SuspenseWrapper />}>
           <Route path="/auth/unauthorised" element={<UnAuthorised />} />
