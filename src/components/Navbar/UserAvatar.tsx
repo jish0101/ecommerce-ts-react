@@ -7,16 +7,19 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { buttonVariants } from '../ui/button';
+import { cn } from '@/lib/utils';
 import { Link } from 'react-router-dom';
+import { buttonVariants } from '../ui/button';
 import { Settings, UserPen } from 'lucide-react';
+import useUserState from '@/store/user/useUserState';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { cn } from '@/lib/utils';
 
 type Props = {};
 
 const UserAvatar = ({}: Props) => {
+  const user = useUserState((state) => state.user);
+
   return (
     <DropdownMenu>
       <Tooltip>
@@ -28,8 +31,10 @@ const UserAvatar = ({}: Props) => {
                 'w-10 h-10 rounded-full'
               )}
             >
-              <AvatarFallback>J</AvatarFallback>
-              <AvatarImage src={''} />
+              <AvatarFallback>
+                {user ? user.fullName.at(0)?.toUpperCase() : null}
+              </AvatarFallback>
+              <AvatarImage src={user ? user.profileImage : ''} />
             </Avatar>
           </DropdownMenuTrigger>
         </TooltipTrigger>

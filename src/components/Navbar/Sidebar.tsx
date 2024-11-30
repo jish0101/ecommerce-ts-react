@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { NavOption } from '../layout/Navbar';
 import {
   Sidebar,
@@ -25,6 +25,8 @@ type Props = {
 };
 
 const SidebarComponent = ({ navOptions }: Props) => {
+  const location = useLocation();
+
   return (
     <Sidebar>
       <SidebarHeader>
@@ -38,13 +40,13 @@ const SidebarComponent = ({ navOptions }: Props) => {
         <SidebarGroup>
           <SidebarMenu>
             {navOptions.map((option) => (
-              <>
+              <div key={option.href}>
                 {!option.listOptions && (
-                  <SidebarMenuItem key={option.label}>
+                  <SidebarMenuItem>
                     <SidebarMenuButton
                       asChild
                       size={'lg'}
-                      isActive={option.href === 'path'}
+                      isActive={option.href === location.pathname}
                       className="data-[active=true]:bg-primary data-[active=true]:text-neutral-100 hover:bg-accent"
                     >
                       {option.href ? (
@@ -86,7 +88,7 @@ const SidebarComponent = ({ navOptions }: Props) => {
                                   size={'lg'}
                                   tooltip={op.label}
                                   className="data-[active=true]:bg-primary data-[active=true]:text-neutral-100 hover:bg-accent"
-                                  isActive={op.href === 'path'}
+                                  isActive={op.href === location.pathname}
                                 >
                                   <Link to={op.href}>
                                     <div className="flex items-center space-x-3 px-1">
@@ -102,7 +104,7 @@ const SidebarComponent = ({ navOptions }: Props) => {
                     </SidebarMenuItem>
                   </Collapsible>
                 )}
-              </>
+              </div>
             ))}
           </SidebarMenu>
         </SidebarGroup>

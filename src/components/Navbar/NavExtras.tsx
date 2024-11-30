@@ -62,7 +62,7 @@ const NavExtras = ({ isSheet }: Props) => {
         size={'icon'}
         variant={'ghost'}
       >
-        {isSheet ? <ChevronsLeft /> :<Menu />}
+        {isSheet ? <ChevronsLeft /> : <Menu />}
       </Button>
     </div>
   );

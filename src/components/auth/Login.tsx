@@ -24,11 +24,13 @@ import {
 } from '@/components/ui/card';
 import MutedPara from '../typography/MutedPara';
 import H2 from '../typography/H2';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import P from '../typography/P';
-import { cn } from '@/lib/utils';
+import { asyncWrapper, cn } from '@/lib/utils';
 import { useState } from 'react';
 import { Eye, EyeClosed } from 'lucide-react';
+import { login } from '@/api/auth/login';
+import useUserState from '@/store/user/useUserState';
 
 const formSchema = z.object({
   email: z
@@ -37,20 +39,19 @@ const formSchema = z.object({
     .min(1, 'This is required*')
     .max(1000, 'This is too long!!')
     .email('This is not a valid email*'),
-  password: z
-    .string()
-    .trim()
-    .min(1, 'This is required*')
-    .max(1000, 'This is too long!!')
+  password: z.string().trim().min(1, 'This is required*')
 });
 
 const defaultValues = {
   email: '',
   password: ''
-}
+};
 
 function Login() {
-  const [inputType, setInputType] = useState<"password"|"text">("password")
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { setUser } = useUserState();
+  const [inputType, setInputType] = useState<'password' | 'text'>('password');
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues
@@ -58,12 +59,30 @@ function Login() {
 
   const handlePasswordView = () => {
     setInputType((prev) => {
-      return prev === "text" ? "password":"text"
-    })
-  }
+      return prev === 'text' ? 'password' : 'text';
+    });
+  };
 
-  const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (data) => {
-    console.log('Form submitted with:', data);
+  const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (body) => {
+    const { response, error } = await asyncWrapper(
+      async () => await login(body)
+    );
+
+    if (error !== null) {
+      return console.info('Server error: ', error.message);
+    }
+
+    const {
+      data: { status, data, message }
+    } = response!;
+
+    if (status === 200) {
+      setUser(data);
+      navigate(location.state.pathname);
+    } else {
+      // show toast
+      console.log(message);
+    }
   };
 
   return (
@@ -92,7 +111,7 @@ function Login() {
                     <FormItem>
                       <FormLabel>Email</FormLabel>
                       <FormControl>
-                        <Input type='email' placeholder="Email" {...field} />
+                        <Input type="email" placeholder="Email" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -107,14 +126,19 @@ function Login() {
                     <FormItem>
                       <FormLabel>Password</FormLabel>
                       <FormControl>
-                        <div className='relative'>
+                        <div className="relative">
                           <Input
                             type={inputType}
                             placeholder="Password"
                             {...field}
                           />
-                          <Button type='button' variant={'link'} className='absolute top-0 right-0' onClick={handlePasswordView}>
-                            {inputType === "password" ? <Eye />:<EyeClosed />}
+                          <Button
+                            type="button"
+                            variant={'link'}
+                            className="absolute top-0 right-0"
+                            onClick={handlePasswordView}
+                          >
+                            {inputType === 'password' ? <Eye /> : <EyeClosed />}
                           </Button>
                         </div>
                       </FormControl>
@@ -134,7 +158,10 @@ function Login() {
               <P>Does not have an account yet ?</P>
               <Link
                 to={'/auth/signup'}
-                className={cn(buttonVariants({ variant: 'link' }), 'p-0 text-xs font-semibold')}
+                className={cn(
+                  buttonVariants({ variant: 'link' }),
+                  'p-0 text-xs font-semibold'
+                )}
               >
                 Click here
               </Link>

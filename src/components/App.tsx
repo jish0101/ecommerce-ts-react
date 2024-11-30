@@ -20,7 +20,7 @@ function App() {
     <ErrorBoundary onReset={errorResetHandler} fallbackRender={ErrorFallBack}>
       <Routes>
         <Route element={<Layout />}>
-          <Route element={<CheckAuth roles={['USER']} />}>
+          <Route element={<CheckAuth roles={['ADMIN', 'USER']} />}>
             <Route element={<SuspenseWrapper />}>
               <Route path="/" element={<HomePage />} />
             </Route>
@@ -30,15 +30,15 @@ function App() {
           </Route>
         </Route>
 
-          <Route element={<SuspenseWrapper />}>
-            <Route path="/auth/login" element={<Login />} />
-          </Route>
-          <Route element={<SuspenseWrapper />}>
-            <Route path="/auth/signup" element={<Signup />} />
-          </Route>
-          <Route element={<SuspenseWrapper />}>
-            <Route path="/auth/unauthorised" element={<UnAuthorised />} />
-          </Route>
+        <Route element={<SuspenseWrapper />}>
+          <Route path="/auth/login" element={<Login />} />
+        </Route>
+        <Route element={<SuspenseWrapper />}>
+          <Route path="/auth/signup" element={<Signup />} />
+        </Route>
+        <Route element={<SuspenseWrapper />}>
+          <Route path="/auth/unauthorised" element={<UnAuthorised />} />
+        </Route>
         <Route element={<SuspenseWrapper />}>
           <Route path="*" element={<NotFound />} />
         </Route>

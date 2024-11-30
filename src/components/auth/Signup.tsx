@@ -27,6 +27,7 @@ import H2 from '../typography/H2';
 import { Link } from 'react-router-dom';
 import P from '../typography/P';
 import { cn } from '@/lib/utils';
+import { PASSWORD_REGEX } from '@/lib/regexHelpers';
 
 const formSchema = z.object({
   firstName: z
@@ -49,7 +50,10 @@ const formSchema = z.object({
     .string()
     .trim()
     .min(1, 'This is required*')
-    .max(1000, 'This is too long!!')
+    .regex(
+      PASSWORD_REGEX,
+      'Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character'
+    )
 });
 
 function Signup() {
@@ -125,7 +129,11 @@ function Signup() {
                     <FormItem>
                       <FormLabel>Email</FormLabel>
                       <FormControl>
-                        <Input type="email" placeholder="Enter email" {...field} />
+                        <Input
+                          type="email"
+                          placeholder="Enter email"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -162,7 +170,10 @@ function Signup() {
               <P>Already have an account ?</P>
               <Link
                 to={'/auth/login'}
-                className={cn(buttonVariants({ variant: 'link' }), 'p-0 text-xs font-semibold')}
+                className={cn(
+                  buttonVariants({ variant: 'link' }),
+                  'p-0 text-xs font-semibold'
+                )}
               >
                 Click here
               </Link>

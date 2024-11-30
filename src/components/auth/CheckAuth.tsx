@@ -1,11 +1,13 @@
+import useUserState from '@/store/user/useUserState';
+import { PayloadUser } from '@/types/user';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
 type Props = {
-  roles: any;
+  roles: PayloadUser['role'][];
 };
 
 export default function CheckAuth({ roles }: Props) {
-  const user: any = null;
+  const user = useUserState((state) => state.user);
   const location = useLocation();
 
   if (!user) {
