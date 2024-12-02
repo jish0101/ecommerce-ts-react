@@ -13,55 +13,155 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import H2 from '../typography/H2';
 import MutedPara from '../typography/MutedPara';
 import { Button } from '../ui/button';
 import { asyncWrapper } from '@/lib/utils';
-import { verifyUser } from '@/api/auth';
+import { reSendOtp, verifyUser } from '@/api/auth';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useToast } from '@/hooks/use-toast';
 
 const schema = z.object({
-  userId: z.string().trim().min(0, "User id not found").max(100, "User id is invalid"),
-  otpId: z.string().trim().min(0, "Otp id not found").max(100, "Otp id is invalid"),
-})
+  userId: z
+    .string()
+    .trim()
+    .min(0, 'User id not found')
+    .max(100, 'User id is invalid'),
+  otpId: z
+    .string()
+    .trim()
+    .min(0, 'Otp id not found')
+    .max(100, 'Otp id is invalid')
+});
 
 type Props = {};
 
+type OtpData = {
+  otpId: string;
+  userId: string;
+  type: "FORGOT PASSWORD" | "EMAIL VERIFICATION"
+}
+
 const VerifyUser = ({}: Props) => {
+  const { toast } = useToast();
+  const location = useLocation();
   const navigate = useNavigate();
-  const location = useLocation()
+
+  const [otpDetails, setOtpDetails] = useState<OtpData | null>(() => {
+    if (location.state) {
+      return {
+        otpId: location.state.otpId,
+        userId: location.state.otpId,
+        type: "EMAIL VERIFICATION",
+      }
+    }
+    return null;
+  })
   const [value, setValue] = useState('');
-  const params = new URLSearchParams(location.search);
-  const parsedParams = Object.fromEntries(params.entries())
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleVerify = async () => {
     try {
-      const {otpId,userId} = schema.parse(parsedParams);
-      const {response,error} = await asyncWrapper(() => verifyUser({ 
-        _id: otpId,
-        userId,
-        value,
-        type: "EMAIL VERIFICATION"
-      }));
+      if (isLoading) return;
+
+      setIsLoading(true);
+
+      const { otpId, userId } = schema.parse(otpDetails);
+      const { response, error } = await asyncWrapper(() =>
+        verifyUser({
+          _id: otpId,
+          userId,
+          value,
+          type: 'EMAIL VERIFICATION'
+        })
+      );
 
       if (error) {
-        return console.log("Server error: ", error.message)
+        setIsLoading(false);
+        return toast({
+          title: 'Failed',
+          description: error.response ? error.response.data?.message : error.message
+        });
       }
-  
-      const {data: {status,data,message}} = response!;
-  
+
+      const {
+        data: { status, data, message }
+      } = response!;
+
       if (status === 200 && data) {
-        console.log(message);
-        navigate("/auth/login")
+        toast({
+          title: 'Success',
+          description: message
+        });
+        setIsLoading(false);
+        navigate('/auth/login');
       }
-    } catch (error) {
-      // Toast here
+    } catch (error: any) {
+      setIsLoading(false);
+      toast({
+        title: 'Failed',
+        description: error.message
+      });
+    }
+  };
+
+  const handleResendOtp = async () => {
+    try {
+      const {response, error} = await asyncWrapper(() => reSendOtp({}))
+
+      if (error !== null) {
+        toast({
+          title: 'Failed',
+          description: error.response ? error.response?.data.message: error.message
+        });
+
+        if (error.response && error.response?.data === false) {
+          if (error.response.data.message === "User is already verified") {
+            navigate("/auth/login")
+          }
+          if (error.response.data.message === "User not found") {
+            navigate("/auth/signup")
+          }
+        }
+        return;
+      }
+      
+      const {data: {status, details, message}} = response!;
+
+      if (status === 200) {
+        toast({
+          title: 'Success',
+          description: message
+        });
+        setOtpDetails({
+          otpId: details?.otp?._id,
+          userId: details?.otp?.user,
+          type: details?.otp?.type
+        })
+      } else {
+        toast({
+          title: 'Failed',
+          description: message
+        });
+      }
+
+    } catch (error: any) {
+      toast({
+        title: 'Failed',
+        description: error.message
+      });
     }
   }
 
+  useEffect(() => {
+    if (!otpDetails) {
+      navigate('/');
+    }
+  }, [otpDetails]);
+
   return (
-    <div className='grid place-content-center h-screen'>
+    <div className="grid place-content-center h-screen">
       <Card className="md:min-w-[475px] min-w-[calc(100%-2rem)] text-center">
         <CardHeader>
           <CardTitle>
@@ -75,7 +175,7 @@ const VerifyUser = ({}: Props) => {
           <InputOTP
             maxLength={6}
             value={value}
-            containerClassName='justify-center'
+            containerClassName="justify-center"
             onChange={(value) => setValue(value)}
           >
             <InputOTPGroup>
@@ -93,8 +193,11 @@ const VerifyUser = ({}: Props) => {
         </CardContent>
         <CardFooter>
           <div className="flex gap-2 justify-center w-full items-center">
-            <Button onClick={handleVerify}>
-              Verify
+            <Button disabled={isLoading} onClick={handleVerify}>
+              {isLoading ? 'Verifying..' : 'Verify'}
+            </Button>
+            <Button disabled={isLoading} onClick={handleResendOtp}>
+              {isLoading ? 'Sending..' : 'Resend otp'}
             </Button>
           </div>
         </CardFooter>

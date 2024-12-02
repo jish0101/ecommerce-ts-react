@@ -4,8 +4,11 @@ import Navbar, { NavOption } from './Navbar';
 import { SidebarProvider } from '../ui/sidebar';
 import SidebarComponent from '../Navbar/Sidebar';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import Loader from '../Loader';
+import useLoader from '@/store/loader/useLoader';
 
 const Layout = () => {
+  const { isLoading } = useLoader();
   const navOptions: NavOption[] = [
     {
       label: 'Home',
@@ -52,6 +55,7 @@ const Layout = () => {
       <SidebarProvider defaultOpen={false}>
         <SidebarComponent navOptions={navOptions} />
         <div className="flex-1 flex flex-col">
+          {isLoading ? <Loader /> : null}
           <Navbar navOptions={navOptions} />
           <ScrollArea type="scroll" className={`h-[calc(100vh-70px)]`}>
             <Outlet />

@@ -28,6 +28,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useToast } from '@/hooks/use-toast';
 
 const formSchema = z.object({
   email: z
@@ -45,9 +46,12 @@ const defaultValues = {
 };
 
 function Login() {
+  const { toast } = useToast();
   const location = useLocation();
   const navigate = useNavigate();
   const { setUser } = useUserState();
+
+  const [isLoading, setIsLoading] = useState(false);
   const [inputType, setInputType] = useState<'password' | 'text'>('password');
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -61,24 +65,45 @@ function Login() {
   };
 
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (body) => {
-    const { response, error } = await asyncWrapper(
-      async () => await login(body)
-    );
+    try {
+      setIsLoading(true);
+      const { response, error } = await asyncWrapper(
+        async () => await login(body)
+      );
 
-    if (error !== null) {
-      return console.info('Server error: ', error.message);
-    }
+      if (error !== null) {
+        setIsLoading(false);
+        return toast({
+          title: 'Failed',
+          description: error.message
+        });
+      }
 
-    const {
-      data: { status, data, message }
-    } = response!;
+      const {
+        data: { status, data, message }
+      } = response!;
 
-    if (status === 200) {
-      setUser(data);
-      navigate(location.state.pathname);
-    } else {
-      // show toast
-      console.log(message);
+      if (status === 200) {
+        setUser(data);
+        toast({
+          title: 'Success',
+          description: message
+        });
+        setIsLoading(false);
+        navigate(location.state?.pathname ?? '/');
+      } else {
+        toast({
+          title: 'Failed',
+          description: message
+        });
+        setIsLoading(false);
+      }
+    } catch (error: any) {
+      setIsLoading(false);
+      toast({
+        title: 'Failed',
+        description: error.message
+      });
     }
   };
 
@@ -144,8 +169,8 @@ function Login() {
                   )}
                 />
 
-                <Button type="submit" className="w-full">
-                  Login
+                <Button disabled={isLoading} type="submit" className="w-full">
+                  {isLoading ? 'Wait..' : 'Login'}
                 </Button>
               </form>
             </Form>

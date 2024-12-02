@@ -1,5 +1,6 @@
-import { PayloadUser } from '@/types/user';
 import { create } from 'zustand';
+import { PayloadUser } from '@/types/user';
+import { persist } from 'zustand/middleware';
 
 type UserState = {
   user: PayloadUser | null;
@@ -7,10 +8,17 @@ type UserState = {
   resetUser: () => void;
 };
 
-const useUserState = create<UserState>((set) => ({
-  user: null,
-  setUser: (user) => set((state) => ({ ...state, user })),
-  resetUser: () => set((state) => ({ ...state, user: null }))
-}));
+const useUserState = create<UserState>()(
+  persist(
+    (set) => ({
+      user: null,
+      setUser: (user) => set((state) => ({ ...state, user })),
+      resetUser: () => set((state) => ({ ...state, user: null }))
+    }),
+    {
+      name: 'crown-auth'
+    }
+  )
+);
 
 export default useUserState;

@@ -7,18 +7,72 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { cn } from '@/lib/utils';
-import { Link } from 'react-router-dom';
-import { buttonVariants } from '../ui/button';
+import { asyncWrapper, cn } from '@/lib/utils';
+import { Link, useNavigate } from 'react-router-dom';
+import { Button, buttonVariants } from '../ui/button';
 import { Settings, UserPen } from 'lucide-react';
 import useUserState from '@/store/user/useUserState';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { logout } from '@/api/auth';
+import { useToast } from '@/hooks/use-toast';
+import useLoader from '@/store/loader/useLoader';
+import useSheetState from '@/store/navbar/useSheetState';
 
 type Props = {};
 
 const UserAvatar = ({}: Props) => {
+  const { toast } = useToast();
+  const navigate = useNavigate();
+  const { resetUser } = useUserState();
+  const { isLoading, toggle } = useLoader();
+  const { isOpen, toggleSheet } = useSheetState();
   const user = useUserState((state) => state.user);
+
+  const handleLogout = async () => {
+    try {
+      if (isOpen) {
+        toggleSheet();
+      }
+
+      toggle(true);
+      const { response, error } = await asyncWrapper(logout);
+
+      if (error !== null) {
+        toggle(false);
+        return toast({
+          title: 'Failed',
+          description: error.message
+        });
+      }
+
+      const {
+        data: { status, message }
+      } = response!;
+
+      if (status === 200) {
+        toggle(false);
+        toast({
+          title: 'Success',
+          description: message
+        });
+        resetUser();
+        navigate('/auth/login');
+      } else {
+        toggle(false);
+        toast({
+          title: 'Failed',
+          description: message
+        });
+      }
+    } catch (error: any) {
+      toggle(false);
+      toast({
+        title: 'Failed',
+        description: error.message
+      });
+    }
+  };
 
   return (
     <DropdownMenu>
@@ -64,6 +118,19 @@ const UserAvatar = ({}: Props) => {
             </DropdownMenuShortcut>
           </DropdownMenuItem>
         </Link>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem className="p-0 cursor-pointer">
+          <Button
+            disabled={isLoading}
+            onClick={handleLogout}
+            className="w-full"
+            variant={'destructive'}
+          >
+            <DropdownMenuLabel className="text-base font-normal">
+              Logout
+            </DropdownMenuLabel>
+          </Button>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

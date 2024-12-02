@@ -28,6 +28,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { createUser } from '@/api/user';
+import { useToast } from '@/hooks/use-toast';
 
 const formSchema = z.object({
   firstName: z
@@ -57,8 +58,11 @@ const formSchema = z.object({
 });
 
 function Signup() {
+  const { toast } = useToast();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [inputType, setInputType] = useState<'password' | 'text'>('password');
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -76,17 +80,51 @@ function Signup() {
   };
 
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (body) => {
-    const {response, error} = await asyncWrapper(() => createUser(body))
+    try {
+      if (isLoading) return;
 
-    if (error) {
-      return console.log("Server error: ", error.message)
-    }
+      setIsLoading(true);
 
-    const {data: {status, message, details: {otp}}} = response!;
+      const { response, error } = await asyncWrapper(() => createUser(body));
 
-    if (status === 200) {
-      console.log(message)
-      navigate(`/auth/verify-user?userId=${otp.user}&otpId=${otp._id}`);
+      if (error) {
+        setIsLoading(false);
+        return toast({
+          title: 'Failed',
+          description: error.response ? error.response.data?.message : error.message
+        });
+      }
+
+      const {
+        data: {
+          status,
+          message,
+          details: { otp }
+        }
+      } = response!;
+
+      if (status === 200) {
+        setIsLoading(false);
+        toast({
+          title: 'Success',
+          description: message
+        });
+        navigate(`/auth/verify-user`, {
+          state: { userId: otp.user, otpId: otp._id }
+        });
+      } else {
+        setIsLoading(false);
+        toast({
+          title: 'Failed',
+          description: message
+        });
+      }
+    } catch (error: any) {
+      setIsLoading(false);
+      toast({
+        title: 'Failed',
+        description: error.message
+      });
     }
   };
 
@@ -188,8 +226,8 @@ function Signup() {
                   )}
                 />
 
-                <Button type="submit" className="w-full">
-                  Sign up
+                <Button disabled={isLoading} type="submit" className="w-full">
+                  {isLoading ? 'Wait..' : 'Sign up'}
                 </Button>
               </form>
             </Form>
