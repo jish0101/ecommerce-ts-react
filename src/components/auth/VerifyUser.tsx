@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z, ZodError } from 'zod';
 import {
   InputOTP,
   InputOTPGroup,
@@ -13,14 +13,17 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import H2 from '../typography/H2';
 import MutedPara from '../typography/MutedPara';
 import { Button } from '../ui/button';
 import { asyncWrapper } from '@/lib/utils';
-import { reSendOtp, verifyUser } from '@/api/auth';
+import { reSendOtp, resetPassword, verifyUser } from '@/api/auth';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
+import { Input } from '../ui/input';
+import { NUMBER_REGEX, PASSWORD_REGEX } from '@/lib/regexHelpers';
+import { Eye, EyeClosed } from 'lucide-react';
 
 const schema = z.object({
   userId: z
@@ -32,48 +35,66 @@ const schema = z.object({
     .string()
     .trim()
     .min(0, 'Otp id not found')
-    .max(100, 'Otp id is invalid')
+    .max(100, 'Otp id is invalid'),
+  type: z.enum(['FORGOT PASSWORD', 'EMAIL VERIFICATION'])
 });
 
-type Props = {};
+const pwdSchema = z.object({
+  otp: z.string().regex(NUMBER_REGEX, `Otp should only be in number`),
+  password: z
+    .string()
+    .trim()
+    .min(1, 'This is required*')
+    .regex(
+      PASSWORD_REGEX,
+      `Minimum 8 chars, one uppercase, lowercase, number and a special char`
+    )
+});
 
 type OtpData = {
   otpId: string;
   userId: string;
-  type: "FORGOT PASSWORD" | "EMAIL VERIFICATION"
-}
+  type: 'FORGOT PASSWORD' | 'EMAIL VERIFICATION';
+};
 
-const VerifyUser = ({}: Props) => {
+const VerifyUser = () => {
   const { toast } = useToast();
   const location = useLocation();
   const navigate = useNavigate();
 
   const [otpDetails, setOtpDetails] = useState<OtpData | null>(() => {
-    if (location.state) {
-      return {
-        otpId: location.state.otpId,
-        userId: location.state.otpId,
-        type: "EMAIL VERIFICATION",
-      }
-    }
-    return null;
-  })
-  const [value, setValue] = useState('');
+    if (!location.state) return null;
+    return {
+      type: location.state.type,
+      otpId: location.state.otpId,
+      userId: location.state.userId
+    };
+  });
+  const [inputType, setInputType] = useState<'password' | 'text'>('password');
+  const [form, setForm] = useState({ otp: '', password: '' });
   const [isLoading, setIsLoading] = useState(false);
+  const [isSendingOtp, setIsSendingOtp] = useState(false);
 
-  const handleVerify = async () => {
+  const handlePasswordView = () => {
+    setInputType((prev) => {
+      return prev === 'text' ? 'password' : 'text';
+    });
+  };
+
+  // For verifying user account
+  const handleVerifyUser = async () => {
     try {
       if (isLoading) return;
 
       setIsLoading(true);
 
-      const { otpId, userId } = schema.parse(otpDetails);
+      const { otpId, userId, type } = schema.parse(otpDetails);
       const { response, error } = await asyncWrapper(() =>
         verifyUser({
           _id: otpId,
           userId,
-          value,
-          type: 'EMAIL VERIFICATION'
+          value: form.otp,
+          type
         })
       );
 
@@ -81,7 +102,9 @@ const VerifyUser = ({}: Props) => {
         setIsLoading(false);
         return toast({
           title: 'Failed',
-          description: error.response ? error.response.data?.message : error.message
+          description: error.response
+            ? error.response.data?.message
+            : error.message
         });
       }
 
@@ -106,30 +129,100 @@ const VerifyUser = ({}: Props) => {
     }
   };
 
+  // For password reset
+  const handleUpdatePassword = async () => {
+    try {
+      const { otp, password } = pwdSchema.parse(form);
+      const { otpId, userId, type } = schema.parse(otpDetails);
+
+      setIsLoading(true);
+
+      const { response, error } = await asyncWrapper(() =>
+        resetPassword({
+          _id: otpId,
+          value: otp,
+          type,
+          userId,
+          password
+        })
+      );
+
+      if (error) {
+        setIsLoading(false);
+        return toast({
+          title: 'Failed',
+          description: error.response
+            ? error.response.data?.message
+            : error.message
+        });
+      }
+
+      const {
+        data: { status, data, message }
+      } = response!;
+
+      if (status === 200 && data) {
+        setIsLoading(false);
+        toast({
+          title: 'Success',
+          description: message
+        });
+        navigate('/auth/login');
+      }
+    } catch (error: any) {
+      setIsLoading(false);
+      if (error instanceof ZodError) {
+        return toast({
+          title: 'Validation Error',
+          description: error.issues.at(0)?.message
+        });
+      }
+      toast({
+        title: 'Failed',
+        description: error.message
+      });
+    }
+  };
+
+  // For resending otp
   const handleResendOtp = async () => {
     try {
-      const {response, error} = await asyncWrapper(() => reSendOtp({}))
+      const { userId, type } = schema.parse(otpDetails);
+
+      setIsSendingOtp(true);
+      const { response, error } = await asyncWrapper(() =>
+        reSendOtp({
+          userId,
+          type
+        })
+      );
 
       if (error !== null) {
+        setIsSendingOtp(false);
         toast({
           title: 'Failed',
-          description: error.response ? error.response?.data.message: error.message
+          description: error.response
+            ? error.response?.data.message
+            : error.message
         });
 
         if (error.response && error.response?.data === false) {
-          if (error.response.data.message === "User is already verified") {
-            navigate("/auth/login")
+          if (error.response.data.message === 'User is already verified') {
+            navigate('/auth/login');
           }
-          if (error.response.data.message === "User not found") {
-            navigate("/auth/signup")
+          if (error.response.data.message === 'User not found') {
+            navigate('/auth/signup');
           }
         }
         return;
       }
-      
-      const {data: {status, details, message}} = response!;
+
+      const {
+        data: { status, details, message }
+      } = response!;
 
       if (status === 200) {
+        setIsSendingOtp(false);
         toast({
           title: 'Success',
           description: message
@@ -138,27 +231,33 @@ const VerifyUser = ({}: Props) => {
           otpId: details?.otp?._id,
           userId: details?.otp?.user,
           type: details?.otp?.type
-        })
-      } else {
-        toast({
-          title: 'Failed',
-          description: message
         });
       }
-
     } catch (error: any) {
+      setIsSendingOtp(false);
+      if (error instanceof ZodError) {
+        return toast({
+          title: 'Validation Error',
+          description: error.issues.at(0)?.message
+        });
+      }
       toast({
         title: 'Failed',
         description: error.message
       });
     }
-  }
+  };
 
-  useEffect(() => {
-    if (!otpDetails) {
-      navigate('/');
-    }
-  }, [otpDetails]);
+  const submitActionMap: Record<OtpData['type'], () => void> = {
+    'EMAIL VERIFICATION': handleVerifyUser,
+    'FORGOT PASSWORD': handleUpdatePassword
+  };
+
+  const handleVerify = () => {
+    if (!otpDetails) return;
+
+    submitActionMap[otpDetails.type]();
+  };
 
   return (
     <div className="grid place-content-center h-screen">
@@ -168,36 +267,65 @@ const VerifyUser = ({}: Props) => {
             <H2>OTP sent to your email.</H2>
           </CardTitle>
           <CardDescription>
-            <MutedPara>Enter it below to verify your account.</MutedPara>
+            <MutedPara>Enter it below to verify yourself.</MutedPara>
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <InputOTP
-            maxLength={6}
-            value={value}
-            containerClassName="justify-center"
-            onChange={(value) => setValue(value)}
-          >
-            <InputOTPGroup>
-              <InputOTPSlot index={0} />
-              <InputOTPSlot index={1} />
-              <InputOTPSlot index={2} />
-            </InputOTPGroup>
-            <InputOTPSeparator />
-            <InputOTPGroup>
-              <InputOTPSlot index={3} />
-              <InputOTPSlot index={4} />
-              <InputOTPSlot index={5} />
-            </InputOTPGroup>
-          </InputOTP>
+          <div className="flex flex-col gap-3">
+            <div className="w-[275px] mx-auto flex items-start flex-col">
+              <label>Enter Otp</label>
+              <InputOTP
+                maxLength={6}
+                value={form.otp}
+                containerClassName="justify-center w-full"
+                onChange={(value) => setForm({ ...form, otp: value })}
+              >
+                <InputOTPGroup>
+                  <InputOTPSlot index={0} />
+                  <InputOTPSlot index={1} />
+                  <InputOTPSlot index={2} />
+                </InputOTPGroup>
+                <InputOTPSeparator />
+                <InputOTPGroup>
+                  <InputOTPSlot index={3} />
+                  <InputOTPSlot index={4} />
+                  <InputOTPSlot index={5} />
+                </InputOTPGroup>
+              </InputOTP>
+            </div>
+
+            {otpDetails && otpDetails.type === 'FORGOT PASSWORD' ? (
+              <div className="w-[275px] mx-auto flex items-start flex-col">
+                <label>Enter new password</label>
+                <div className='w-full relative'>
+                  <Input
+                    type={inputType}
+                    value={form.password}
+                    placeholder="Enter new password"
+                    onChange={(e) =>
+                      setForm({ ...form, password: e.target.value })
+                    }
+                  />
+                  <Button
+                    type="button"
+                    variant={'link'}
+                    className="absolute top-0 right-0"
+                    onClick={handlePasswordView}
+                  >
+                    {inputType === 'password' ? <Eye /> : <EyeClosed />}
+                  </Button>
+                </div>
+              </div>
+            ) : null}
+          </div>
         </CardContent>
         <CardFooter>
           <div className="flex gap-2 justify-center w-full items-center">
             <Button disabled={isLoading} onClick={handleVerify}>
               {isLoading ? 'Verifying..' : 'Verify'}
             </Button>
-            <Button disabled={isLoading} onClick={handleResendOtp}>
-              {isLoading ? 'Sending..' : 'Resend otp'}
+            <Button disabled={isSendingOtp} onClick={handleResendOtp}>
+              {isSendingOtp ? 'Sending..' : 'Resend otp'}
             </Button>
           </div>
         </CardFooter>

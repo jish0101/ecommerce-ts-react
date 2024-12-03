@@ -30,3 +30,9 @@ export const reSendOtp = async (
 ): Promise<AxiosResponse<CreateResponse<true>>> => {
   return await axiosInstance.post('/auth/send-otp', payload);
 };
+
+export const resetPassword = async (
+  payload: Record<string, any>
+): Promise<AxiosResponse<CreateResponse<true>>> => {
+  return await axiosInstance.post('/auth/reset-password', payload);
+};

@@ -91,7 +91,9 @@ function Signup() {
         setIsLoading(false);
         return toast({
           title: 'Failed',
-          description: error.response ? error.response.data?.message : error.message
+          description: error.response
+            ? error.response.data?.message
+            : error.message
         });
       }
 
@@ -110,7 +112,11 @@ function Signup() {
           description: message
         });
         navigate(`/auth/verify-user`, {
-          state: { userId: otp.user, otpId: otp._id }
+          state: {
+            userId: otp.user,
+            otpId: otp._id,
+            type: 'EMAIL VERIFICATION'
+          }
         });
       } else {
         setIsLoading(false);

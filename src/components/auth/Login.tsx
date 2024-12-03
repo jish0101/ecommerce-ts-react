@@ -46,13 +46,15 @@ const defaultValues = {
 };
 
 function Login() {
-  const { toast } = useToast();
-  const location = useLocation();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const { toast } = useToast();
   const { setUser } = useUserState();
 
   const [isLoading, setIsLoading] = useState(false);
   const [inputType, setInputType] = useState<'password' | 'text'>('password');
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues
@@ -67,9 +69,7 @@ function Login() {
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (body) => {
     try {
       setIsLoading(true);
-      const { response, error } = await asyncWrapper(
-        async () => await login(body)
-      );
+      const { response, error } = await asyncWrapper(() => login(body));
 
       if (error !== null) {
         setIsLoading(false);
@@ -175,17 +175,29 @@ function Login() {
               </form>
             </Form>
           </CardContent>
-          <CardFooter>
-            <div className="flex gap-2 justify-center w-full items-center">
-              <P>Does not have an account yet ?</P>
+          <CardFooter className="flex-col">
+            <div className="flex gap-2 items-center">
+              <P>Forgot password ?</P>
+              <Link
+                to={'/auth/reset-password'}
+                className={cn(
+                  buttonVariants({ variant: 'link' }),
+                  'p-0 text-xs font-semibold h-0'
+                )}
+              >
+                Reset your password
+              </Link>
+            </div>
+            <div className="flex gap-2 items-center">
+              <P>Does not have an account ?</P>
               <Link
                 to={'/auth/signup'}
                 className={cn(
                   buttonVariants({ variant: 'link' }),
-                  'p-0 text-xs font-semibold'
+                  'p-0 text-xs font-semibold h-0'
                 )}
               >
-                Click here
+                Create a new account
               </Link>
             </div>
           </CardFooter>

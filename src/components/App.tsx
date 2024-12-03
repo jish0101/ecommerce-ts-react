@@ -10,6 +10,7 @@ const NotFound = lazy(() => import('./NotFound'));
 
 const Login = lazy(() => import('./auth/Login'));
 const Signup = lazy(() => import('./auth/Signup'));
+const ResetPassport = lazy(() => import('./auth/ResetPassword'));
 const VerifyUser = lazy(() => import('./auth/VerifyUser'));
 const UnAuthorised = lazy(() => import('./auth/UnAuthorised'));
 
@@ -39,6 +40,9 @@ function App() {
         </Route>
         <Route element={<SuspenseWrapper />}>
           <Route path="/auth/verify-user" element={<VerifyUser />} />
+        </Route>
+        <Route element={<SuspenseWrapper />}>
+          <Route path="/auth/reset-password" element={<ResetPassport />} />
         </Route>
         <Route element={<SuspenseWrapper />}>
           <Route path="/auth/unauthorised" element={<UnAuthorised />} />
