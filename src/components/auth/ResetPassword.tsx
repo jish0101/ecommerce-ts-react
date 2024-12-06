@@ -104,7 +104,7 @@ const ResetPassport = () => {
   };
 
   return (
-    <div className="grid place-content-center h-screen">
+    <div className="grid place-content-center mt-24 md:mt-0 md:min-h-[100vh]">
       <Card className="md:min-w-[475px] min-w-[calc(100%-2rem)] text-center">
         <CardHeader>
           <CardTitle>

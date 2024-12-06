@@ -1,33 +1,67 @@
 import { lazy } from 'react';
-import Layout from './layout/Layout';
 import CheckAuth from './auth/CheckAuth';
 import SuspenseWrapper from './SuspenseWrapper';
 import { Route, Routes } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallBack, { errorResetHandler } from './ErrorFallback';
 
-const NotFound = lazy(() => import('./NotFound'));
-
-const Login = lazy(() => import('./auth/Login'));
-const Signup = lazy(() => import('./auth/Signup'));
-const ResetPassport = lazy(() => import('./auth/ResetPassword'));
-const VerifyUser = lazy(() => import('./auth/VerifyUser'));
-const UnAuthorised = lazy(() => import('./auth/UnAuthorised'));
-
-const HomePage = lazy(() => import('@/pages/HomePage/HomePage'));
-const ProductPage = lazy(() => import('@/pages/ProductPage/ProductPage'));
-
 function App() {
+  const NotFound = lazy(() => import('./NotFound'));
+  
+  // Auth
+  const Login = lazy(() => import('./auth/Login'));
+  const Signup = lazy(() => import('./auth/Signup'));
+  const VerifyUser = lazy(() => import('./auth/VerifyUser'));
+  const ResetPassport = lazy(() => import('./auth/ResetPassword'));
+  const UnAuthorised = lazy(() => import('./auth/UnAuthorised'));
+  
+  // General
+  const Layout = lazy(() => import('./layout/Layout'));
+  const HomePage = lazy(() => import('@/pages/HomePage/HomePage'));
+  const ProductPage = lazy(() => import('@/pages/ProductPage/ProductPage'));
+
+  // Layout
+  const Dashboard = lazy(() => import('@/pages/Dashboard/Dashboard'));
+  const DashboardLayout = lazy(() => import('@/pages/Dashboard/DashboardLayout'));
+  
+  // Settings
+  const SettingsWrapper = lazy(() => import('@/pages/settings/SettingsWrapper'));
+  const Settings = lazy(() => import('@/pages/settings/Settings'));
+  const Orders = lazy(() => import('@/pages/settings/user/Orders'));
+  const UserProfile = lazy(() => import('@/pages/settings/user/UserProfile'));
+
   return (
     <ErrorBoundary onReset={errorResetHandler} fallbackRender={ErrorFallBack}>
       <Routes>
-        <Route element={<Layout />}>
-          <Route element={<CheckAuth roles={['ADMIN', 'USER']} />}>
-            <Route element={<SuspenseWrapper />}>
-              <Route path="/" element={<HomePage />} />
+        <Route element={<SuspenseWrapper />}>
+          <Route element={<Layout />}>
+            <Route element={<CheckAuth roles={['ADMIN', 'USER']} />}>
+              <Route element={<SuspenseWrapper />}>
+                <Route path="/" element={<HomePage />} />
+              </Route>
+              <Route element={<SuspenseWrapper />}>
+                <Route path="/products" element={<ProductPage />} />
+              </Route>
+
+              {/* Settings routes */}
+              <Route path='/settings' element={<SettingsWrapper />}>
+                <Route index element={<Settings />} />
+                <Route path=":subSettings" element={<Settings />} />
+                <Route element={<SuspenseWrapper />}>
+                  <Route path="user/profile" element={<UserProfile />} />
+                </Route>
+                <Route element={<SuspenseWrapper />}>
+                  <Route path="user/orders" element={<Orders />} />
+                </Route>
+              </Route>
             </Route>
-            <Route element={<SuspenseWrapper />}>
-              <Route path="/products" element={<ProductPage />} />
+          </Route>
+        </Route>
+
+        <Route element={<SuspenseWrapper />}>
+          <Route element={<DashboardLayout />}>
+            <Route path='/admin' element={<SuspenseWrapper />}>
+              <Route path="dashboard" element={<Dashboard />} />
             </Route>
           </Route>
         </Route>

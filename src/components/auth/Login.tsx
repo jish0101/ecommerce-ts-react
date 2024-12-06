@@ -19,6 +19,7 @@ import P from '../typography/P';
 import { useState } from 'react';
 import H2 from '../typography/H2';
 import { login } from '@/api/auth';
+import { useToast } from '@/hooks/use-toast';
 import { Eye, EyeClosed } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { asyncWrapper, cn } from '@/lib/utils';
@@ -28,7 +29,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useToast } from '@/hooks/use-toast';
 
 const formSchema = z.object({
   email: z
@@ -75,7 +75,9 @@ function Login() {
         setIsLoading(false);
         return toast({
           title: 'Failed',
-          description: error.message
+          description: error.response
+            ? error.response.data?.message
+            : error.message
         });
       }
 

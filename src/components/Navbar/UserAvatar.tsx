@@ -10,7 +10,7 @@ import {
 import { asyncWrapper, cn } from '@/lib/utils';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, buttonVariants } from '../ui/button';
-import { Settings, UserPen } from 'lucide-react';
+import { LayoutDashboard, Settings, UserPen } from 'lucide-react';
 import useUserState from '@/store/user/useUserState';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -74,6 +74,24 @@ const UserAvatar = ({}: Props) => {
     }
   };
 
+  const links = [
+    {
+      title: "Dashboard",
+      href: "/admin/dashboard",
+      icon: <LayoutDashboard size={18} />
+    },
+    {
+      title: "Profile",
+      href: "/settings/user/profile",
+      icon: <UserPen size={18} />
+    },
+    {
+      title: "Settings",
+      href: "/settings",
+      icon: <Settings size={18} />
+    },
+  ]
+
   return (
     <DropdownMenu>
       <Tooltip>
@@ -97,28 +115,23 @@ const UserAvatar = ({}: Props) => {
         </TooltipContent>
       </Tooltip>
       <DropdownMenuContent align="end">
-        <Link className="w-full block" to={'/settings/user/profile'}>
-          <DropdownMenuItem className="cursor-pointer">
-            <DropdownMenuLabel className="text-base font-normal">
-              Profile
-            </DropdownMenuLabel>
-            <DropdownMenuShortcut>
-              <UserPen size={18} />
-            </DropdownMenuShortcut>
-          </DropdownMenuItem>
-        </Link>
-        <DropdownMenuSeparator />
-        <Link className="w-full block" to={'/settings'}>
-          <DropdownMenuItem className="cursor-pointer">
-            <DropdownMenuLabel className="text-base font-normal">
-              Settings
-            </DropdownMenuLabel>
-            <DropdownMenuShortcut>
-              <Settings size={18} />
-            </DropdownMenuShortcut>
-          </DropdownMenuItem>
-        </Link>
-        <DropdownMenuSeparator />
+        {
+          links.map((link) => (
+            <div key={link.href}>
+              <Link className="w-full block" to={link.href}>
+              <DropdownMenuItem className="cursor-pointer py-0">
+                <DropdownMenuLabel className="text-base font-normal">
+                  {link.title}
+                </DropdownMenuLabel>
+                <DropdownMenuShortcut>
+                  {link.icon}
+                </DropdownMenuShortcut>
+              </DropdownMenuItem>
+              </Link>
+              <DropdownMenuSeparator />
+            </div>
+          ))
+        }
         <DropdownMenuItem className="p-0 cursor-pointer">
           <Button
             disabled={isLoading}

@@ -7,8 +7,8 @@ type Props = {
 };
 
 export default function CheckAuth({ roles }: Props) {
-  const user = useUserState((state) => state.user);
   const location = useLocation();
+  const user = useUserState((state) => state.user);
 
   if (!user) {
     return <Navigate to={'/auth/login'} state={location} />;

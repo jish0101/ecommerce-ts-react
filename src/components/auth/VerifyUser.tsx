@@ -297,7 +297,7 @@ const VerifyUser = () => {
             {otpDetails && otpDetails.type === 'FORGOT PASSWORD' ? (
               <div className="w-[275px] mx-auto flex items-start flex-col">
                 <label>Enter new password</label>
-                <div className='w-full relative'>
+                <div className="w-full relative">
                   <Input
                     type={inputType}
                     value={form.password}
