@@ -2,8 +2,8 @@ import { Home, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useSidebar } from '@/components/ui/sidebar';
 import useUserState from '@/store/user/useUserState';
-import ThemeToggle from '@/components/Navbar/ThemeToggle';
-import UserAvatar, { UserAvatarOptions } from '@/components/Navbar/UserAvatar';
+import ThemeToggle from '@/components/navbar/ThemeToggle';
+import UserAvatar, { UserAvatarOptions } from '@/components/navbar/UserAvatar';
 
 type Props = {};
 
