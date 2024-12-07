@@ -1,7 +1,7 @@
 import logoSrc from '/logo.svg';
 import { Link } from 'react-router-dom';
-import NavExtras from '../Navbar/NavExtras';
-import Searchbar from '../Navbar/Searchbar';
+import NavExtras from '../navbar/NavExtras';
+import Searchbar from '../navbar/Searchbar';
 
 export type ListOption = {
   href: string;
