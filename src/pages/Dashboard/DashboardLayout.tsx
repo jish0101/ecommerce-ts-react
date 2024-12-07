@@ -4,8 +4,8 @@ import DashboardNav from './DashboardNav';
 import useLoader from '@/store/loader/useLoader';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { SidebarProvider } from '@/components/ui/sidebar';
-import SidebarComponent from '@/components/navbar/Sidebar';
-import ChevronSidebarButton from '@/components/navbar/ChevronSidebarButton';
+import SidebarComponent from '@/components/Navbar/Sidebar';
+import ChevronSidebarButton from '@/components/Navbar/ChevronSidebarButton';
 import { NavOption } from '@/components/layout/Navbar';
 import {
   Car,
