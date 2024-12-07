@@ -1,7 +1,7 @@
-import { Button, ButtonProps } from '../ui/button';
-import { ChevronsLeft, Menu } from 'lucide-react';
-import { useSidebar } from '../ui/sidebar';
 import { cn } from '@/lib/utils';
+import { useSidebar } from '../ui/sidebar';
+import { ChevronsLeft, Menu } from 'lucide-react';
+import { Button, ButtonProps } from '../ui/button';
 
 interface Props extends ButtonProps {
   isSheet: boolean;

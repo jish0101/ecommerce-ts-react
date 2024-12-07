@@ -1,12 +1,12 @@
 import Footer from './Footer';
+import Loader from '../Loader';
 import { Outlet } from 'react-router-dom';
+import NavExtras from '../navbar/NavExtras';
 import Navbar, { NavOption } from './Navbar';
 import { SidebarProvider } from '../ui/sidebar';
-import SidebarComponent from '@/components/navbar/Sidebar';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import Loader from '../Loader';
 import useLoader from '@/store/loader/useLoader';
-import NavExtras from '@/components/navbar/NavExtras';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import SidebarComponent from '@/components/navbar/Sidebar';
 
 export const NAV_LINKS: NavOption[] = [
   {
