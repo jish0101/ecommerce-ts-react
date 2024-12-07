@@ -172,7 +172,7 @@ function Login() {
                 />
 
                 <Button disabled={isLoading} type="submit" className="w-full">
-                  {isLoading ? 'Wait..' : 'Login'}
+                  {isLoading ? 'Please Wait..' : 'Login'}
                 </Button>
               </form>
             </Form>

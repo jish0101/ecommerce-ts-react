@@ -18,7 +18,7 @@ type Props = {
 const NavOptions = ({ navOptions }: Props) => {
   return (
     <NavigationMenu orientation="vertical">
-      <NavigationMenuList className={`hidden sm:flex`}>
+      <NavigationMenuList className={`hidden lg:flex`}>
         {navOptions.map((opt) => (
           <div key={opt.label}>
             {opt.listOptions ? (

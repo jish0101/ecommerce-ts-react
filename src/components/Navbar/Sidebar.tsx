@@ -1,5 +1,4 @@
 import { Link, useLocation } from 'react-router-dom';
-import { NavOption } from '../layout/Navbar';
 import {
   Sidebar,
   SidebarContent,
@@ -7,6 +6,7 @@ import {
   SidebarGroup,
   SidebarHeader,
   SidebarMenu,
+  SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
@@ -17,29 +17,30 @@ import {
   CollapsibleContent,
   CollapsibleTrigger
 } from '../ui/collapsible';
-import NavExtras from './NavExtras';
 import { ChevronDown } from 'lucide-react';
+import { NavOption } from '../layout/Navbar';
 
 type Props = {
-  navOptions: NavOption[];
+  options: NavOption[];
+  FooterContent?: React.ReactNode;
 };
 
-const SidebarComponent = ({ navOptions }: Props) => {
+const SidebarComponent = ({ options, FooterContent }: Props) => {
   const location = useLocation();
 
   return (
     <Sidebar>
-      <SidebarHeader>
-        <div className="flex justify-start items-center">
-          <Link className={`flex gap-2 text-xl items-end`} to="/">
-            <img src={'/logo.svg'} className="w-20 p-3" loading="eager" />
+      <SidebarHeader className="p-0">
+        <div className="flex justify-start items-center h-[70px] p-3">
+          <Link to={'/'}>
+            <img src={'/logo.svg'} className="w-12 md:mx-2" loading="eager" />
           </Link>
         </div>
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarMenu>
-            {navOptions.map((option) => (
+        <SidebarGroup className="px-2 py-0">
+          <SidebarMenu className="justify-center">
+            {options.map((option) => (
               <div key={option.href}>
                 {!option.listOptions && (
                   <SidebarMenuItem>
@@ -47,19 +48,14 @@ const SidebarComponent = ({ navOptions }: Props) => {
                       asChild
                       size={'lg'}
                       isActive={option.href === location.pathname}
-                      className="data-[active=true]:bg-primary data-[active=true]:text-neutral-100 hover:bg-accent"
+                      className="data-[active=true]:bg-primary data-[active=true]:text-neutral-100 hover:bg-accent rounded-l-full mx-2"
                     >
-                      {option.href ? (
-                        <Link to={option.href}>
-                          <div className="flex items-center space-x-2 px-2">
-                            <span>{option.label}</span>
-                          </div>
-                        </Link>
-                      ) : (
-                        <div className="flex items-center space-x-2">
+                      <Link to={option.href}>
+                        <div className="flex items-center space-x-2 px-2">
                           <span>{option.label}</span>
                         </div>
-                      )}
+                        <SidebarMenuBadge>{option.icon}</SidebarMenuBadge>
+                      </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 )}
@@ -109,9 +105,7 @@ const SidebarComponent = ({ navOptions }: Props) => {
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>
-        <NavExtras isSheet />
-      </SidebarFooter>
+      {FooterContent && <SidebarFooter>{FooterContent}</SidebarFooter>}
     </Sidebar>
   );
 };

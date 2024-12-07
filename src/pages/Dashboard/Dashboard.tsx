@@ -1,9 +1,7 @@
-type Props = {}
+type Props = {};
 
 const Dashboard = ({}: Props) => {
-  return (
-    <div>Dashboard</div>
-  )
-}
+  return <div className="h-screen">Dashboard</div>;
+};
 
-export default Dashboard
+export default Dashboard;

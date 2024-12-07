@@ -1,24 +1,33 @@
 import { cn } from '@/lib/utils';
 import { Link } from 'react-router-dom';
-// import { useSidebar } from '../ui/sidebar';
-import UserAvatar from '../Navbar/UserAvatar';
-import ThemeToggle from '../Navbar/ThemeToggle';
-import { Button, buttonVariants } from '../ui/button';
-import { ChevronsLeft, Heart, Menu, ShoppingCart } from 'lucide-react';
+import { buttonVariants } from '../ui/button';
+import ThemeToggle from './ThemeToggle';
+import useUserState from '@/store/user/useUserState';
+import ChevronSidebarButton from './ChevronSidebarButton';
+import { Heart, LayoutDashboard, ShoppingCart } from 'lucide-react';
+import UserAvatar, { UserAvatarOptions } from './UserAvatar';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
-import { useSidebar } from '../ui/sidebar';
 
 type Props = {
   isSheet?: boolean;
 };
 
 const NavExtras = ({ isSheet }: Props) => {
-  const { toggleSidebar } = useSidebar();
+  const user = useUserState((state) => state.user);
+  const options = new Array(...UserAvatarOptions);
+
+  if (user && user.role === 'ADMIN') {
+    options.unshift({
+      title: 'Dashboard',
+      href: '/admin/dashboard',
+      icon: <LayoutDashboard size={18} />
+    });
+  }
 
   return (
     <div className={isSheet ? 'h-[70px] flex items-center justify-center' : ''}>
       <div
-        className={`${isSheet ? 'flex flex-wrap' : 'sm:flex hidden'} gap-1 justify-center items-center`}
+        className={`${isSheet ? 'flex flex-wrap' : 'md:flex hidden'} gap-1 justify-center items-center`}
       >
         <Tooltip>
           <TooltipTrigger asChild>
@@ -39,11 +48,11 @@ const NavExtras = ({ isSheet }: Props) => {
         <Tooltip>
           <TooltipTrigger asChild>
             <Link
+              to={'/wishlist'}
               className={cn(
                 buttonVariants({ variant: 'ghost' }),
                 'rounded-full w-10 h-10'
               )}
-              to={'/wishlist'}
             >
               <Heart />
             </Link>
@@ -54,16 +63,9 @@ const NavExtras = ({ isSheet }: Props) => {
         </Tooltip>
 
         <ThemeToggle />
-        <UserAvatar />
+        <UserAvatar options={options} />
       </div>
-      <Button
-        className="flex sm:hidden"
-        onClick={toggleSidebar}
-        size={'icon'}
-        variant={'ghost'}
-      >
-        {isSheet ? <ChevronsLeft /> : <Menu />}
-      </Button>
+      <ChevronSidebarButton isSheet />
     </div>
   );
 };

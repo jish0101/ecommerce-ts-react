@@ -1,7 +1,7 @@
 import logoSrc from '/logo.svg';
 import { Link } from 'react-router-dom';
-import NavExtras from '../Navbar/NavExtras';
-import NavOptions from '../Navbar/NavOptions';
+import NavExtras from '../navbar/NavExtras';
+import Searchbar from '../navbar/Searchbar';
 
 export type ListOption = {
   href: string;
@@ -12,21 +12,22 @@ export type ListOption = {
 export type NavOption = {
   href: string;
   label: string;
+  icon?: React.ReactNode;
   listOptions?: ListOption[];
 };
 
-type Props = {
-  navOptions: NavOption[];
-};
+type Props = {};
 
-const Navbar = ({ navOptions }: Props) => {
+const Navbar = ({}: Props) => {
   return (
-    <div className={`flex items-center justify-between p-3 shadow-sm h-[70px]`}>
+    <div
+      className={`flex items-center justify-between p-3 shadow-sm h-[70px] border-b`}
+    >
       <Link to={'/'}>
         <img src={logoSrc} className="w-12 md:mx-2" loading="eager" />
       </Link>
 
-      <NavOptions navOptions={navOptions} />
+      <Searchbar className="md:flex hidden" />
       <NavExtras />
     </div>
   );

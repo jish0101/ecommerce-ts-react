@@ -1,68 +1,68 @@
-import { NavOption } from "@/components/layout/Navbar";
-import Loader from "@/components/Loader";
-import SidebarComponent from "@/components/Navbar/Sidebar"
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { SidebarProvider } from "@/components/ui/sidebar"
-import useLoader from "@/store/loader/useLoader";
-import { Outlet } from "react-router-dom";
+import Loader from '@/components/Loader';
+import { Outlet } from 'react-router-dom';
+import DashboardNav from './DashboardNav';
+import useLoader from '@/store/loader/useLoader';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { SidebarProvider } from '@/components/ui/sidebar';
+import SidebarComponent from '@/components/navbar/Sidebar';
+import ChevronSidebarButton from '@/components/navbar/ChevronSidebarButton';
+import { NavOption } from '@/components/layout/Navbar';
+import {
+  Car,
+  HandCoins,
+  LayoutDashboard,
+  ShoppingBasket,
+  Users
+} from 'lucide-react';
 
-type Props = {}
+type Props = {};
+
+const options: NavOption[] = [
+  {
+    label: 'Dashboard',
+    href: '/admin/dashboard',
+    icon: <LayoutDashboard />
+  },
+  {
+    label: 'Users',
+    href: '/admin/users',
+    icon: <Users />
+  },
+  {
+    label: 'Products',
+    href: '/admin/products',
+    icon: <ShoppingBasket />
+  },
+  {
+    label: 'Orders',
+    href: '/admin/orders',
+    icon: <Car />
+  },
+  {
+    label: 'Payments',
+    href: '/admin/payments',
+    icon: <HandCoins />
+  }
+];
 
 const DashboardLayout = ({}: Props) => {
-    const { isLoading } = useLoader();
-
-    const navOptions: NavOption[] = [
-        {
-          label: 'Home',
-          href: '/'
-        },
-        {
-          label: 'Category',
-          href: '/product-categories'
-        },
-        {
-          label: 'Categories',
-          href: '',
-          listOptions: [
-            {
-              label: 'Categories',
-              href: '/product-categories1',
-              description:
-                'Lorem ipsum dolor sit amet consectetur adipisicing elit.'
-            },
-            {
-              label: 'Categories',
-              href: '/product-categories2',
-              description:
-                'Lorem ipsum dolor sit amet consectetur adipisicing elit.'
-            },
-            {
-              label: 'Categories',
-              href: '/product-categories3',
-              description:
-                'Lorem ipsum dolor sit amet consectetur adipisicing elit.'
-            },
-            {
-              label: 'Categories',
-              href: '/product-categories4',
-              description:
-                'Lorem ipsum dolor sit amet consectetur adipisicing elit.'
-            }
-          ]
-        }
-      ];
+  const { isLoading } = useLoader();
 
   return (
-      <SidebarProvider defaultOpen={true}>
-        <SidebarComponent navOptions={navOptions} />
-        <div className="flex-1 flex flex-col">
-          {isLoading ? <Loader /> : null}
-          <ScrollArea type="scroll" className={`h-[calc(100vh-70px)]`}>
-            <Outlet />
-          </ScrollArea>
-        </div>
-      </SidebarProvider>
-  )
-}
+    <SidebarProvider defaultOpen={true}>
+      <SidebarComponent
+        options={options}
+        FooterContent={<ChevronSidebarButton className="ml-auto" isSheet />}
+      />
+      <div className="flex-1 flex flex-col">
+        <DashboardNav />
+        {isLoading ? <Loader /> : null}
+        <ScrollArea type="scroll" className={`h-[calc(100vh-70px)]`}>
+          <Outlet />
+        </ScrollArea>
+      </div>
+    </SidebarProvider>
+  );
+};
 
-export default DashboardLayout
+export default DashboardLayout;

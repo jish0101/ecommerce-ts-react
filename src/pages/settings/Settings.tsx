@@ -3,7 +3,7 @@ import { Outlet, useParams } from 'react-router-dom';
 type Props = {};
 
 const Settings = ({}: Props) => {
-  const {subSettings} = useParams();
+  const { subSettings } = useParams();
   return (
     <div>
       Settings {subSettings}

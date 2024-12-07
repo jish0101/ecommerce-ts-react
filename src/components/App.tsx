@@ -7,14 +7,14 @@ import ErrorFallBack, { errorResetHandler } from './ErrorFallback';
 
 function App() {
   const NotFound = lazy(() => import('./NotFound'));
-  
+
   // Auth
   const Login = lazy(() => import('./auth/Login'));
   const Signup = lazy(() => import('./auth/Signup'));
   const VerifyUser = lazy(() => import('./auth/VerifyUser'));
   const ResetPassport = lazy(() => import('./auth/ResetPassword'));
   const UnAuthorised = lazy(() => import('./auth/UnAuthorised'));
-  
+
   // General
   const Layout = lazy(() => import('./layout/Layout'));
   const HomePage = lazy(() => import('@/pages/HomePage/HomePage'));
@@ -22,10 +22,14 @@ function App() {
 
   // Layout
   const Dashboard = lazy(() => import('@/pages/Dashboard/Dashboard'));
-  const DashboardLayout = lazy(() => import('@/pages/Dashboard/DashboardLayout'));
-  
+  const DashboardLayout = lazy(
+    () => import('@/pages/Dashboard/DashboardLayout')
+  );
+
   // Settings
-  const SettingsWrapper = lazy(() => import('@/pages/settings/SettingsWrapper'));
+  const SettingsWrapper = lazy(
+    () => import('@/pages/settings/SettingsWrapper')
+  );
   const Settings = lazy(() => import('@/pages/settings/Settings'));
   const Orders = lazy(() => import('@/pages/settings/user/Orders'));
   const UserProfile = lazy(() => import('@/pages/settings/user/UserProfile'));
@@ -35,6 +39,7 @@ function App() {
       <Routes>
         <Route element={<SuspenseWrapper />}>
           <Route element={<Layout />}>
+            {/* PUBLIC ROUTES */}
             <Route element={<CheckAuth roles={['ADMIN', 'USER']} />}>
               <Route element={<SuspenseWrapper />}>
                 <Route path="/" element={<HomePage />} />
@@ -43,8 +48,8 @@ function App() {
                 <Route path="/products" element={<ProductPage />} />
               </Route>
 
-              {/* Settings routes */}
-              <Route path='/settings' element={<SettingsWrapper />}>
+              {/* SETTINGS ROUTES */}
+              <Route path="/settings" element={<SettingsWrapper />}>
                 <Route index element={<Settings />} />
                 <Route path=":subSettings" element={<Settings />} />
                 <Route element={<SuspenseWrapper />}>
@@ -58,14 +63,18 @@ function App() {
           </Route>
         </Route>
 
+        {/* ADMIN ROUTES */}
         <Route element={<SuspenseWrapper />}>
           <Route element={<DashboardLayout />}>
-            <Route path='/admin' element={<SuspenseWrapper />}>
-              <Route path="dashboard" element={<Dashboard />} />
+            <Route element={<CheckAuth roles={['ADMIN']} />}>
+              <Route path="/admin" element={<SuspenseWrapper />}>
+                <Route path="dashboard" element={<Dashboard />} />
+              </Route>
             </Route>
           </Route>
         </Route>
 
+        {/* AUTH ROUTES */}
         <Route element={<SuspenseWrapper />}>
           <Route path="/auth/login" element={<Login />} />
         </Route>

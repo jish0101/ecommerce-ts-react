@@ -1,13 +1,14 @@
-import { Outlet } from "react-router-dom"
+import { Outlet } from 'react-router-dom';
 
-type Props = {}
+type Props = {};
 
 const SettingsWrapper = ({}: Props) => {
   return (
-    <div>SettingsWrapper
-        <Outlet />
+    <div>
+      SettingsWrapper
+      <Outlet />
     </div>
-  )
-}
+  );
+};
 
-export default SettingsWrapper
+export default SettingsWrapper;
