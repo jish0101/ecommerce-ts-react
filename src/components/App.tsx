@@ -9,6 +9,7 @@ function App() {
   const NotFound = lazy(() => import('./NotFound'));
 
   // Auth
+  const AuthLayout = lazy(() => import('./layout/AuthLayout'));
   const Login = lazy(() => import('./auth/Login'));
   const Signup = lazy(() => import('./auth/Signup'));
   const VerifyUser = lazy(() => import('./auth/VerifyUser'));
@@ -76,22 +77,26 @@ function App() {
 
         {/* AUTH ROUTES */}
         <Route element={<SuspenseWrapper />}>
-          <Route path="/auth/login" element={<Login />} />
-        </Route>
-        <Route element={<SuspenseWrapper />}>
-          <Route path="/auth/signup" element={<Signup />} />
-        </Route>
-        <Route element={<SuspenseWrapper />}>
-          <Route path="/auth/verify-user" element={<VerifyUser />} />
-        </Route>
-        <Route element={<SuspenseWrapper />}>
-          <Route path="/auth/reset-password" element={<ResetPassport />} />
-        </Route>
-        <Route element={<SuspenseWrapper />}>
-          <Route path="/auth/unauthorised" element={<UnAuthorised />} />
-        </Route>
-        <Route element={<SuspenseWrapper />}>
-          <Route path="*" element={<NotFound />} />
+          <Route element={<AuthLayout />}>
+            <Route element={<SuspenseWrapper />}>
+              <Route path="/auth/login" element={<Login />} />
+            </Route>
+            <Route element={<SuspenseWrapper />}>
+              <Route path="/auth/signup" element={<Signup />} />
+            </Route>
+            <Route element={<SuspenseWrapper />}>
+              <Route path="/auth/verify-user" element={<VerifyUser />} />
+            </Route>
+            <Route element={<SuspenseWrapper />}>
+              <Route path="/auth/reset-password" element={<ResetPassport />} />
+            </Route>
+            <Route element={<SuspenseWrapper />}>
+              <Route path="/auth/unauthorised" element={<UnAuthorised />} />
+            </Route>
+            <Route element={<SuspenseWrapper />}>
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Route>
         </Route>
       </Routes>
     </ErrorBoundary>

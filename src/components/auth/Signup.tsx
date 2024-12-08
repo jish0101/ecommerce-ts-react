@@ -136,8 +136,8 @@ function Signup() {
 
   return (
     <main>
-      <div className="flex justify-center items-center mt-24 md:mt-0 md:min-h-[100vh]">
-        <Card className="md:min-w-[375px] min-w-[calc(100%-2rem)]">
+      <div className="flex p-2 justify-center items-center md:min-h-[calc(90vh-70px)]">
+        <Card className="md:max-w-[375px] min-w-[calc(100%-2rem)]">
           <CardHeader>
             <CardTitle>
               <H2>Register</H2>

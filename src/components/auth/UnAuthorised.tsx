@@ -8,6 +8,7 @@ import useLoader from '@/store/loader/useLoader';
 import { useToast } from '@/hooks/use-toast';
 import { asyncWrapper } from '@/lib/utils';
 import { logout } from '@/api/auth';
+import { useLayoutEffect } from 'react';
 
 type Props = {};
 
@@ -16,7 +17,14 @@ const UnAuthorised = ({}: Props) => {
   const { toast } = useToast();
   const { isLoading, toggle } = useLoader();
   const { isOpen, toggleSheet } = useSheetState();
+  const user = useUserState((state) => state.user);
   const resetUser = useUserState((state) => state.resetUser);
+
+  useLayoutEffect(() => {
+    if (!user) {
+      navigate("/")
+    }
+  }, [user]);
 
   const handleLogout = async () => {
     try {
@@ -64,7 +72,7 @@ const UnAuthorised = ({}: Props) => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-170px)] grid place-content-center">
+    <div className="md:min-h-[calc(90vh-70px)] grid place-content-center">
       <div className="grid place-content-center gap-3">
         <H2 className="flex gap-2 items-center">
           <OctagonMinus /> You are not authorised to view this page

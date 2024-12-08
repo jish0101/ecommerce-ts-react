@@ -13,7 +13,7 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card';
-import { useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import H2 from '../typography/H2';
 import MutedPara from '../typography/MutedPara';
 import { Button } from '../ui/button';
@@ -259,9 +259,15 @@ const VerifyUser = () => {
     submitActionMap[otpDetails.type]();
   };
 
+  useLayoutEffect(() => {
+    if (!otpDetails) {
+      navigate("/")
+    }
+  }, [otpDetails])
+
   return (
-    <div className="grid place-content-center h-screen">
-      <Card className="md:min-w-[475px] min-w-[calc(100%-2rem)] text-center">
+    <div className="grid place-content-center md:min-h-[calc(90vh-70px)]">
+      <Card className="md:max-w-[375px] min-w-[calc(100%-2rem)] text-center">
         <CardHeader>
           <CardTitle>
             <H2>OTP sent to your email.</H2>

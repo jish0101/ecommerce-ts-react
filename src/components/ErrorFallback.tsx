@@ -1,4 +1,4 @@
-import H1 from './typography/H1';
+import H2 from './typography/H2';
 import { Button } from './ui/button';
 import { FallbackProps } from 'react-error-boundary';
 
@@ -21,8 +21,8 @@ export function errorResetHandler(details: Details) {
 const ErrorFallBack = ({ error, resetErrorBoundary }: FallbackProps) => {
   return (
     <div className="grid place-content-center" role="alert">
-      <p>Something went wrong:</p>
-      <H1>{error.message}</H1>
+      <p>Something went wrong</p>
+      <H2>{error.message}</H2>
       <Button onClick={() => resetErrorBoundary()}>Refresh Page</Button>
     </div>
   );

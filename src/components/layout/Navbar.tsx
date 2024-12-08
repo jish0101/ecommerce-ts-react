@@ -1,4 +1,3 @@
-import logoSrc from '/logo.svg';
 import { Link } from 'react-router-dom';
 import NavExtras from '../navbar/NavExtras';
 import Searchbar from '../navbar/Searchbar';
@@ -24,7 +23,7 @@ const Navbar = ({}: Props) => {
       className={`flex items-center justify-between p-3 shadow-sm h-[70px] border-b`}
     >
       <Link to={'/'}>
-        <img src={logoSrc} className="w-12 md:mx-2" loading="eager" />
+        <img src={'/logo.svg'} className="w-12 md:mx-2" loading="eager" />
       </Link>
 
       <Searchbar className="md:flex hidden" />
