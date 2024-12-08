@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "serve -s dist",
+    "start": "vite preview --host",
     "dev": "vite",
     "test": "vitest",
     "preview": "vite preview",
@@ -29,6 +29,7 @@
     "axios": "^1.7.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "cmdk": "1.0.0",
     "input-otp": "^1.4.1",
     "lucide-react": "^0.460.0",
     "react": "^18.3.1",

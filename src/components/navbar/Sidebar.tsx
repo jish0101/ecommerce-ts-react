@@ -54,7 +54,9 @@ const SidebarComponent = ({ options, FooterContent }: Props) => {
                         <div className="flex items-center space-x-2 px-2">
                           <span>{option.label}</span>
                         </div>
-                        <SidebarMenuBadge>{option.icon}</SidebarMenuBadge>
+                        <SidebarMenuBadge className="text-current">
+                          {option.icon}
+                        </SidebarMenuBadge>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>

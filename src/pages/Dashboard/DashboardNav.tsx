@@ -4,6 +4,8 @@ import { useSidebar } from '@/components/ui/sidebar';
 import useUserState from '@/store/user/useUserState';
 import ThemeToggle from '@/components/navbar/ThemeToggle';
 import UserAvatar, { UserAvatarOptions } from '@/components/navbar/UserAvatar';
+import CommandPallete from '@/components/navbar/CommandPallete';
+import { DASHBOARD_OPTIONS } from './DashboardLayout';
 
 type Props = {};
 
@@ -25,13 +27,15 @@ const DashboardNav = ({}: Props) => {
       className={`flex items-center justify-between p-3 shadow-sm border-b h-[70px]`}
     >
       <Button
-        className="flex rounded-full w-[50px] h-[50px] [&_svg]:size-6"
-        onClick={toggleSidebar}
         variant={'ghost'}
+        onClick={toggleSidebar}
+        size={'icon'}
+        className="flex rounded-full md:w-[50px] md:h-[50px] md:[&_svg]:size-6"
       >
         <Menu size={80} />
       </Button>
 
+      <CommandPallete options={DASHBOARD_OPTIONS} />
       <div className="flex items-center justify-center gap-3">
         <ThemeToggle />
         <UserAvatar options={options} />

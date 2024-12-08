@@ -66,8 +66,8 @@ function App() {
         {/* ADMIN ROUTES */}
         <Route element={<SuspenseWrapper />}>
           <Route element={<DashboardLayout />}>
-            <Route element={<CheckAuth roles={['ADMIN']} />}>
-              <Route path="/admin" element={<SuspenseWrapper />}>
+            <Route path="/admin" element={<CheckAuth roles={['ADMIN']} />}>
+              <Route element={<SuspenseWrapper />}>
                 <Route path="dashboard" element={<Dashboard />} />
               </Route>
             </Route>

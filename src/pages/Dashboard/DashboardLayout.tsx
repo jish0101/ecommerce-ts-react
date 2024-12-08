@@ -17,7 +17,7 @@ import {
 
 type Props = {};
 
-const options: NavOption[] = [
+export const DASHBOARD_OPTIONS: NavOption[] = [
   {
     label: 'Dashboard',
     href: '/admin/dashboard',
@@ -51,7 +51,7 @@ const DashboardLayout = ({}: Props) => {
   return (
     <SidebarProvider defaultOpen={true}>
       <SidebarComponent
-        options={options}
+        options={DASHBOARD_OPTIONS}
         FooterContent={<ChevronSidebarButton className="ml-auto" isSheet />}
       />
       <div className="flex-1 flex flex-col">
