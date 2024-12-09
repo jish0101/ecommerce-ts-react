@@ -104,7 +104,7 @@ const UserAvatar = ({ options }: Props) => {
             <Avatar
               className={cn(
                 buttonVariants({ variant: 'ghost', size: 'icon' }),
-                'w-10 h-10 rounded-full'
+                'h-10 w-10 rounded-full'
               )}
             >
               <AvatarFallback>
@@ -121,7 +121,7 @@ const UserAvatar = ({ options }: Props) => {
       <DropdownMenuContent align="end">
         {options.map((link) => (
           <div key={link.href}>
-            <Link className="w-full block" to={link.href}>
+            <Link className="block w-full" to={link.href}>
               <DropdownMenuItem className="cursor-pointer py-0">
                 <DropdownMenuLabel className="text-base font-normal">
                   {link.title}
@@ -132,7 +132,7 @@ const UserAvatar = ({ options }: Props) => {
             <DropdownMenuSeparator />
           </div>
         ))}
-        <DropdownMenuItem className="p-0 cursor-pointer">
+        <DropdownMenuItem className="cursor-pointer p-0">
           <Button
             disabled={isLoading}
             onClick={handleLogout}

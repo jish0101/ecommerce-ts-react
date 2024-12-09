@@ -54,7 +54,7 @@ const DashboardLayout = ({}: Props) => {
         options={DASHBOARD_OPTIONS}
         FooterContent={<ChevronSidebarButton className="ml-auto" isSheet />}
       />
-      <div className="flex-1 flex flex-col">
+      <div className="flex flex-1 flex-col">
         <DashboardNav />
         {isLoading ? <Loader /> : null}
         <ScrollArea type="scroll" className={`h-[calc(100vh-70px)]`}>

@@ -91,7 +91,7 @@ span {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-normal text-sm;
+    @apply bg-background text-sm font-normal text-foreground;
   }
 }
 

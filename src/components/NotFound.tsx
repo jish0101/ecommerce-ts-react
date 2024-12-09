@@ -9,12 +9,12 @@ const NotFound = ({}: Props) => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-[calc(100vh-170px)] grid place-content-center">
+    <div className="grid min-h-[calc(100vh-170px)] place-content-center">
       <div className="grid place-content-center gap-3">
-        <H2 className="flex gap-2 items-center">
+        <H2 className="flex items-center gap-2">
           <OctagonMinus /> Page not found
         </H2>
-        <Button className="w-fit mx-auto" onClick={() => navigate(-1)}>
+        <Button className="mx-auto w-fit" onClick={() => navigate(-1)}>
           <ArrowLeft />
           Go back
         </Button>

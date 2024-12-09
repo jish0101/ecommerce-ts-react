@@ -22,7 +22,7 @@ const UnAuthorised = ({}: Props) => {
 
   useLayoutEffect(() => {
     if (!user) {
-      navigate("/")
+      navigate('/');
     }
   }, [user]);
 
@@ -72,12 +72,12 @@ const UnAuthorised = ({}: Props) => {
   };
 
   return (
-    <div className="md:min-h-[calc(90vh-70px)] grid place-content-center">
+    <div className="grid place-content-center md:min-h-[calc(90vh-70px)]">
       <div className="grid place-content-center gap-3">
-        <H2 className="flex gap-2 items-center">
+        <H2 className="flex items-center gap-2">
           <OctagonMinus /> You are not authorised to view this page
         </H2>
-        <div className="flex justify-center items-center gap-2">
+        <div className="flex items-center justify-center gap-2">
           <Button
             disabled={isLoading}
             className="w-fit"

@@ -31,7 +31,7 @@ const SidebarComponent = ({ options, FooterContent }: Props) => {
   return (
     <Sidebar>
       <SidebarHeader className="p-0">
-        <div className="flex justify-start items-center h-[70px] p-3">
+        <div className="flex h-[70px] items-center justify-start p-3">
           <Link to={'/'}>
             <img src={'/logo.svg'} className="w-12 md:mx-2" loading="eager" />
           </Link>
@@ -48,7 +48,7 @@ const SidebarComponent = ({ options, FooterContent }: Props) => {
                       asChild
                       size={'lg'}
                       isActive={option.href === location.pathname}
-                      className="data-[active=true]:bg-primary data-[active=true]:text-neutral-100 hover:bg-accent rounded-l-full mx-2"
+                      className="mx-2 rounded-l-full hover:bg-accent data-[active=true]:bg-primary data-[active=true]:text-neutral-100"
                     >
                       <Link to={option.href}>
                         <div className="flex items-center space-x-2 px-2">
@@ -68,7 +68,7 @@ const SidebarComponent = ({ options, FooterContent }: Props) => {
                       <CollapsibleTrigger asChild>
                         <SidebarMenuButton
                           size={'lg'}
-                          className="justify-between data-[state=open]:hover:bg-accent hover:bg-accent"
+                          className="justify-between hover:bg-accent data-[state=open]:hover:bg-accent"
                         >
                           <div className="flex items-center space-x-2 px-2">
                             <span>{option.label}</span>
@@ -85,7 +85,7 @@ const SidebarComponent = ({ options, FooterContent }: Props) => {
                                   asChild
                                   size={'lg'}
                                   tooltip={op.label}
-                                  className="data-[active=true]:bg-primary data-[active=true]:text-neutral-100 hover:bg-accent"
+                                  className="hover:bg-accent data-[active=true]:bg-primary data-[active=true]:text-neutral-100"
                                   isActive={op.href === location.pathname}
                                 >
                                   <Link to={op.href}>

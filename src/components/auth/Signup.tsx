@@ -136,8 +136,8 @@ function Signup() {
 
   return (
     <main>
-      <div className="flex p-2 justify-center items-center md:min-h-[calc(90vh-70px)]">
-        <Card className="md:max-w-[375px] min-w-[calc(100%-2rem)]">
+      <div className="flex items-center justify-center p-2 md:min-h-[calc(90vh-70px)]">
+        <Card className="min-w-[calc(100%-2rem)] md:max-w-[375px]">
           <CardHeader>
             <CardTitle>
               <H2>Register</H2>
@@ -152,7 +152,7 @@ function Signup() {
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-6"
               >
-                <div className="grid md:grid-cols-2 my-6 gap-4">
+                <div className="my-6 grid gap-4 md:grid-cols-2">
                   {/* First Name */}
                   <FormField
                     name="firstName"
@@ -220,7 +220,7 @@ function Signup() {
                           <Button
                             type="button"
                             variant={'link'}
-                            className="absolute top-0 right-0"
+                            className="absolute right-0 top-0"
                             onClick={handlePasswordView}
                           >
                             {inputType === 'password' ? <Eye /> : <EyeClosed />}
@@ -239,7 +239,7 @@ function Signup() {
             </Form>
           </CardContent>
           <CardFooter>
-            <div className="flex gap-2 justify-center w-full items-center">
+            <div className="flex w-full items-center justify-center gap-2">
               <P>Already have an account ?</P>
               <Link
                 to={'/auth/login'}

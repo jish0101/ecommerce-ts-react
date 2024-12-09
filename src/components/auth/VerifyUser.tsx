@@ -261,13 +261,13 @@ const VerifyUser = () => {
 
   useLayoutEffect(() => {
     if (!otpDetails) {
-      navigate("/")
+      navigate('/');
     }
-  }, [otpDetails])
+  }, [otpDetails]);
 
   return (
     <div className="grid place-content-center md:min-h-[calc(90vh-70px)]">
-      <Card className="md:max-w-[375px] min-w-[calc(100%-2rem)] text-center">
+      <Card className="min-w-[calc(100%-2rem)] text-center md:max-w-[375px]">
         <CardHeader>
           <CardTitle>
             <H2>OTP sent to your email.</H2>
@@ -278,7 +278,7 @@ const VerifyUser = () => {
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-3">
-            <div className="w-[275px] mx-auto flex items-start flex-col">
+            <div className="mx-auto flex w-[275px] flex-col items-start">
               <label>Enter Otp</label>
               <InputOTP
                 maxLength={6}
@@ -301,9 +301,9 @@ const VerifyUser = () => {
             </div>
 
             {otpDetails && otpDetails.type === 'FORGOT PASSWORD' ? (
-              <div className="w-[275px] mx-auto flex items-start flex-col">
+              <div className="mx-auto flex w-[275px] flex-col items-start">
                 <label>Enter new password</label>
-                <div className="w-full relative">
+                <div className="relative w-full">
                   <Input
                     type={inputType}
                     value={form.password}
@@ -315,7 +315,7 @@ const VerifyUser = () => {
                   <Button
                     type="button"
                     variant={'link'}
-                    className="absolute top-0 right-0"
+                    className="absolute right-0 top-0"
                     onClick={handlePasswordView}
                   >
                     {inputType === 'password' ? <Eye /> : <EyeClosed />}
@@ -326,7 +326,7 @@ const VerifyUser = () => {
           </div>
         </CardContent>
         <CardFooter>
-          <div className="flex gap-2 justify-center w-full items-center">
+          <div className="flex w-full items-center justify-center gap-2">
             <Button disabled={isLoading} onClick={handleVerify}>
               {isLoading ? 'Verifying..' : 'Verify'}
             </Button>

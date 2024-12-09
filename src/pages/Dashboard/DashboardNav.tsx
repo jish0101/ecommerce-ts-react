@@ -24,13 +24,13 @@ const DashboardNav = ({}: Props) => {
 
   return (
     <nav
-      className={`flex items-center justify-between p-3 shadow-sm border-b h-[70px]`}
+      className={`flex h-[70px] items-center justify-between border-b p-3 shadow-sm`}
     >
       <Button
         variant={'ghost'}
         onClick={toggleSidebar}
         size={'icon'}
-        className="flex rounded-full md:w-[50px] md:h-[50px] md:[&_svg]:size-6"
+        className="flex rounded-full md:h-[50px] md:w-[50px] md:[&_svg]:size-6"
       >
         <Menu size={80} />
       </Button>

@@ -104,8 +104,8 @@ const ResetPassport = () => {
   };
 
   return (
-    <div className="grid place-content-center mt-24 md:mt-0 md:min-h-[calc(90vh-70px)]">
-      <Card className="md:max-w-[375px] min-w-[calc(100%-2rem)] text-center">
+    <div className="mt-24 grid place-content-center md:mt-0 md:min-h-[calc(90vh-70px)]">
+      <Card className="min-w-[calc(100%-2rem)] text-center md:max-w-[375px]">
         <CardHeader>
           <CardTitle>
             <H2>Reset your password</H2>
@@ -117,15 +117,19 @@ const ResetPassport = () => {
         <CardContent>
           <Input
             type="email"
-            className="max-w-[275px] mx-auto"
+            className="mx-auto max-w-[275px]"
             placeholder="Enter your email"
             value={value}
             onChange={(e) => setValue(e.target.value)}
           />
         </CardContent>
         <CardFooter>
-          <div className="flex gap-2 justify-center w-full items-center">
-            <Button className='w-full' disabled={isLoading} onClick={handleSendOtp}>
+          <div className="flex w-full items-center justify-center gap-2">
+            <Button
+              className="w-full"
+              disabled={isLoading}
+              onClick={handleSendOtp}
+            >
               {isLoading ? 'Sending..' : 'Send'}
             </Button>
           </div>

@@ -20,13 +20,13 @@ type Props = {};
 const Navbar = ({}: Props) => {
   return (
     <div
-      className={`flex items-center justify-between p-3 shadow-sm h-[70px] border-b`}
+      className={`flex h-[70px] items-center justify-between border-b p-3 shadow-sm`}
     >
       <Link to={'/'}>
         <img src={'/logo.svg'} className="w-12 md:mx-2" loading="eager" />
       </Link>
 
-      <Searchbar className="md:flex hidden" />
+      <Searchbar className="hidden md:flex" />
       <NavExtras />
     </div>
   );

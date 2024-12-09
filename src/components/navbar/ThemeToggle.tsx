@@ -17,9 +17,9 @@ export function ThemeToggle() {
       <Tooltip>
         <TooltipTrigger asChild>
           <DropdownMenuTrigger className="rounded-full" asChild>
-            <Button className="w-10 h-10" variant="ghost">
-              <Sun className="w-10 h-10 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute w-10 h-10 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            <Button className="h-10 w-10" variant="ghost">
+              <Sun className="h-10 w-10 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+              <Moon className="absolute h-10 w-10 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
               <span className="sr-only">Toggle theme</span>
             </Button>
           </DropdownMenuTrigger>

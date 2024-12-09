@@ -11,7 +11,7 @@ import { useState, useEffect } from 'react';
 import { NavOption } from '../layout/Navbar';
 import { useNavigate } from 'react-router-dom';
 
-type Props = { options: NavOption[] }
+type Props = { options: NavOption[] };
 
 export default function CommandPallete({ options }: Props) {
   const navigate = useNavigate();
@@ -35,14 +35,14 @@ export default function CommandPallete({ options }: Props) {
   };
 
   return (
-    <div className="grid items-center h-[60px] w-[100%] md:min-w-[650px]">
+    <div className="grid h-[60px] w-[100%] items-center md:min-w-[650px]">
       <Button
         variant={'secondary'}
         onClick={() => setOpen(true)}
-        className="w-full md:[&_svg]:size-6 text-sm h-12 border flex items-center justify-between gap-3 cursor-pointer text-muted-foreground bg-card"
+        className="flex h-12 w-full cursor-pointer items-center justify-between gap-3 border bg-card text-sm text-muted-foreground md:[&_svg]:size-6"
       >
         <Search size={20} />
-        <kbd className="pointer-events-none p-3 bg-card inline-flex h-5 select-none items-center gap-1 rounded font-medium text-muted-foreground opacity-100 border">
+        <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-card p-3 font-medium text-muted-foreground opacity-100">
           <span>⌘</span>K
         </kbd>
       </Button>

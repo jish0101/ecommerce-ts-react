@@ -25,16 +25,16 @@ const NavExtras = ({ isSheet }: Props) => {
   }
 
   return (
-    <div className={isSheet ? 'h-[70px] flex items-center justify-center' : ''}>
+    <div className={isSheet ? 'flex h-[70px] items-center justify-center' : ''}>
       <div
-        className={`${isSheet ? 'flex flex-wrap' : 'md:flex hidden'} gap-1 justify-center items-center`}
+        className={`${isSheet ? 'flex flex-wrap' : 'hidden md:flex'} items-center justify-center gap-1`}
       >
         <Tooltip>
           <TooltipTrigger asChild>
             <Link
               className={cn(
                 buttonVariants({ variant: 'ghost' }),
-                'rounded-full w-10 h-10'
+                'h-10 w-10 rounded-full'
               )}
               to={'/cart'}
             >
@@ -51,7 +51,7 @@ const NavExtras = ({ isSheet }: Props) => {
               to={'/wishlist'}
               className={cn(
                 buttonVariants({ variant: 'ghost' }),
-                'rounded-full w-10 h-10'
+                'h-10 w-10 rounded-full'
               )}
             >
               <Heart />

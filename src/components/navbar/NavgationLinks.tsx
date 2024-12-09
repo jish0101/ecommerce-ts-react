@@ -25,14 +25,14 @@ const NavOptions = ({ navOptions }: Props) => {
               <NavigationMenuItem>
                 <NavigationMenuTrigger>{opt.label}</NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <div className="flex flex-col w-[200px] gap-3 p-4 md:w-[300px]">
+                  <div className="flex w-[200px] flex-col gap-3 p-4 md:w-[300px]">
                     {opt.listOptions.map((op) => (
                       <Link
-                        className={`${navigationMenuTriggerStyle()} h-auto flex-col max-w-fit`}
+                        className={`${navigationMenuTriggerStyle()} h-auto max-w-fit flex-col`}
                         key={op.href}
                         to={op.href}
                       >
-                        <div className="space-y-1 max-w-fit">
+                        <div className="max-w-fit space-y-1">
                           <span className="font-medium">{op.label}</span>
                           <MutedPara>{op.description}</MutedPara>
                         </div>

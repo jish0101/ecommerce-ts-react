@@ -111,8 +111,8 @@ function Login() {
 
   return (
     <main>
-      <div className="flex justify-center items-center p-2 md:min-h-[calc(90vh-70px)]">
-        <Card className="md:max-w-[375px] min-w-[calc(100%-2rem)]">
+      <div className="flex items-center justify-center p-2 md:min-h-[calc(90vh-70px)]">
+        <Card className="min-w-[calc(100%-2rem)] md:max-w-[375px]">
           <CardHeader>
             <CardTitle>
               <H2>Login</H2>
@@ -159,7 +159,7 @@ function Login() {
                           <Button
                             type="button"
                             variant={'link'}
-                            className="absolute top-0 right-0"
+                            className="absolute right-0 top-0"
                             onClick={handlePasswordView}
                           >
                             {inputType === 'password' ? <Eye /> : <EyeClosed />}
@@ -178,25 +178,25 @@ function Login() {
             </Form>
           </CardContent>
           <CardFooter className="flex-col">
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <P>Forgot password ?</P>
               <Link
                 to={'/auth/reset-password'}
                 className={cn(
                   buttonVariants({ variant: 'link' }),
-                  'p-0 text-xs font-semibold h-0'
+                  'h-0 p-0 text-xs font-semibold'
                 )}
               >
                 Reset your password
               </Link>
             </div>
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <P>Does not have an account ?</P>
               <Link
                 to={'/auth/signup'}
                 className={cn(
                   buttonVariants({ variant: 'link' }),
-                  'p-0 text-xs font-semibold h-0'
+                  'h-0 p-0 text-xs font-semibold'
                 )}
               >
                 Create a new account

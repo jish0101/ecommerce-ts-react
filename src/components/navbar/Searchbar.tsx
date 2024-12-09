@@ -17,11 +17,11 @@ const Searchbar = ({ className, ...restProps }: Props) => {
       <form onSubmit={handleSubmit}>
         <Input
           placeholder="Search your favorite clothings"
-          className="md:text-base rounded-full indent-2 lg:w-[650px] md:w-[450px] md:h-12 placeholder:text-base"
+          className="rounded-full indent-2 placeholder:text-base md:h-12 md:w-[450px] md:text-base lg:w-[650px]"
         />
         <Button
           type="submit"
-          className="flex md:[&_svg]:size-6 absolute h-full top-0 right-0 rounded-r-full rounded-l-none"
+          className="absolute right-0 top-0 flex h-full rounded-l-none rounded-r-full md:[&_svg]:size-6"
         >
           <Search />
         </Button>
