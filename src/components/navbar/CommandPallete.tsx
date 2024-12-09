@@ -35,7 +35,7 @@ export default function CommandPallete({ options }: Props) {
   };
 
   return (
-    <div className="grid h-[60px] w-[100%] items-center md:min-w-[650px]">
+    <div className="grid h-[60px] w-[calc(100%-45px)] items-center xl:w-[650px]">
       <Button
         variant={'secondary'}
         onClick={() => setOpen(true)}

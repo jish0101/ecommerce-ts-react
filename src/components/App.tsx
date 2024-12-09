@@ -2,8 +2,6 @@ import { lazy } from 'react';
 import CheckAuth from './auth/CheckAuth';
 import SuspenseWrapper from './SuspenseWrapper';
 import { Route, Routes } from 'react-router-dom';
-import { ErrorBoundary } from 'react-error-boundary';
-import ErrorFallBack, { errorResetHandler } from './ErrorFallback';
 
 function App() {
   const NotFound = lazy(() => import('./NotFound'));
@@ -22,10 +20,11 @@ function App() {
   const ProductPage = lazy(() => import('@/pages/ProductPage/ProductPage'));
 
   // Layout
-  const Dashboard = lazy(() => import('@/pages/Dashboard/Dashboard'));
   const DashboardLayout = lazy(
     () => import('@/pages/Dashboard/DashboardLayout')
   );
+  const Dashboard = lazy(() => import('@/pages/Dashboard/Dashboard'));
+  const DashboardUsersPage = lazy(() => import('@/pages/Dashboard/dashboard-pages/DashboardUsersPage'));
 
   // Settings
   const SettingsWrapper = lazy(
@@ -36,7 +35,6 @@ function App() {
   const UserProfile = lazy(() => import('@/pages/settings/user/UserProfile'));
 
   return (
-    <ErrorBoundary onReset={errorResetHandler} fallbackRender={ErrorFallBack}>
       <Routes>
         <Route element={<SuspenseWrapper />}>
           <Route element={<Layout />}>
@@ -71,6 +69,9 @@ function App() {
               <Route element={<SuspenseWrapper />}>
                 <Route path="dashboard" element={<Dashboard />} />
               </Route>
+              <Route element={<SuspenseWrapper />}>
+                <Route path="users" element={<DashboardUsersPage />} />
+              </Route>
             </Route>
           </Route>
         </Route>
@@ -99,7 +100,6 @@ function App() {
           </Route>
         </Route>
       </Routes>
-    </ErrorBoundary>
   );
 }
 

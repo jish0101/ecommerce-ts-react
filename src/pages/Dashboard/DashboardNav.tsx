@@ -24,15 +24,15 @@ const DashboardNav = ({}: Props) => {
 
   return (
     <nav
-      className={`flex h-[70px] items-center justify-between border-b p-3 shadow-sm`}
+      className={`flex gap-2 h-[70px] items-center justify-between border-b p-3 shadow-sm`}
     >
       <Button
         variant={'ghost'}
         onClick={toggleSidebar}
         size={'icon'}
-        className="flex rounded-full md:h-[50px] md:w-[50px] md:[&_svg]:size-6"
+        className="flex rounded-full w-[45px] h-[45px] aspect-[1] md:[&_svg]:size-5"
       >
-        <Menu size={80} />
+        <Menu />
       </Button>
 
       <CommandPallete options={DASHBOARD_OPTIONS} />
