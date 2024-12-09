@@ -1,6 +1,3 @@
-import React, { useEffect } from 'react';
-import { Search } from 'lucide-react';
-
 import {
   CommandDialog,
   CommandGroup,
@@ -9,13 +6,16 @@ import {
   CommandList
 } from '@/components/ui/command';
 import { Button } from '../ui/button';
-import { useNavigate } from 'react-router-dom';
-import {} from '@/pages/Dashboard/DashboardLayout';
+import { Search } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import { NavOption } from '../layout/Navbar';
+import { useNavigate } from 'react-router-dom';
 
-export default function CommandPallete({ options }: { options: NavOption[] }) {
+type Props = { options: NavOption[] }
+
+export default function CommandPallete({ options }: Props) {
   const navigate = useNavigate();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -35,7 +35,7 @@ export default function CommandPallete({ options }: { options: NavOption[] }) {
   };
 
   return (
-    <div className="grid items-center h-[60px] min-w-[150px] md:min-w-[650px]">
+    <div className="grid items-center h-[60px] w-[100%] md:min-w-[650px]">
       <Button
         variant={'secondary'}
         onClick={() => setOpen(true)}

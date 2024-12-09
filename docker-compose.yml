@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: crown-clothing:0.0.1.RELEASE
+    container_name: cc-client
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - .env:/app/.env
+    ports:
+      - "8080:80"
