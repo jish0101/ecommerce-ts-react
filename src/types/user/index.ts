@@ -8,3 +8,16 @@ export type PayloadUser = {
   userType: 'jwt' | 'google';
   accessToken: string;
 };
+
+export type User = {
+  _id: string;
+  userName: string;
+  email: string;
+  isVerified: boolean;
+  role: 'ADMIN' | 'USER';
+  createdAt: string;
+  updatedAt: string;
+  profileImage: string;
+  fullName: string;
+  userType: 'jwt' | 'google';
+};

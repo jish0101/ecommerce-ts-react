@@ -8,17 +8,22 @@ import { TooltipProvider } from './components/ui/tooltip';
 import { ThemeProvider } from './components/theme-provider';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallBack, { errorResetHandler } from './components/ErrorFallback';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+const client = new QueryClient();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ErrorBoundary onReset={errorResetHandler} fallbackRender={ErrorFallBack}>
       <BrowserRouter>
-        <TooltipProvider>
-          <ThemeProvider>
-            <Toaster />
-            <App />
-          </ThemeProvider>
-        </TooltipProvider>
+        <QueryClientProvider client={client}>
+          <TooltipProvider>
+            <ThemeProvider>
+              <Toaster />
+              <App />
+            </ThemeProvider>
+          </TooltipProvider>
+        </QueryClientProvider>
       </BrowserRouter>
     </ErrorBoundary>
   </StrictMode>

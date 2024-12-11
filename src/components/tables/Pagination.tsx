@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 import {
   Pagination,
   PaginationContent,
   PaginationItem,
   PaginationLink,
   PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
+  PaginationPrevious
+} from '@/components/ui/pagination';
 
 type PaginationProps = {
   total: number;
@@ -19,10 +19,9 @@ const TablePagination: React.FC<PaginationProps> = ({
   currentPage,
   pageSize,
   total,
-  onPageChange,
+  onPageChange
 }) => {
   const totalPages = Math.ceil(total / pageSize);
-  const maxPageButtons = 4;
 
   const handlePrevious = () => {
     if (currentPage > 1) {
@@ -44,10 +43,12 @@ const TablePagination: React.FC<PaginationProps> = ({
 
   const renderPageLinks = () => {
     const pages = [];
-    let startPage = Math.max(1, currentPage - Math.floor(maxPageButtons / 2));
-    let endPage = Math.min(totalPages, startPage + maxPageButtons - 1);
+    const maxPageButtons = 3;
 
-    // Adjust startPage if endPage exceeds totalPages
+    // Ensure startPage and endPage align with the visible range
+    let startPage = Math.max(1, currentPage - Math.floor(maxPageButtons / 2));
+    let endPage = startPage + maxPageButtons - 1;
+
     if (endPage > totalPages) {
       endPage = totalPages;
       startPage = Math.max(1, endPage - maxPageButtons + 1);

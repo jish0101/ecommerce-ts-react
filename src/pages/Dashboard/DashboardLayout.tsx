@@ -57,7 +57,10 @@ const DashboardLayout = ({}: Props) => {
       <div className="flex flex-1 flex-col">
         <DashboardNav />
         {isLoading ? <Loader /> : null}
-        <ScrollArea type="scroll" className={`h-[calc(100vh-70px)] p-2 md:p-12`}>
+        <ScrollArea
+          type="scroll"
+          className={`h-[calc(100vh-70px)] p-2 md:p-12`}
+        >
           <Outlet />
         </ScrollArea>
       </div>

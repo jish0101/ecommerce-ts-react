@@ -3,16 +3,16 @@ import {
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
+  useReactTable
+} from '@tanstack/react-table';
 import {
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+  TableRow
+} from '@/components/ui/table';
 
 type DataTableProps<T> = {
   columns: ColumnDef<T>[];
@@ -25,12 +25,11 @@ const DataTable = <T extends unknown>({ columns, data }: DataTableProps<T>) => {
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    manualPagination: true,
+    manualPagination: true
   });
 
   return (
-    <div className="overflow-x-auto">
-      <div className="rounded-md border border-border-clr min-w-full">
+    <div className="border-border-clr rounded-md border overflow-x-auto mx-auto md:w-full">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -75,7 +74,6 @@ const DataTable = <T extends unknown>({ columns, data }: DataTableProps<T>) => {
           </TableBody>
         </Table>
       </div>
-    </div>
   );
 };
 

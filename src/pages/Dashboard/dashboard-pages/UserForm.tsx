@@ -1,9 +1,7 @@
-type Props = {}
+type Props = {};
 
 const UserForm = ({}: Props) => {
-  return (
-    <div>UserForm</div>
-  )
-}
+  return <div>UserForm</div>;
+};
 
-export default UserForm
+export default UserForm;
