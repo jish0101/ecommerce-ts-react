@@ -86,14 +86,14 @@ const DashboardContent = <T,>({
             <DialogTrigger
               className={cn(
                 buttonVariants({ variant: 'default' }),
-                'h-8 px-2 py-2 md:h-9 md:px-4 md:py-2'
+                'h-8 px-2 py-2 md:h-9 md:px-4 md:py-2 capitalize'
               )}
             >
               Create {title}
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Create a new {title}</DialogTitle>
+                <DialogTitle className='capitalize'>Create a new {title}</DialogTitle>
                 <DialogDescription>Fill in all details</DialogDescription>
               </DialogHeader>
               {form}
@@ -103,7 +103,7 @@ const DashboardContent = <T,>({
 
         <CardContent className={'py-0 md:py-0'}>
           <DataTable data={data ? data.data : []} columns={columns} />
-          <div className="mt-4 flex justify-center md:justify-end md:p-2">
+          <div className="my-4 flex justify-center md:justify-end md:p-2">
             <TablePagination
               currentPage={pagination.page}
               onPageChange={pageChangeHandler}

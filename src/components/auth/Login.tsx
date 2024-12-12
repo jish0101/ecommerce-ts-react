@@ -56,8 +56,8 @@ function Login() {
   const [inputType, setInputType] = useState<'password' | 'text'>('password');
 
   const form = useForm({
-    resolver: zodResolver(formSchema),
-    defaultValues
+    defaultValues,
+    resolver: zodResolver(formSchema)
   });
 
   const handlePasswordView = () => {
@@ -162,7 +162,7 @@ function Login() {
                             className="absolute right-0 top-0"
                             onClick={handlePasswordView}
                           >
-                            {inputType === 'password' ? <Eye /> : <EyeClosed />}
+                            {inputType === 'password' ? <EyeClosed /> : <Eye />}
                           </Button>
                         </div>
                       </FormControl>

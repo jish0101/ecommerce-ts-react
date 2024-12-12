@@ -3,13 +3,13 @@ import { create } from 'zustand';
 type ModalState = {
   isOpen: boolean;
   payload: any;
-  toggleModal: () => void;
+  toggleModal: (payload?: any) => void;
 };
 
 const useModal = create<ModalState>((set) => ({
-  isOpen: true,
+  isOpen: false,
   payload: null,
-  toggleModal: () => set((state) => ({ ...state, isOpen: !state.isOpen }))
+  toggleModal: (payload?: any) => set((state) => ({ ...state, isOpen: !state.isOpen, payload: payload ?? null }))
 }));
 
 export default useModal;

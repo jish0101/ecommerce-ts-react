@@ -223,7 +223,7 @@ function Signup() {
                             className="absolute right-0 top-0"
                             onClick={handlePasswordView}
                           >
-                            {inputType === 'password' ? <Eye /> : <EyeClosed />}
+                            {inputType === 'password' ? <EyeClosed /> : <Eye />}
                           </Button>
                         </div>
                       </FormControl>
@@ -233,7 +233,7 @@ function Signup() {
                 />
 
                 <Button disabled={isLoading} type="submit" className="w-full">
-                  {isLoading ? 'Wait..' : 'Sign up'}
+                  {isLoading ? 'Signing up..' : 'Sign up'}
                 </Button>
               </form>
             </Form>

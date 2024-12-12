@@ -29,7 +29,10 @@ const useGetQuery = <T>(options: UseDataQueryOptions) => {
 
   async function getData(): Promise<AxiosResponse<T>['data']> {
     const response = (await axiosPrivate.get(endpoint, {
-      params: pagination
+      params: {
+        page: pagination.page,
+        limit: pagination.pageSize
+      },
     })) as AxiosResponse<T>;
 
     if (!response) {

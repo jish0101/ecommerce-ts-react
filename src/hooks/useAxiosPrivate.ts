@@ -1,6 +1,6 @@
+import { useEffect } from 'react';
 import axiosInstance from '@/api/axios';
 import useUserState from '@/store/user/useUserState';
-import { useEffect } from 'react';
 
 const useAxiosPrivate = () => {
   const user = useUserState((state) => state.user);

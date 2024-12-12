@@ -7,8 +7,8 @@ import {
   DialogTrigger
 } from '@/components/ui/dialog';
 import { cn } from '@/lib/utils';
-import UserForm from './UserForm';
 import { User } from '@/types/user';
+import ProductForm from './ProductForm';
 import P from '@/components/typography/P';
 import { Edit, Trash } from 'lucide-react';
 import useModal from '@/store/modal/useModal';
@@ -18,10 +18,10 @@ import { Button, buttonVariants } from '@/components/ui/button';
 
 type Props = {};
 
-const DashboardUsersPage = ({}: Props) => {
+const DashboardProductPage = ({}: Props) => {
   const { isOpen, toggleModal } = useModal();
 
-  const userColumns: ColumnDef<User>[] = [
+  const productColumns: ColumnDef<User>[] = [
     {
       accessorKey: '_id',
       header: 'ID',
@@ -111,13 +111,12 @@ const DashboardUsersPage = ({}: Props) => {
 
   return (
     <DashboardContent
-      title="User"
-      queryKey={'users'}
-      form={<UserForm />}
-      columns={userColumns}
-      endpoint="/api/users/get"
+      title="Product"
+      queryKey={'products'}
+      form={<ProductForm />}
+      columns={productColumns}
+      endpoint="/api/products/get"
     />
   );
 };
-
-export default DashboardUsersPage;
+export default DashboardProductPage

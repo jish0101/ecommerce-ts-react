@@ -19,13 +19,16 @@ function App() {
   const HomePage = lazy(() => import('@/pages/HomePage/HomePage'));
   const ProductPage = lazy(() => import('@/pages/ProductPage/ProductPage'));
 
-  // Layout
+  // Dashboard
   const DashboardLayout = lazy(
     () => import('@/pages/Dashboard/DashboardLayout')
   );
   const Dashboard = lazy(() => import('@/pages/Dashboard/Dashboard'));
   const DashboardUsersPage = lazy(
     () => import('@/pages/Dashboard/dashboard-pages/user/DashboardUsersPage')
+  );
+  const DashboardProductPage = lazy(
+    () => import('@/pages/Dashboard/dashboard-pages/product/DashboardProductPage')
   );
 
   // Settings
@@ -73,6 +76,9 @@ function App() {
             </Route>
             <Route element={<SuspenseWrapper />}>
               <Route path="users" element={<DashboardUsersPage />} />
+            </Route>
+            <Route element={<SuspenseWrapper />}>
+              <Route path="products" element={<DashboardProductPage />} />
             </Route>
           </Route>
         </Route>
