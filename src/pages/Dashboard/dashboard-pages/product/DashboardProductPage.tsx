@@ -98,7 +98,7 @@ const DashboardProductPage = ({}: Props) => {
                 <DialogTitle>Update user</DialogTitle>
                 <DialogDescription>Fill in all details</DialogDescription>
               </DialogHeader>
-              <UserForm />
+              <ProductForm />
             </DialogContent>
           </Dialog>
           <Button size={"icon"} className="[&_svg]:size-5 rounded-full" variant={'destructive'}>
