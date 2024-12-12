@@ -24,7 +24,9 @@ function App() {
     () => import('@/pages/Dashboard/DashboardLayout')
   );
   const Dashboard = lazy(() => import('@/pages/Dashboard/Dashboard'));
-  const DashboardUsersPage = lazy(() => import('@/pages/Dashboard/dashboard-pages/DashboardUsersPage'));
+  const DashboardUsersPage = lazy(
+    () => import('@/pages/Dashboard/dashboard-pages/user/DashboardUsersPage')
+  );
 
   // Settings
   const SettingsWrapper = lazy(
@@ -35,71 +37,71 @@ function App() {
   const UserProfile = lazy(() => import('@/pages/settings/user/UserProfile'));
 
   return (
-      <Routes>
-        <Route element={<SuspenseWrapper />}>
-          <Route element={<Layout />}>
-            {/* PUBLIC ROUTES */}
-            <Route element={<CheckAuth roles={['ADMIN', 'USER']} />}>
-              <Route element={<SuspenseWrapper />}>
-                <Route path="/" element={<HomePage />} />
-              </Route>
-              <Route element={<SuspenseWrapper />}>
-                <Route path="/products" element={<ProductPage />} />
-              </Route>
+    <Routes>
+      <Route element={<SuspenseWrapper />}>
+        <Route element={<Layout />}>
+          {/* PUBLIC ROUTES */}
+          <Route element={<CheckAuth roles={['ADMIN', 'USER']} />}>
+            <Route element={<SuspenseWrapper />}>
+              <Route path="/" element={<HomePage />} />
+            </Route>
+            <Route element={<SuspenseWrapper />}>
+              <Route path="/products" element={<ProductPage />} />
+            </Route>
 
-              {/* SETTINGS ROUTES */}
-              <Route path="/settings" element={<SettingsWrapper />}>
-                <Route index element={<Settings />} />
-                <Route path=":subSettings" element={<Settings />} />
-                <Route element={<SuspenseWrapper />}>
-                  <Route path="user/profile" element={<UserProfile />} />
-                </Route>
-                <Route element={<SuspenseWrapper />}>
-                  <Route path="user/orders" element={<Orders />} />
-                </Route>
+            {/* SETTINGS ROUTES */}
+            <Route path="/settings" element={<SettingsWrapper />}>
+              <Route index element={<Settings />} />
+              <Route path=":subSettings" element={<Settings />} />
+              <Route element={<SuspenseWrapper />}>
+                <Route path="user/profile" element={<UserProfile />} />
+              </Route>
+              <Route element={<SuspenseWrapper />}>
+                <Route path="user/orders" element={<Orders />} />
               </Route>
             </Route>
           </Route>
         </Route>
+      </Route>
 
-        {/* ADMIN ROUTES */}
-        <Route element={<SuspenseWrapper />}>
-          <Route element={<DashboardLayout />}>
-            <Route path="/admin" element={<CheckAuth roles={['ADMIN']} />}>
-              <Route element={<SuspenseWrapper />}>
-                <Route path="dashboard" element={<Dashboard />} />
-              </Route>
-              <Route element={<SuspenseWrapper />}>
-                <Route path="users" element={<DashboardUsersPage />} />
-              </Route>
+      {/* ADMIN ROUTES */}
+      <Route element={<SuspenseWrapper />}>
+        <Route element={<DashboardLayout />}>
+          <Route path="/admin" element={<CheckAuth roles={['ADMIN']} />}>
+            <Route element={<SuspenseWrapper />}>
+              <Route path="dashboard" element={<Dashboard />} />
+            </Route>
+            <Route element={<SuspenseWrapper />}>
+              <Route path="users" element={<DashboardUsersPage />} />
             </Route>
           </Route>
         </Route>
+      </Route>
 
-        {/* AUTH ROUTES */}
-        <Route element={<SuspenseWrapper />}>
-          <Route element={<AuthLayout />}>
-            <Route element={<SuspenseWrapper />}>
-              <Route path="/auth/login" element={<Login />} />
-            </Route>
-            <Route element={<SuspenseWrapper />}>
-              <Route path="/auth/signup" element={<Signup />} />
-            </Route>
-            <Route element={<SuspenseWrapper />}>
-              <Route path="/auth/verify-user" element={<VerifyUser />} />
-            </Route>
-            <Route element={<SuspenseWrapper />}>
-              <Route path="/auth/reset-password" element={<ResetPassport />} />
-            </Route>
-            <Route element={<SuspenseWrapper />}>
-              <Route path="/auth/unauthorised" element={<UnAuthorised />} />
-            </Route>
-            <Route element={<SuspenseWrapper />}>
-              <Route path="*" element={<NotFound />} />
-            </Route>
+      {/* AUTH ROUTES */}
+      <Route element={<SuspenseWrapper />}>
+        <Route element={<AuthLayout />}>
+          <Route element={<SuspenseWrapper />}>
+            <Route path="/auth/login" element={<Login />} />
+          </Route>
+          <Route element={<SuspenseWrapper />}>
+            <Route path="/auth/signup" element={<Signup />} />
+          </Route>
+          <Route element={<SuspenseWrapper />}>
+            <Route path="/auth/verify-user" element={<VerifyUser />} />
+          </Route>
+          <Route element={<SuspenseWrapper />}>
+            <Route path="/auth/reset-password" element={<ResetPassport />} />
+          </Route>
+          <Route element={<SuspenseWrapper />}>
+            <Route path="/auth/unauthorised" element={<UnAuthorised />} />
+          </Route>
+          <Route element={<SuspenseWrapper />}>
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Route>
-      </Routes>
+      </Route>
+    </Routes>
   );
 }
 

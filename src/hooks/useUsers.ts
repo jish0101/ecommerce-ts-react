@@ -6,7 +6,7 @@ const useUsers = (pagination: Pagination) => {
   return useGetQuery<GetResponse<User>>({
     endpoint: '/api/users/get',
     pagination,
-    queryKey: 'users',
+    queryKey: 'users'
   });
 };
 

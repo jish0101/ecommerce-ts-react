@@ -14,21 +14,23 @@ type UseDataQueryOptions = {
   queryKey: string;
 };
 
-const useGetQuery = <T,>(options: UseDataQueryOptions) => {
-    const axiosPrivate = useAxiosPrivate();
-    const { endpoint, pagination, queryKey } = options;
+const useGetQuery = <T>(options: UseDataQueryOptions) => {
+  const axiosPrivate = useAxiosPrivate();
+  const { endpoint, pagination, queryKey } = options;
 
   const { data, isLoading, isError, error } = useQuery(
     [queryKey, pagination],
     getData,
     {
       staleTime: Infinity,
-      retry: 1,
+      retry: 1
     }
   );
 
   async function getData(): Promise<AxiosResponse<T>['data']> {
-    const response = (await axiosPrivate.get(endpoint, { params: pagination })) as AxiosResponse<T>;
+    const response = (await axiosPrivate.get(endpoint, {
+      params: pagination
+    })) as AxiosResponse<T>;
 
     if (!response) {
       throw new Error('Failed to fetch data');
@@ -47,7 +49,7 @@ const useGetQuery = <T,>(options: UseDataQueryOptions) => {
     data,
     isLoading,
     isError,
-    error: error as any,
+    error: error as any
   };
 };
 
