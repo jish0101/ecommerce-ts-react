@@ -23,22 +23,28 @@ export const asyncWrapper = async <T>(
   }
 };
 
-export const removeFields = (key: string, obj: Record<any, any>): Record<any, any> => {
-  return Object.entries(obj).reduce((acc, [k, v]) => {
-    if (k !== key) {
-      acc[k] = v;
-    }
-    return acc;
-  }, {} as Record<any, any>);
+export const removeFields = (
+  key: string,
+  obj: Record<any, any>
+): Record<any, any> => {
+  return Object.entries(obj).reduce(
+    (acc, [k, v]) => {
+      if (k !== key) {
+        acc[k] = v;
+      }
+      return acc;
+    },
+    {} as Record<any, any>
+  );
 };
 
 export const isImageValid = (images: File[], size: number) => {
   let isValid = true;
-  
-  images.forEach(image => {
+
+  images.forEach((image) => {
     if (image.size <= size) return;
     isValid = false;
-  })
+  });
 
   return isValid;
-}
+};

@@ -17,7 +17,9 @@ import {
 import FilesInput from '@/components/ui/filesInput';
 import { createProduct } from '@/api/product';
 import { useEffect, useState } from 'react';
-import { isImageValid } from '@/lib/utils';
+import { cn, isImageValid } from '@/lib/utils';
+import { CircleX } from 'lucide-react';
+import FileInputImage from '@/components/ui/FileInputImage';
 
 type Props = {};
 
@@ -58,7 +60,7 @@ const ProductForm = ({}: Props) => {
   });
 
   const [images, setImages] = useState<Record<string, File>>({});
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   const form = useForm({
     defaultValues,
@@ -66,10 +68,13 @@ const ProductForm = ({}: Props) => {
   });
 
   function validateImages(images: Record<string, File>) {
-    const results = isImageValid(Object.values(images).map(f => f), 1024 * 1024 * 20);
+    const results = isImageValid(
+      Object.values(images).map((f) => f),
+      1024 * 1024 * 20
+    );
 
     if (!results && Object.values(images).length > 0) {
-      setError("Max image size allowed is 2 megabytes")
+      setError('Max image size allowed is 2 megabytes');
       return false;
     }
     return true;
@@ -79,15 +84,14 @@ const ProductForm = ({}: Props) => {
     const result = validateImages(files);
 
     if (!result) {
-      setError("Max image size allowed is 2 megabytes");
+      setError('Max image size allowed is 2 megabytes');
     } else {
-      setError("")
+      setError('');
     }
 
     setImages(files);
-
   }
-  
+
   function renderInput() {
     return Object.keys(defaultValues).map((key) => (
       <FormField
@@ -102,7 +106,7 @@ const ProductForm = ({}: Props) => {
                   type={'text'}
                   placeholder={`Enter ${field.name}`}
                   {...field}
-                  />
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -111,7 +115,7 @@ const ProductForm = ({}: Props) => {
       />
     ));
   }
-  
+
   const submitHandler: SubmitHandler<FormBody> = async (body) => {
     if (error) return;
 
@@ -120,10 +124,10 @@ const ProductForm = ({}: Props) => {
 
     Object.entries(body).forEach(([key, value]) => {
       formData.append(key, value.toString());
-    })
-    
+    });
+
     files.forEach((file) => {
-      formData.append("productImages", file);
+      formData.append('productImages', file);
     });
 
     const response = await createProductAsync(formData);
@@ -154,7 +158,7 @@ const ProductForm = ({}: Props) => {
 
   useEffect(() => {
     validateImages(images);
-  }, [images])
+  }, [images]);
 
   return (
     <Form {...form}>
@@ -162,15 +166,19 @@ const ProductForm = ({}: Props) => {
         className="flex flex-wrap gap-4"
         onSubmit={form.handleSubmit(submitHandler)}
       >
-        {renderInput()}
-
-        <div className="flex min-h-[200px] w-full min-w-[100%] max-w-[300px]">
+        <div className="grid grid-cols-2 gap-2">{renderInput()}</div>
+        <div className="flex flex-col min-h-[100px] w-full min-w-[100%] max-w-[300px] md:min-h-[200px]">
           <FilesInput
             maxFiles={4}
             error={error}
             inputState={images}
-            accepts={{'image/*': []}}
-            inputChangeHandler={imageHandler} />
+            accepts={{ 'image/*': [] }}
+            inputChangeHandler={imageHandler}
+          />
+          <FileInputImage
+            inputState={images}
+            inputChangeHandler={imageHandler}
+          />
         </div>
         <div className="flex w-full items-center justify-center">
           <Button disabled={isLoading}>
