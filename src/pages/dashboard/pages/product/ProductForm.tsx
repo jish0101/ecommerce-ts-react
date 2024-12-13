@@ -17,8 +17,7 @@ import {
 import FilesInput from '@/components/ui/filesInput';
 import { createProduct } from '@/api/product';
 import { useEffect, useState } from 'react';
-import { cn, isImageValid } from '@/lib/utils';
-import { CircleX } from 'lucide-react';
+import { isImageValid } from '@/lib/utils';
 import FileInputImage from '@/components/ui/FileInputImage';
 
 type Props = {};
