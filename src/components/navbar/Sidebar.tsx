@@ -48,7 +48,7 @@ const SidebarComponent = ({ options, FooterContent }: Props) => {
                       asChild
                       size={'lg'}
                       isActive={option.href === location.pathname}
-                      className="mx-2 rounded-l-full hover:bg-accent data-[active=true]:bg-primary dark:data-[active=true]:text-neutral-900 data-[active=true]:text-neutral-100"
+                      className="mx-2 rounded-l-full hover:bg-accent data-[active=true]:bg-primary data-[active=true]:text-neutral-100 dark:data-[active=true]:text-neutral-900"
                     >
                       <Link to={option.href}>
                         <div className="flex items-center space-x-2 px-2">
@@ -85,7 +85,7 @@ const SidebarComponent = ({ options, FooterContent }: Props) => {
                                   asChild
                                   size={'lg'}
                                   tooltip={op.label}
-                                  className="hover:bg-accent data-[active=true]:bg-primary dark:data-[active=true]:text-neutral-900 data-[active=true]:text-neutral-100"
+                                  className="hover:bg-accent data-[active=true]:bg-primary data-[active=true]:text-neutral-100 dark:data-[active=true]:text-neutral-900"
                                   isActive={op.href === location.pathname}
                                 >
                                   <Link to={op.href}>

@@ -119,91 +119,85 @@ const UserForm = ({}: Props) => {
   };
 
   return (
-    <div>
-      <Form {...form}>
-        <form className="space-y-4" onSubmit={form.handleSubmit(submitHandler)}>
-          <FormField
-            name="firstName"
-            control={form.control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>First Name</FormLabel>
-                <FormControl>
+    <Form {...form}>
+      <form className="space-y-4" onSubmit={form.handleSubmit(submitHandler)}>
+        <FormField
+          name="firstName"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>First Name</FormLabel>
+              <FormControl>
+                <Input type="text" placeholder="Enter first name" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          name="lastName"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Last Name</FormLabel>
+              <FormControl>
+                <Input type="text" placeholder="Enter last name" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          name="email"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input type="email" placeholder="Enter an email" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          name="password"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <div className="relative">
                   <Input
-                    type="text"
-                    placeholder="Enter first name"
+                    type={inputType}
+                    placeholder="Enter a password"
                     {...field}
                   />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                  <Button
+                    type="button"
+                    variant={'link'}
+                    className="absolute right-0 top-0"
+                    onClick={handlePasswordView}
+                  >
+                    {inputType === 'password' ? <EyeClosed /> : <Eye />}
+                  </Button>
+                </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-          <FormField
-            name="lastName"
-            control={form.control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Last Name</FormLabel>
-                <FormControl>
-                  <Input type="text" placeholder="Enter last name" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            name="email"
-            control={form.control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input type="email" placeholder="Enter an email" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            name="password"
-            control={form.control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <div className="relative">
-                    <Input
-                      type={inputType}
-                      placeholder="Enter a password"
-                      {...field}
-                    />
-                    <Button
-                      type="button"
-                      variant={'link'}
-                      className="absolute right-0 top-0"
-                      onClick={handlePasswordView}
-                    >
-                      {inputType === 'password' ? <EyeClosed /> : <Eye />}
-                    </Button>
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <div className="flex w-full items-center justify-center">
-            <Button disabled={isLoading}>
-              {isLoading ? 'Submitting..' : 'Submit'}
-            </Button>
-          </div>
-        </form>
-      </Form>
-    </div>
+        <div className="flex w-full items-center justify-center">
+          <Button disabled={isLoading}>
+            {isLoading ? 'Submitting..' : 'Submit'}
+          </Button>
+        </div>
+      </form>
+    </Form>
   );
 };
 

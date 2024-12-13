@@ -55,7 +55,9 @@ const DashboardProductPage = ({}: Props) => {
       header: 'Verified',
       cell: (info) =>
         info.getValue() ? (
-          <P className="bg-primary flex w-fit items-center justify-center rounded-full px-3 font-medium uppercase text-background">Yes</P>
+          <P className="flex w-fit items-center justify-center rounded-full bg-primary px-3 font-medium uppercase text-background">
+            Yes
+          </P>
         ) : (
           <P className="flex w-fit items-center justify-center rounded-full bg-destructive px-3 font-medium uppercase text-background">
             No
@@ -84,11 +86,14 @@ const DashboardProductPage = ({}: Props) => {
       header: 'Actions',
       cell: (info) => (
         <div className="flex space-x-2">
-          <Dialog onOpenChange={() => toggleModal(info.row.original)} open={isOpen}>
+          <Dialog
+            onOpenChange={() => toggleModal(info.row.original)}
+            open={isOpen}
+          >
             <DialogTrigger
               className={cn(
                 buttonVariants({ variant: 'default', size: 'icon' }),
-                '[&_svg]:size-5 rounded-full'
+                'rounded-full [&_svg]:size-5'
               )}
             >
               <Edit />
@@ -101,7 +106,11 @@ const DashboardProductPage = ({}: Props) => {
               <ProductForm />
             </DialogContent>
           </Dialog>
-          <Button size={"icon"} className="[&_svg]:size-5 rounded-full" variant={'destructive'}>
+          <Button
+            size={'icon'}
+            className="rounded-full [&_svg]:size-5"
+            variant={'destructive'}
+          >
             <Trash />
           </Button>
         </div>
@@ -119,4 +128,4 @@ const DashboardProductPage = ({}: Props) => {
     />
   );
 };
-export default DashboardProductPage
+export default DashboardProductPage;

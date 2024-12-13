@@ -86,14 +86,16 @@ const DashboardContent = <T,>({
             <DialogTrigger
               className={cn(
                 buttonVariants({ variant: 'default' }),
-                'h-8 px-2 py-2 md:h-9 md:px-4 md:py-2 capitalize'
+                'h-8 px-2 py-2 capitalize md:h-9 md:px-4 md:py-2'
               )}
             >
               Create {title}
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle className='capitalize'>Create a new {title}</DialogTitle>
+                <DialogTitle className="capitalize">
+                  Create a new {title}
+                </DialogTitle>
                 <DialogDescription>Fill in all details</DialogDescription>
               </DialogHeader>
               {form}

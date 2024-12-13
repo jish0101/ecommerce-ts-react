@@ -32,7 +32,7 @@ const useGetQuery = <T>(options: UseDataQueryOptions) => {
       params: {
         page: pagination.page,
         limit: pagination.pageSize
-      },
+      }
     })) as AxiosResponse<T>;
 
     if (!response) {

@@ -9,7 +9,12 @@ type ModalState = {
 const useModal = create<ModalState>((set) => ({
   isOpen: false,
   payload: null,
-  toggleModal: (payload?: any) => set((state) => ({ ...state, isOpen: !state.isOpen, payload: payload ?? null }))
+  toggleModal: (payload?: any) =>
+    set((state) => ({
+      ...state,
+      isOpen: !state.isOpen,
+      payload: payload ?? null
+    }))
 }));
 
 export default useModal;
