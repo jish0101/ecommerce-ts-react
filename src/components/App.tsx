@@ -16,20 +16,20 @@ function App() {
 
   // General
   const Layout = lazy(() => import('./layout/Layout'));
-  const HomePage = lazy(() => import('@/pages/home-page/HomePage'));
-  const ProductPage = lazy(() => import('@/pages/product-page/ProductPage'));
+  const HomePage = lazy(() => import('@/pages/home/HomePage'));
+  const ProductPage = lazy(() => import('@/pages/product/ProductPage'));
 
   // Dashboard
-  const DashboardLayout = lazy(() => import('@/pages/dashboard'));
-  const Dashboard = lazy(() => import('@/pages/dashboard/dashboard-pages'));
-  const DashboardUsersPage = lazy(() => import('@/pages/dashboard/dashboard-pages/user'));
-  const DashboardProductPage = lazy(() => import('@/pages/dashboard/dashboard-pages/product'));
+  const DashboardLayout = lazy(() => import('@/pages/dashboard-pages'));
+  const Dashboard = lazy(() => import('@/pages/dashboard-pages/pages'));
+  const DashboardUsersPage = lazy(() => import('@/pages/dashboard-pages/pages/user'));
+  const DashboardProductPage = lazy(() => import('@/pages/dashboard-pages/pages/product'));
 
   // Settings
-  const SettingsWrapper = lazy(() => import('@/pages/settings-page/SettingsWrapper'));
-  const Settings = lazy(() => import('@/pages/settings-page'));
-  const Orders = lazy(() => import('@/pages/settings-page/user/Orders'));
-  const UserProfile = lazy(() => import('@/pages/settings-page/user/UserProfile'));
+  const SettingsWrapper = lazy(() => import('@/pages/settings/SettingsWrapper'));
+  const Settings = lazy(() => import('@/pages/settings'));
+  const Orders = lazy(() => import('@/pages/settings/user/Orders'));
+  const UserProfile = lazy(() => import('@/pages/settings/user/UserProfile'));
 
   return (
     <Routes>
