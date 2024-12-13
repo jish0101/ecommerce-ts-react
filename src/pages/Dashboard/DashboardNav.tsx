@@ -5,7 +5,7 @@ import useUserState from '@/store/user/useUserState';
 import ThemeToggle from '@/components/navbar/ThemeToggle';
 import UserAvatar, { UserAvatarOptions } from '@/components/navbar/UserAvatar';
 import CommandPallete from '@/components/navbar/CommandPallete';
-import { DASHBOARD_OPTIONS } from './DashboardLayout';
+import { DASHBOARD_OPTIONS } from '.';
 
 type Props = {};
 
