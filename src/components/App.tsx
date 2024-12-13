@@ -20,10 +20,10 @@ function App() {
   const ProductPage = lazy(() => import('@/pages/product/ProductPage'));
 
   // Dashboard
-  const DashboardLayout = lazy(() => import('@/pages/dashboard-pages'));
-  const Dashboard = lazy(() => import('@/pages/dashboard-pages/pages'));
-  const DashboardUsersPage = lazy(() => import('@/pages/dashboard-pages/pages/user'));
-  const DashboardProductPage = lazy(() => import('@/pages/dashboard-pages/pages/product'));
+  const DashboardLayout = lazy(() => import('@/pages/dashboard'));
+  const Dashboard = lazy(() => import('@/pages/dashboard/pages'));
+  const DashboardUsersPage = lazy(() => import('@/pages/dashboard/pages/user'));
+  const DashboardProductPage = lazy(() => import('@/pages/dashboard/pages/product'));
 
   // Settings
   const SettingsWrapper = lazy(() => import('@/pages/settings/SettingsWrapper'));
