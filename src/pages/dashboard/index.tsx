@@ -59,7 +59,7 @@ const DashboardLayout = ({}: Props) => {
         {isLoading ? <Loader /> : null}
         <ScrollArea
           type="scroll"
-          className={`h-[calc(100vh-70px)] p-2 md:p-12`}
+          className={`h-[calc(100vh-70px)] p-2 md:p-10`}
         >
           <Outlet />
         </ScrollArea>

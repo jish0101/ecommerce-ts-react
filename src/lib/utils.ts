@@ -48,3 +48,14 @@ export const isImageValid = (images: File[], size: number) => {
 
   return isValid;
 };
+
+export const makeSelectOptions = <T>(
+  arr: T[],
+  label: keyof T,
+  value: keyof T
+) => {
+  return arr.map((a) => ({
+    label: a[label],
+    value: a[value]
+  }));
+};

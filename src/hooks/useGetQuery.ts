@@ -10,7 +10,7 @@ export type Pagination = {
 
 type UseDataQueryOptions = {
   endpoint: string;
-  pagination: Pagination;
+  pagination?: Pagination;
   queryKey: string;
 };
 
@@ -29,10 +29,12 @@ const useGetQuery = <T>(options: UseDataQueryOptions) => {
 
   async function getData(): Promise<AxiosResponse<T>['data']> {
     const response = (await axiosPrivate.get(endpoint, {
-      params: {
-        page: pagination.page,
-        limit: pagination.pageSize
-      }
+      params: pagination
+        ? {
+            page: pagination.page,
+            limit: pagination.pageSize
+          }
+        : undefined
     })) as AxiosResponse<T>;
 
     if (!response) {

@@ -11,7 +11,6 @@ import { cn } from '@/lib/utils';
 import Loader from '@/components/Loader';
 import { GetResponse } from '@/types/api';
 import { toast } from '@/hooks/use-toast';
-import H3 from '@/components/typography/H3';
 import useGetQuery from '@/hooks/useGetQuery';
 import { ColumnDef } from '@tanstack/react-table';
 import DataTable from '@/components/tables/DataTable';
@@ -20,6 +19,8 @@ import TablePagination from '@/components/tables/Pagination';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { useQueryClient } from 'react-query';
 import useModal from '@/store/modal/useModal';
+import H2 from '@/components/typography/H2';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 type Pagination = {
   page: number;
@@ -81,7 +82,7 @@ const DashboardContent = <T,>({
     <div className="flex flex-col">
       <Card>
         <CardHeader className="flex-row items-center justify-between">
-          <H3>{title}</H3>
+          <H2>{title}</H2>
           <Dialog onOpenChange={toggleModal} open={isOpen}>
             <DialogTrigger
               className={cn(
@@ -93,12 +94,16 @@ const DashboardContent = <T,>({
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle className="capitalize">
-                  Create a new {title}
+                <DialogTitle>
+                  <H2>
+                    Create <span className="lowercase">a new {title}</span>
+                  </H2>
                 </DialogTitle>
                 <DialogDescription>Fill in all details</DialogDescription>
               </DialogHeader>
-              {form}
+              <ScrollArea className="max-h-[calc(100vh-200px)]">
+                {form}
+              </ScrollArea>
             </DialogContent>
           </Dialog>
         </CardHeader>
