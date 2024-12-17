@@ -23,13 +23,13 @@ import useModal from '@/store/modal/useModal';
 type Props = {};
 
 const schema = z.object({
-  name: z.string().min(1, 'Name is required').max(100, "Max 100 chars allowed"),
+  name: z.string().min(1, 'Name is required').max(100, 'Max 100 chars allowed')
 });
 
 type FormBody = z.infer<typeof schema>;
 
 const defaultValues = {
-  name: '',
+  name: ''
 };
 
 const CategoryForm = ({}: Props) => {
@@ -37,11 +37,8 @@ const CategoryForm = ({}: Props) => {
   const axios = useAxiosPrivate();
   const { toggleModal } = useModal();
 
-  const {
-    isLoading,
-    mutateAsync: createCatAsync,
-  } = useMutation({
-    mutationKey: ["categories/all", "categories"],
+  const { isLoading, mutateAsync: createCatAsync } = useMutation({
+    mutationKey: ['categories/all', 'categories'],
     mutationFn: (payload: any) => createCategory(payload, axios)
   });
 
@@ -54,7 +51,7 @@ const CategoryForm = ({}: Props) => {
 
   const submitHandler: SubmitHandler<FormBody> = async (body) => {
     const result = await createCatAsync(body);
-    
+
     if (result instanceof AxiosError) {
       return toast({
         title: 'Info',
@@ -72,12 +69,12 @@ const CategoryForm = ({}: Props) => {
     const { status, message } = result;
 
     if (status === 200) {
-        toast({
-          title: 'Success',
-          description: message
-        });
+      toast({
+        title: 'Success',
+        description: message
+      });
       toggleModal();
-      return client.invalidateQueries(["categories/all", "categories"])
+      return client.invalidateQueries(['categories/all', 'categories']);
     } else {
       return toast({
         title: 'Info',
@@ -92,7 +89,7 @@ const CategoryForm = ({}: Props) => {
         className="flex flex-wrap gap-4 p-4 md:p-3"
         onSubmit={form.handleSubmit(submitHandler)}
       >
-        <div className="flex justify-center items-center w-full gap-2">
+        <div className="flex w-full items-center justify-center gap-2">
           {Object.keys(inputOptions).map((key) => {
             const currentOption = inputOptions[key as FieldPath<FormBody>];
 
@@ -133,4 +130,4 @@ const CategoryForm = ({}: Props) => {
   );
 };
 
-export default CategoryForm
+export default CategoryForm;

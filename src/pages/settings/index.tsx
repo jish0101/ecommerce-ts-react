@@ -6,7 +6,7 @@ const Settings = ({}: Props) => {
   const { subSettings } = useParams();
   return (
     <div>
-      Settings {subSettings}
+      Settings `&gt;` {subSettings}
       <Outlet />
     </div>
   );

@@ -29,6 +29,7 @@ const NavExtras = ({ isSheet }: Props) => {
       <div
         className={`${isSheet ? 'flex flex-wrap' : 'hidden md:flex'} items-center justify-center gap-1`}
       >
+        <ThemeToggle />
         <Tooltip>
           <TooltipTrigger asChild>
             <Link
@@ -61,9 +62,11 @@ const NavExtras = ({ isSheet }: Props) => {
             <p>Wishlist</p>
           </TooltipContent>
         </Tooltip>
-
-        <ThemeToggle />
-        <UserAvatar options={options} />
+        {!user ? (
+            <Link className={buttonVariants({variant: "ghost"})} to={'/auth/login'}>Login</Link>
+          ): (
+            <UserAvatar options={options} />
+          )}
       </div>
       <ChevronSidebarButton isSheet />
     </div>

@@ -2,12 +2,12 @@ import P from '@/components/typography/P';
 
 // type Props = {};
 
-const HomePage = () => {
+const Home = () => {
   return (
     <div className="h-[100vh]">
-      <P>HomePage</P>
+      <P></P>
     </div>
   );
 };
 
-export default HomePage;
+export default Home;

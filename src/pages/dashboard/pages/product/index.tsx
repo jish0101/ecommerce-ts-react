@@ -19,7 +19,6 @@ import CategoryForm from '../category/CategoryForm';
 import { Product } from '@/types/product';
 import H2 from '@/components/typography/H2';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import getEnv from '@/lib/envConfig';
 import { GetResponse } from '@/types/api';
 import useGetQuery from '@/hooks/useGetQuery';
 import Loader from '@/components/Loader';
@@ -30,26 +29,29 @@ type Props = {};
 type ToggleState = {
   open: boolean;
   payload: any;
-}
+};
 
 const DashboardProductPage = ({}: Props) => {
-  const [isEditModalOpen, setIsEditModalOpen] = useState<ToggleState>({open: false, payload: null})
+  const [isEditModalOpen, setIsEditModalOpen] = useState<ToggleState>({
+    open: false,
+    payload: null
+  });
 
   const { data, isLoading } = useGetQuery<GetResponse<Category>>({
-  endpoint: '/api/categories/get',
-  queryKey: 'categories/all'
-});
+    endpoint: '/api/categories/get',
+    queryKey: 'categories/all'
+  });
 
   const productColumns: ColumnDef<Product>[] = [
     {
       accessorKey: '_id',
       header: 'ID',
-      cell: (info) => info.getValue(),
+      cell: (info) => info.getValue()
     },
     {
       accessorKey: 'name',
       header: 'Name',
-      cell: (info) => info.getValue(),
+      cell: (info) => info.getValue()
     },
     {
       accessorKey: 'desc',
@@ -59,7 +61,7 @@ const DashboardProductPage = ({}: Props) => {
           <DialogTrigger
             className={cn(
               buttonVariants({ variant: 'default' }),
-              'capitalize rounded-full h-8 w-8 px-0 py-0 [&_svg]:size-5'
+              'h-8 w-8 rounded-full px-0 py-0 capitalize [&_svg]:size-5'
             )}
           >
             <Eye />
@@ -67,9 +69,7 @@ const DashboardProductPage = ({}: Props) => {
           <DialogContent className="sm:min-w-[400px] lg:min-w-fit">
             <DialogHeader>
               <DialogTitle>
-                <H2>
-                  Description
-                </H2>
+                <H2>Description</H2>
               </DialogTitle>
             </DialogHeader>
             <ScrollArea className="max-h-[calc(100vh-200px)]">
@@ -77,17 +77,17 @@ const DashboardProductPage = ({}: Props) => {
             </ScrollArea>
           </DialogContent>
         </Dialog>
-      ),
+      )
     },
     {
       accessorKey: 'price',
       header: 'Price',
-      cell: (info) => `$${info.getValue()}`,
+      cell: (info) => `$${info.getValue()}`
     },
     {
       accessorKey: 'stock',
       header: 'Stock',
-      cell: (info) => info.getValue(),
+      cell: (info) => info.getValue()
     },
     {
       accessorKey: 'imageLinks',
@@ -96,29 +96,28 @@ const DashboardProductPage = ({}: Props) => {
         const images = info.getValue() as string[];
         return (
           <div className="flex space-x-2">
-            {images.map((src, index) => (
+            {images && images.length ? (
               <img
-                key={index}
-                alt={`Image ${index + 1}`}
-                src={`${getEnv('VITE_APP_BASE_API')}${src}`}
+                alt={`Image`}
+                src={images.at(0)}
                 className="h-10 w-10 rounded-full"
               />
-            ))}
+            ) : null}
           </div>
         );
-      },
+      }
     },
     {
       accessorKey: 'createdAt',
       header: 'Created At',
       cell: (info) =>
-        new Date(info.getValue() as string).toLocaleDateString('en-US'),
+        new Date(info.getValue() as string).toLocaleDateString('en-US')
     },
     {
       accessorKey: 'updatedAt',
       header: 'Updated At',
       cell: (info) =>
-        new Date(info.getValue() as string).toLocaleDateString('en-US'),
+        new Date(info.getValue() as string).toLocaleDateString('en-US')
     },
     {
       accessorKey: 'actions',
@@ -126,7 +125,9 @@ const DashboardProductPage = ({}: Props) => {
       cell: (info) => (
         <div className="flex space-x-2">
           <Dialog
-            onOpenChange={(open) => setIsEditModalOpen({open, payload: info.row.original})}
+            onOpenChange={(open) =>
+              setIsEditModalOpen({ open, payload: info.row.original })
+            }
             open={isEditModalOpen.open}
           >
             <DialogTrigger
@@ -140,13 +141,16 @@ const DashboardProductPage = ({}: Props) => {
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>
-                  <H2>
-                    Update user
-                  </H2>
+                  <H2>Update product</H2>
                 </DialogTitle>
                 <DialogDescription>Fill in all details</DialogDescription>
               </DialogHeader>
-              {data ? <ProductForm categories={data} />: null}
+              {data ? (
+                <ProductForm
+                  defaultValues={isEditModalOpen.payload}
+                  categories={data}
+                />
+              ) : null}
             </DialogContent>
           </Dialog>
           <Button
@@ -181,14 +185,52 @@ const DashboardProductPage = ({}: Props) => {
     {
       accessorKey: 'updatedAt',
       header: 'Updated At',
-      cell: (info) => new Date(info.getValue() as string).toLocaleDateString('en-US')
+      cell: (info) =>
+        new Date(info.getValue() as string).toLocaleDateString('en-US')
     },
+    {
+      accessorKey: 'actions',
+      header: 'Actions',
+      cell: (info) => (
+        <div className="flex space-x-2">
+          <Dialog
+            onOpenChange={(open) =>
+              setIsEditModalOpen({ open, payload: info.row.original })
+            }
+            open={isEditModalOpen.open}
+          >
+            <DialogTrigger
+              className={cn(
+                buttonVariants({ variant: 'default', size: 'icon' }),
+                'rounded-full [&_svg]:size-5'
+              )}
+            >
+              <Edit />
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>
+                  <H2>Update Category</H2>
+                </DialogTitle>
+                <DialogDescription>Fill in all details</DialogDescription>
+              </DialogHeader>
+              <CategoryForm />
+            </DialogContent>
+          </Dialog>
+          <Button
+            size={'icon'}
+            className="rounded-full [&_svg]:size-5"
+            variant={'destructive'}
+          >
+            <Trash />
+          </Button>
+        </div>
+      )
+    }
   ];
 
   if (isLoading) {
-    return (
-      <Loader />
-    )
+    return <Loader />;
   }
 
   return (

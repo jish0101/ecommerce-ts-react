@@ -5,7 +5,7 @@ type Props = {};
 
 const AuthLayout = ({}: Props) => {
   return (
-    <main>
+    <main className='mx-auto'>
       <div
         className={`flex h-[50px] items-center justify-between p-3 md:h-[70px]`}
       >

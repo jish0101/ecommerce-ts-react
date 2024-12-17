@@ -50,10 +50,11 @@ export const isImageValid = (images: File[], size: number) => {
 };
 
 export const makeSelectOptions = <T>(
-  arr: T[],
   label: keyof T,
-  value: keyof T
+  value: keyof T,
+  arr?: T[]
 ) => {
+  if (!arr) return [];
   return arr.map((a) => ({
     label: a[label],
     value: a[value]

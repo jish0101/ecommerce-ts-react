@@ -55,7 +55,7 @@ const Layout = () => {
           options={NAV_LINKS}
           FooterContent={<NavExtras isSheet />}
         />
-        <div className="flex flex-1 flex-col">
+        <div className="flex-1 max-h-screen">
           {isLoading ? <Loader /> : null}
           <Navbar />
           <ScrollArea type="scroll" className={`h-[calc(100vh-70px)]`}>

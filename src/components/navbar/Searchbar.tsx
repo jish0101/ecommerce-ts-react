@@ -17,7 +17,7 @@ const Searchbar = ({ className, ...restProps }: Props) => {
       <form onSubmit={handleSubmit}>
         <Input
           placeholder="Search your favorite clothings"
-          className="rounded-full indent-2 placeholder:text-base md:h-12 md:w-[450px] md:text-base lg:w-[650px]"
+          className="rounded-full indent-2 placeholder:text-base md:h-12 md:w-[400px] md:text-base lg:w-[550px]"
         />
         <Button
           type="submit"

@@ -31,14 +31,19 @@ import { AxiosError } from 'axios';
 import { GetResponse } from '@/types/api';
 import { Category } from '@/types/category';
 import useModal from '@/store/modal/useModal';
+import { Product } from '@/types/product';
 
 type Props = {
-  categories?: GetResponse<Category>
+  defaultValues?: Product;
+  categories?: GetResponse<Category>;
 };
 
 const schema = z.object({
   name: z.string().min(1, 'Name is required'),
-  desc: z.string().min(1, 'Description is required').max(1000, "Max 1000 characters allowed"),
+  desc: z
+    .string()
+    .min(1, 'Description is required')
+    .max(1000, 'Max 1000 characters allowed'),
   price: z
     .string()
     .min(1, 'Price is required')
@@ -52,7 +57,7 @@ const schema = z.object({
 
 type FormBody = z.infer<typeof schema>;
 
-const defaultValues = {
+const defaultValuesFallback = {
   name: '',
   desc: '',
   category: '',
@@ -60,15 +65,12 @@ const defaultValues = {
   stock: ''
 };
 
-const ProductForm = ({categories}: Props) => {
+const ProductForm = ({ defaultValues, categories }: Props) => {
   const client = useQueryClient();
   const axios = useAxiosPrivate();
-  const {toggleModal} = useModal();
+  const { toggleModal } = useModal();
 
-  const {
-    mutateAsync: createProductAsync,
-    isLoading,
-  } = useMutation({
+  const { mutateAsync: createProductAsync, isLoading } = useMutation({
     mutationKey: 'products',
     mutationFn: (payload: any) => createProduct(payload, axios)
   });
@@ -76,13 +78,19 @@ const ProductForm = ({categories}: Props) => {
   const [error, setError] = useState('');
   const [images, setImages] = useState<Record<string, File>>({});
 
-  const categoryData = categories
-    ? makeSelectOptions(categories.data, 'name', '_id')
-    : [];
+  const categoryData = makeSelectOptions('name', '_id', categories?.data);
   const inputOptions = getProductInputOptions<FormBody>(categoryData);
 
   const form = useForm({
-    defaultValues,
+    defaultValues: !defaultValues
+      ? defaultValuesFallback
+      : {
+          name: defaultValues.name,
+          desc: defaultValues.desc,
+          category: defaultValues.category,
+          stock: defaultValues.stock ? String(defaultValues.stock) : '',
+          price: defaultValues.price ? String(defaultValues.price) : ''
+        },
     resolver: zodResolver(schema)
   });
 
@@ -149,7 +157,7 @@ const ProductForm = ({categories}: Props) => {
         description: message
       });
       toggleModal();
-      client.invalidateQueries("products")
+      client.invalidateQueries('products');
     } else {
       return toast({
         title: 'Info',
@@ -190,7 +198,7 @@ const ProductForm = ({categories}: Props) => {
                       </FormLabel>
                       {currentOption.options ? (
                         <Select
-                          disabled={categories === undefined ? true:false}
+                          disabled={categories === undefined ? true : false}
                           defaultValue={field.value}
                           onValueChange={field.onChange}
                         >

@@ -1,11 +1,9 @@
-version: '3.8'
-
 services:
   app:
     build:
       context: .
       dockerfile: Dockerfile
-    image: crown-clothing:0.0.1.RELEASE
+    image: crown-clothing-client:0.0.1.RELEASE
     container_name: cc-client
     environment:
       - NODE_ENV=production

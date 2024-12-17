@@ -187,7 +187,7 @@ function Login() {
                   'h-0 p-0 text-xs font-semibold'
                 )}
               >
-                Reset your password
+                Click here
               </Link>
             </div>
             <div className="flex items-center gap-2">
@@ -199,7 +199,7 @@ function Login() {
                   'h-0 p-0 text-xs font-semibold'
                 )}
               >
-                Create a new account
+                Click here
               </Link>
             </div>
           </CardFooter>
