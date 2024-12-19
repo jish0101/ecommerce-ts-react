@@ -1,10 +1,13 @@
 // type Props = {};
 
-import SubCategories from "@/components/home/categories/SubCategories";
+import { useParams } from "react-router-dom";
 
 const Product = () => {
+  const {id} = useParams();
+  console.log("🚀 ~ Product ~ id:", id)
+
   return <div className="h-[100vh]">
-    <SubCategories />
+    Product Page
   </div>;
 };
 

@@ -52,7 +52,7 @@ const SubCategories = () => {
   const data = formatCategories(response.data);
 
   return (
-    <div className="flex w-full items-center border py-2 md:px-10">
+    <div className="flex w-full items-center border-b py-1 md:px-10">
       <div className="w-fit flex gap-4 items-center">
         <H4>Explore by category</H4>
         <NavOptions navOptions={[{label: "All", href: `/products/all`}, ...Object.values(data)]} />

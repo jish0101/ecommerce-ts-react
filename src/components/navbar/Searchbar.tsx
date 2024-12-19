@@ -6,9 +6,10 @@ SheetTrigger,
 } from "@/components/ui/sheet";
 import { Input } from '../ui/input';
 import { Search } from 'lucide-react';
-import { Button } from '../ui/button';
+import { Button, buttonVariants } from '../ui/button';
 import { FormEvent } from 'react';
 import MutedPara from "../typography/MutedPara";
+import { cn } from "@/lib/utils";
 
 const Searchbar = () => {
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -18,10 +19,8 @@ const Searchbar = () => {
 
   return (
     <Sheet>
-      <SheetTrigger>
-        <Button variant={"ghost"} className="h-10 w-10 rounded-full">
-          <Search size={20} />
-        </Button>
+      <SheetTrigger className={cn(buttonVariants({ variant: 'ghost' }), 'h-10 w-10 rounded-full')}>
+        <Search size={20} />
       </SheetTrigger>
       <SheetContent className="w-[85%]">
         <SheetHeader>

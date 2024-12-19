@@ -17,7 +17,11 @@ function App() {
   // General
   const Layout = lazy(() => import('./layout/Layout'));
   const Home = lazy(() => import('@/pages/home'));
+
+  // Products
+  const ProductLayout = lazy(() => import('@/pages/product/Layout'));
   const Product = lazy(() => import('@/pages/product'));
+  const Products = lazy(() => import('@/pages/products'));
 
   // Dashboard
   const DashboardLayout = lazy(() => import('@/pages/dashboard'));
@@ -44,7 +48,10 @@ function App() {
             <Route path="/" element={<Home />} />
           </Route>
           <Route element={<SuspenseWrapper />}>
-            <Route path="/products" element={<Product />} />
+            <Route element={<ProductLayout />}>
+              <Route path="/products" element={<Products />} />
+              <Route path="/products/:id" element={<Product />} />
+            </Route>
           </Route>
 
           {/* SETTINGS ROUTES */}
