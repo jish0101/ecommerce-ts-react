@@ -14,35 +14,17 @@ export const NAV_LINKS: NavOption[] = [
     href: '/'
   },
   {
-    label: 'Category',
-    href: '/product-categories'
+    label: 'Products',
+    href: '/products'
   },
   {
-    label: 'Categories',
-    href: '',
-    listOptions: [
-      {
-        label: 'Categories',
-        href: '/product-categories1',
-        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.'
-      },
-      {
-        label: 'Categories',
-        href: '/product-categories2',
-        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.'
-      },
-      {
-        label: 'Categories',
-        href: '/product-categories3',
-        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.'
-      },
-      {
-        label: 'Categories',
-        href: '/product-categories4',
-        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.'
-      }
-    ]
-  }
+    label: 'Track order',
+    href: '/track-order',
+  },
+  {
+    label: 'Return order',
+    href: '/return-order',
+  },
 ];
 
 const Layout = () => {
@@ -55,9 +37,9 @@ const Layout = () => {
           options={NAV_LINKS}
           FooterContent={<NavExtras isSheet />}
         />
-        <div className="flex-1 max-h-screen">
+        <div className="max-h-screen flex-1">
           {isLoading ? <Loader /> : null}
-          <Navbar />
+          <Navbar options={NAV_LINKS} />
           <ScrollArea type="scroll" className={`h-[calc(100vh-70px)]`}>
             <Outlet />
             <Footer />

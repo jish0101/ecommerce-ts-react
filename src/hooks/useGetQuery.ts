@@ -8,7 +8,7 @@ export type Pagination = {
   total: number;
 };
 
-type UseDataQueryOptions = {
+export type UseDataQueryOptions = {
   endpoint: string;
   pagination?: Pagination;
   queryKey: string;

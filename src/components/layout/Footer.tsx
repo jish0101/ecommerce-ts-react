@@ -5,78 +5,80 @@ import Ul from '../typography/Ul';
 import Li from '../typography/Li';
 import H4 from '../typography/H4';
 
-type Option = {label: string; to: string};
+type Option = { label: string; to: string };
 
 const Footer = () => {
-
   const options: Record<string, Option[]> = {
     about: [
       {
-        label: "Contact us",
-        to: ""
+        label: 'Contact us',
+        to: ''
       },
       {
-        label: "About us",
-        to: ""
+        label: 'About us',
+        to: ''
       },
       {
-        label: "Careers",
-        to: ""
+        label: 'Careers',
+        to: ''
       },
       {
-        label: "FAQ",
-        to: ""
-      },
+        label: 'FAQ',
+        to: ''
+      }
     ],
     help: [
       {
-        label: "Terms of use",
-        to: ""
+        label: 'Terms of use',
+        to: ''
       },
       {
-        label: "Payments",
-        to: ""
+        label: 'Payments',
+        to: ''
       },
       {
-        label: "Shipping",
-        to: ""
+        label: 'Shipping',
+        to: ''
       },
       {
-        label: "Cancellation & Returns",
-        to: ""
-      },
+        label: 'Cancellation & Returns',
+        to: ''
+      }
     ]
-  }
+  };
 
-  return <div className={cn(`h-[200px] border-t px-8 shadow-sm`)}>
-    <div className='grid md:grid-cols-3 h-full items-center mx-auto'>
-      <div className='space-y-2 flex flex-col gap-2 sm:flex-row justify-center items-center min-h-[100px]'>
-        <Link to={'/'}>
-          <img src={'/logo.svg'} className="md:w-20" loading="eager" />
-        </Link>
-        <P className='mx-3 text-center sm:text-start text-sm md:text-base md:pt-[18px] leading-4'>
-          Crown Clothings <br /> Get your favourite clothings
-        </P>
-      </div>
-
-      {Object.keys(options).map(key => (
-        <div className='flex justify-center items-center' key={key}>
-          <Ul className='list-none ml-0 text-center sm:text-start w-[calc(100%-1rem)] sm:w-[300px]'>
-            <div className='w-full flex sm:justify-start justify-center'>
-              <H4 className='capitalize w-fit'>{key}</H4>
-            </div>
-            {options[key].map(option => (
-              <Li className={"text-primary underline-offset-4 hover:underline"} key={option.label}>
-                <Link to={option.to}>
-                  {option.label}
-                </Link>
-              </Li>
-            ))}
-          </Ul>
+  return (
+    <div className={cn(`h-[200px] border-t px-8 shadow-sm`)}>
+      <div className="mx-auto grid h-full items-center md:grid-cols-3">
+        <div className="flex min-h-[100px] flex-col items-center justify-center gap-2 space-y-2 sm:flex-row">
+          <Link to={'/'}>
+            <img src={'/logo.svg'} className="md:w-20" loading="eager" />
+          </Link>
+          <P className="mx-3 text-center text-sm leading-4 sm:text-start md:pt-[18px] md:text-base">
+            Crown Clothings <br /> Get your favourite clothings
+          </P>
         </div>
-      ))}
+
+        {Object.keys(options).map((key) => (
+          <div className="flex items-center justify-center" key={key}>
+            <Ul className="ml-0 w-[calc(100%-1rem)] list-none text-center sm:w-[300px] sm:text-start">
+              <div className="flex w-full justify-center sm:justify-start">
+                <H4 className="w-fit capitalize">{key}</H4>
+              </div>
+              {options[key].map((option) => (
+                <Li
+                  className={'text-primary underline-offset-4 hover:underline'}
+                  key={option.label}
+                >
+                  <Link to={option.to}>{option.label}</Link>
+                </Li>
+              ))}
+            </Ul>
+          </div>
+        ))}
+      </div>
     </div>
-  </div>;
+  );
 };
 
 export default Footer;

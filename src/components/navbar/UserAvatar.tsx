@@ -17,9 +17,14 @@ import { logout } from '@/api/auth';
 import { useToast } from '@/hooks/use-toast';
 import useLoader from '@/store/loader/useLoader';
 import useSheetState from '@/store/navbar/useSheetState';
-import { Settings, UserPen } from 'lucide-react';
+import { Heart, Settings, UserPen } from 'lucide-react';
 
 export const UserAvatarOptions = [
+  {
+    title: "Wishlist",
+    href: "/wishlist",
+    icon: <Heart size={18} />
+  },
   {
     title: 'Profile',
     href: '/settings/user/profile',
@@ -115,7 +120,7 @@ const UserAvatar = ({ options }: Props) => {
           </DropdownMenuTrigger>
         </TooltipTrigger>
         <TooltipContent>
-          <p>User Options</p>
+          <p>More Options</p>
         </TooltipContent>
       </Tooltip>
       <DropdownMenuContent align="end">

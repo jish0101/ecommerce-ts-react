@@ -4,9 +4,10 @@ import { buttonVariants } from '../ui/button';
 import ThemeToggle from './ThemeToggle';
 import useUserState from '@/store/user/useUserState';
 import ChevronSidebarButton from './ChevronSidebarButton';
-import { Heart, LayoutDashboard, ShoppingCart } from 'lucide-react';
+import { LayoutDashboard, ShoppingCart } from 'lucide-react';
 import UserAvatar, { UserAvatarOptions } from './UserAvatar';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
+import Searchbar from './Searchbar';
 
 type Props = {
   isSheet?: boolean;
@@ -27,8 +28,9 @@ const NavExtras = ({ isSheet }: Props) => {
   return (
     <div className={isSheet ? 'flex h-[70px] items-center justify-center' : ''}>
       <div
-        className={`${isSheet ? 'flex flex-wrap' : 'hidden md:flex'} items-center justify-center gap-1`}
+        className={`${isSheet ? 'flex flex-wrap' : 'hidden lg:flex'} items-center justify-center gap-1`}
       >
+        <Searchbar />
         <ThemeToggle />
         <Tooltip>
           <TooltipTrigger asChild>
@@ -46,27 +48,16 @@ const NavExtras = ({ isSheet }: Props) => {
             <p>Cart</p>
           </TooltipContent>
         </Tooltip>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Link
-              to={'/wishlist'}
-              className={cn(
-                buttonVariants({ variant: 'ghost' }),
-                'h-10 w-10 rounded-full'
-              )}
-            >
-              <Heart />
-            </Link>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Wishlist</p>
-          </TooltipContent>
-        </Tooltip>
         {!user ? (
-            <Link className={buttonVariants({variant: "ghost"})} to={'/auth/login'}>Login</Link>
-          ): (
-            <UserAvatar options={options} />
-          )}
+          <Link
+            className={buttonVariants({ variant: 'ghost' })}
+            to={'/auth/login'}
+          >
+            Login
+          </Link>
+        ) : (
+          <UserAvatar options={options} />
+        )}
       </div>
       <ChevronSidebarButton isSheet />
     </div>

@@ -16,7 +16,7 @@ export default {
 			"caret-blink": "caret-blink 1.25s ease-out infinite",
 		},
   		fontFamily: {
-  			sans: ['Geist', 'ui-sans-serif', 'system-ui']
+  			sans: ['Josefin Sans', 'ui-sans-serif', 'system-ui']
   		},
   		borderRadius: {
   			lg: 'var(--radius)',

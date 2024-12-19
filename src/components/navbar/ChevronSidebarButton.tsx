@@ -15,7 +15,7 @@ const ChevronSidebarButton = ({ isSheet, className, ...restProps }: Props) => {
       size={'icon'}
       variant={'ghost'}
       onClick={toggleSidebar}
-      className={cn('flex md:hidden', className)}
+      className={cn('flex lg:hidden', className)}
       {...restProps}
     >
       {openMobile && isSheet ? <ChevronsLeft /> : <Menu />}
