@@ -84,6 +84,6 @@ span {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground selection:text-background selection:bg-primary;
+    @apply bg-background text-foreground selection:bg-primary selection:text-background;
   }
 }

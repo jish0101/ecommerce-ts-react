@@ -21,8 +21,8 @@ import { Heart, Settings, UserPen } from 'lucide-react';
 
 export const UserAvatarOptions = [
   {
-    title: "Wishlist",
-    href: "/wishlist",
+    title: 'Wishlist',
+    href: '/settings/user/wishlist',
     icon: <Heart size={18} />
   },
   {

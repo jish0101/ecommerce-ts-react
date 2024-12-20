@@ -60,3 +60,7 @@ export const makeSelectOptions = <T>(
     value: a[value]
   }));
 };
+
+export const numberFormatter = (n: number, format: string = 'en-IN') => {
+  return new Intl.NumberFormat(format, { useGrouping: true }).format(n);
+};

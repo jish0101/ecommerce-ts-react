@@ -24,13 +24,13 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 
 type Pagination = {
   page: number;
-  pageSize: number;
-  total: number;
+  limit: number;
+  total?: number;
 };
 
 const DEFAULT_PAGINATION: Pagination = {
   page: 1,
-  pageSize: 10,
+  limit: 10,
   total: 100
 };
 
@@ -55,7 +55,7 @@ const DashboardContent = <T,>({
 
   const { data, isLoading, isError, error } = useGetQuery<GetResponse<T>>({
     endpoint,
-    pagination,
+    params: pagination,
     queryKey
   });
 
@@ -114,8 +114,8 @@ const DashboardContent = <T,>({
             <TablePagination
               currentPage={pagination.page}
               onPageChange={pageChangeHandler}
-              pageSize={pagination.pageSize}
-              total={pagination.total}
+              pageSize={pagination.limit}
+              total={pagination.total ?? 100}
             />
           </div>
         </CardContent>

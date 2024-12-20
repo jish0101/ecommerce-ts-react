@@ -4,22 +4,22 @@ import useAxiosPrivate from './useAxiosPrivate';
 
 export type Pagination = {
   page: number;
-  pageSize: number;
-  total: number;
+  limit: number;
+  total?: number;
 };
 
 export type UseDataQueryOptions = {
   endpoint: string;
-  pagination?: Pagination;
+  params?: Pagination & Record<string, string | number>;
   queryKey: string;
 };
 
 const useGetQuery = <T>(options: UseDataQueryOptions) => {
   const axiosPrivate = useAxiosPrivate();
-  const { endpoint, pagination, queryKey } = options;
+  const { endpoint, params, queryKey } = options;
 
   const { data, isLoading, isError, error } = useQuery(
-    [queryKey, pagination],
+    [queryKey, params],
     getData,
     {
       staleTime: Infinity,
@@ -29,12 +29,7 @@ const useGetQuery = <T>(options: UseDataQueryOptions) => {
 
   async function getData(): Promise<AxiosResponse<T>['data']> {
     const response = (await axiosPrivate.get(endpoint, {
-      params: pagination
-        ? {
-            page: pagination.page,
-            limit: pagination.pageSize
-          }
-        : undefined
+      params
     })) as AxiosResponse<T>;
 
     if (!response) {

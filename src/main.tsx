@@ -20,9 +20,9 @@ createRoot(document.getElementById('root')!).render(
           <TooltipProvider>
             <ThemeProvider>
               <Toaster />
-                <section className="mx-auto 2xl:max-w-[14s36px]">
-                  <App />
-                </section>
+              <section className="mx-auto 2xl:max-w-[14s36px]">
+                <App />
+              </section>
             </ThemeProvider>
           </TooltipProvider>
         </QueryClientProvider>

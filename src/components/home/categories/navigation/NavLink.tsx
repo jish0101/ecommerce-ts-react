@@ -17,14 +17,16 @@ const NavLink = ({ option }: Props) => {
       {!option.href ? (
         <P className={cn(navigationMenuTriggerStyle())}>{option.label}</P>
       ) : (
-        <Link
-          to={option.href}
-          key={option.href}
-        >
-            <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), 'h-auto w-full flex-col')}>
-              {option.label}
-            </NavigationMenuLink>
-            {option.description && <MutedPara>{option.description}</MutedPara>}
+        <Link to={option.href} key={option.href}>
+          <NavigationMenuLink
+            className={cn(
+              navigationMenuTriggerStyle(),
+              'h-auto w-full flex-col'
+            )}
+          >
+            {option.label}
+          </NavigationMenuLink>
+          {option.description && <MutedPara>{option.description}</MutedPara>}
         </Link>
       )}
     </div>

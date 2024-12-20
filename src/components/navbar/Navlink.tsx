@@ -10,8 +10,18 @@ type Props = {
 const Navlink = ({ option }: Props) => {
   const path = useLocation().pathname;
   return (
-    <Li className={"list-none font-medium leading-6 !mt-0"}>
-      <Link className={cn(path === option.href ? "underline": "hover:underline hover:opacity-65", 'leading-6')} to={option.href}>{option.label}</Link>
+    <Li className={'!mt-0 list-none font-medium leading-6'}>
+      <Link
+        className={cn(
+          path === option.href
+            ? 'underline'
+            : 'hover:underline hover:opacity-65',
+          'leading-6'
+        )}
+        to={option.href}
+      >
+        {option.label}
+      </Link>
     </Li>
   );
 };

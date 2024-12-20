@@ -16,7 +16,10 @@ function formatCategories(data: SubCategoryWithCategory[]) {
           listOptions: []
         };
       }
-      result[key].listOptions?.push({ label: item.name, href: `/products/${item._id}` });
+      result[key].listOptions?.push({
+        label: item.name,
+        href: `/products/${item._id}`
+      });
       return result;
     }, {});
   } catch (error) {
@@ -53,9 +56,14 @@ const SubCategories = () => {
 
   return (
     <div className="flex w-full items-center border-b py-1 md:px-10">
-      <div className="w-fit flex gap-4 items-center">
-        <H4>Explore by category</H4>
-        <NavOptions navOptions={[{label: "All", href: `/products/all`}, ...Object.values(data)]} />
+      <div className="flex w-fit items-center gap-4">
+        <H4>Filter by category</H4>
+        <NavOptions
+          navOptions={[
+            { label: 'All', href: `/products` },
+            ...Object.values(data)
+          ]}
+        />
       </div>
     </div>
   );

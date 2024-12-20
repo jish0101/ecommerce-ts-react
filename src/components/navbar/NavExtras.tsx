@@ -39,7 +39,7 @@ const NavExtras = ({ isSheet }: Props) => {
                 buttonVariants({ variant: 'ghost' }),
                 'h-10 w-10 rounded-full'
               )}
-              to={'/cart'}
+              to={'/settings/user/cart'}
             >
               <ShoppingCart />
             </Link>

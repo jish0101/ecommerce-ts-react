@@ -20,7 +20,7 @@ const NavDropdown = ({ option }: Props) => {
     <NavigationMenuItem>
       <NavigationMenuTrigger>{option.label}</NavigationMenuTrigger>
       <NavigationMenuContent>
-        <div className="flex flex-col min-w-[150px] gap-1 p-2">
+        <div className="flex min-w-[150px] flex-col gap-1 p-2">
           {option.listOptions.map((op, idx) => (
             <div key={op.label}>
               <NavLink option={op} />

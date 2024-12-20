@@ -19,12 +19,12 @@ export const NAV_LINKS: NavOption[] = [
   },
   {
     label: 'Track order',
-    href: '/track-order',
+    href: '/track-order'
   },
   {
     label: 'Return order',
-    href: '/return-order',
-  },
+    href: '/return-order'
+  }
 ];
 
 const Layout = () => {
@@ -41,7 +41,9 @@ const Layout = () => {
           {isLoading ? <Loader /> : null}
           <Navbar options={NAV_LINKS} />
           <ScrollArea type="scroll" className={`h-[calc(100vh-70px)]`}>
-            <Outlet />
+            <div className={`min-h-[calc(100vh-70px)]`}>
+              <Outlet />
+            </div>
             <Footer />
           </ScrollArea>
         </div>

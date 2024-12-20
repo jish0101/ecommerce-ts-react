@@ -4,7 +4,7 @@ import NavDropdown from './NavDropdown';
 import {
   NavigationMenu,
   NavigationMenuItem,
-  NavigationMenuList,
+  NavigationMenuList
 } from '@/components/ui/navigation-menu';
 
 type Props = {
@@ -23,9 +23,8 @@ const NavOptions = ({ navOptions }: Props) => {
               </NavigationMenuItem>
             );
           }
-          return (
-            <NavDropdown key={opt.label} option={opt} />
-          )})}
+          return <NavDropdown key={opt.label} option={opt} />;
+        })}
       </NavigationMenuList>
     </NavigationMenu>
   );
