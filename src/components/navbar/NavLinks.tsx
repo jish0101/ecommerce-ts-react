@@ -1,6 +1,6 @@
-import { NavOption } from '../layout/Navbar';
-import Ul from '../typography/Ul';
 import Navlink from './Navlink';
+import Ul from '../typography/Ul';
+import { NavOption } from '../layout/Navbar';
 
 type Props = {
   options: NavOption[];

@@ -68,7 +68,7 @@ const ProductCard = ({ product }: Props) => {
         className="cursor-pointer p-0 md:p-0"
       >
         <img
-          className="max-h-[275px] min-w-[100%] rounded-md object-cover"
+          className="max-h-[275px] min-w-[100%] rounded-2xl object-cover"
           src={product.imageLinks.at(0)}
           alt={product.name}
         />

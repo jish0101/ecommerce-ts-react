@@ -15,8 +15,7 @@ const Navlink = ({ option }: Props) => {
         className={cn(
           path === option.href
             ? 'underline'
-            : 'hover:underline hover:opacity-65',
-          'leading-6'
+            : 'hover:underline hover:opacity-65'
         )}
         to={option.href}
       >

@@ -7,7 +7,7 @@ const Loader = ({ className, ...rest }: LoaderProps) => {
   return (
     <div
       className={cn(
-        'h-6 w-6 animate-spin rounded-full border-4 border-white border-t-transparent',
+        'h-5 w-5 animate-spin rounded-full border-[3px] border-t-transparent',
         className
       )}
       {...rest}

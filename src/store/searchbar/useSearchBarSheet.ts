@@ -2,7 +2,7 @@ import { create } from 'zustand';
 
 type SheetState = {
   isOpen: boolean;
-  toggleSheet: (value: boolean) => void;
+  toggleSheet: (value?: boolean) => void;
 };
 
 const useSearchBarSheet = create<SheetState>((set) => ({

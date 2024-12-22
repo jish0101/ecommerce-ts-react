@@ -4,11 +4,11 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { Toaster } from '@/components/ui/toaster';
+import { ErrorBoundary } from 'react-error-boundary';
 import { TooltipProvider } from './components/ui/tooltip';
 import { ThemeProvider } from './components/theme-provider';
-import { ErrorBoundary } from 'react-error-boundary';
-import ErrorFallBack, { errorResetHandler } from './components/ErrorFallback';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import ErrorFallBack, { errorResetHandler } from './components/ErrorFallback';
 
 const client = new QueryClient();
 
@@ -19,8 +19,8 @@ createRoot(document.getElementById('root')!).render(
         <QueryClientProvider client={client}>
           <TooltipProvider>
             <ThemeProvider>
-              <Toaster />
-              <section className="mx-auto 2xl:max-w-[14s36px]">
+              <section className="mx-auto 2xl:max-w-[1536px]">
+                <Toaster />
                 <App />
               </section>
             </ThemeProvider>

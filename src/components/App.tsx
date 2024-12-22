@@ -53,12 +53,13 @@ function App() {
           </Route>
           <Route element={<SuspenseWrapper />}>
             <Route element={<ProductsLayout />}>
-              <Route path="/products" element={<Products />} />
-              <Route path="/products/:id" element={<Product />} />
+              <Route element={<SuspenseWrapper />}>
+                <Route path="/products" element={<Products />} />
+              </Route>
+              <Route element={<SuspenseWrapper />}>
+                <Route path="/product/:id" element={<Product />} />
+              </Route>
             </Route>
-          </Route>
-          <Route element={<SuspenseWrapper />}>
-            <Route path="/product" element={<Home />} />
           </Route>
 
           {/* SETTINGS ROUTES */}

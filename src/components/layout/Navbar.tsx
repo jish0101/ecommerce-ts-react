@@ -26,7 +26,7 @@ const Navbar = ({ options }: Props) => {
         <NavLinks options={options} />
         <div className="lg:ml-auto">
           <Link to={'/'}>
-            <img src={'/logo.svg'} className="w-14 md:mx-2" loading="eager" />
+            <img src={'/logo.svg'} className="w-12 md:mx-2" loading="eager" />
           </Link>
         </div>
       </nav>
