@@ -55,9 +55,9 @@ const SubCategories = () => {
   const data = formatCategories(response.data);
 
   return (
-    <div className="flex w-full items-center border-b py-1 md:px-10">
+    <div className="flex w-full justify-center md:justify-start items-center border-b py-1 md:px-10">
       <div className="flex w-fit items-center gap-4">
-        <H4>Filter by category</H4>
+        <H4 className='hidden lg:block'>Filter by category</H4>
         <NavOptions
           navOptions={[
             { label: 'All', href: `/products` },
