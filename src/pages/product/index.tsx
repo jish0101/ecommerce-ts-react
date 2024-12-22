@@ -7,9 +7,9 @@ import { useParams } from 'react-router-dom';
 const Product = () => {
   const { id } = useParams();
   const {
-    isLoading,
-    isError,
-    data: response
+    // isLoading,
+    // isError,
+    // data: response
   } = useGetQuery<GetResponse<ProductT>>({
     endpoint: '/api/products/get',
     queryKey: id ? `products/${id}` : 'products/all',
