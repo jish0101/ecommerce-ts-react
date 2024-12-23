@@ -18,6 +18,7 @@ type Props = {
 const ProductCard = ({ product }: Props) => {
   const navigate = useNavigate();
   const axios = useAxiosPrivate();
+  
   const { mutateAsync: addToCartAsync, isLoading } = useMutation({
     mutationKey: 'cart',
     mutationFn: (product: Product) =>

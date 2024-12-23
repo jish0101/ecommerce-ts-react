@@ -29,6 +29,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { AxiosError } from 'axios';
 
 const formSchema = z.object({
   email: z
@@ -48,6 +49,7 @@ const defaultValues = {
 function Login() {
   const navigate = useNavigate();
   const location = useLocation();
+  const redirectTo = location.state?.pathname ? location.state?.pathname: "/"
 
   const { toast } = useToast();
   const { setUser } = useUserState();
@@ -69,43 +71,46 @@ function Login() {
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (body) => {
     try {
       setIsLoading(true);
-      const { response, error } = await asyncWrapper(() => login(body));
+      const result = await login(body);
 
-      if (error !== null) {
-        setIsLoading(false);
+      if (result instanceof AxiosError) {
+        return toast({
+          title: 'Info',
+          description: result.response?.data.message
+        });
+      }
+  
+      if (result instanceof Error) {
         return toast({
           title: 'Failed',
-          description: error.response
-            ? error.response.data?.message
-            : error.message
+          description: result.message
         });
       }
 
       const {
         data: { status, data, message }
-      } = response!;
+      } = result!;
 
       if (status === 200) {
-        setUser(data);
         toast({
           title: 'Success',
           description: message
         });
-        setIsLoading(false);
-        navigate(location.state?.pathname ?? '/');
+        setUser(data);
+        navigate(redirectTo);
       } else {
         toast({
           title: 'Failed',
           description: message
         });
-        setIsLoading(false);
       }
     } catch (error: any) {
-      setIsLoading(false);
       toast({
         title: 'Failed',
         description: error.message
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
