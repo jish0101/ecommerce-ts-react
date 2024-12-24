@@ -66,12 +66,13 @@ const ProductCard = ({ product }: Props) => {
     <Card className="overflow-hidden rounded-md border-none shadow-none">
       <CardContent
         onClick={handleNavigate}
-        className="cursor-pointer p-0 md:p-0"
+        className="cursor-pointer h-[275px] min-w-[100%] p-0 md:p-0"
       >
         <img
-          className="max-h-[275px] min-w-[100%] rounded-2xl object-cover"
-          src={product.imageLinks.at(0)}
+          loading='lazy'
           alt={product.name}
+          src={product.imageLinks.at(0)}
+          className="max-h-[275px] min-w-[100%] rounded-2xl object-cover"
         />
       </CardContent>
       <CardFooter className="flex-col items-start p-0 pt-0">

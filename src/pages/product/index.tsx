@@ -1,28 +1,20 @@
-import { useEffect } from 'react';
 import { GetResponse } from '@/types/api';
-import { useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
 import useGetQuery from '@/hooks/useGetQuery';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Product as ProductT } from '@/types/product';
+import ProductHeader from '@/components/product/ProductHeader';
 import ProductImages from '@/components/product/ProductImages';
 import ProductDetails from '@/components/product/ProductDetails';
-import ProductHeader from '@/components/product/ProductHeader';
-import { Skeleton } from '@/components/ui/skeleton';
 
 const Product = () => {
   const { id } = useParams();
-  const client = useQueryClient();
+
   const { isLoading, data: response } = useGetQuery<GetResponse<ProductT>>({
     endpoint: '/api/products/get',
     queryKey: id ? `products/${id}` : 'products/all',
     params: { page: 1, limit: 1, id: id ?? '' }
   });
-
-  useEffect(() => {
-    if (!id) return;
-
-    client.invalidateQueries(`products/${id}`)
-  }, [id]);
 
   if (isLoading || !response || !response.data || response.data.length < 1) {
     return (

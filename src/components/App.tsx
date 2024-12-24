@@ -39,7 +39,7 @@ function App() {
 
   // Settings/User
   const User = lazy(() => import('@/pages/settings/user'));
-  const Cart = lazy(() => import('@/pages/settings/user/Cart'));
+  const Cart = lazy(() => import('@/pages/settings/user/cart'));
   const Orders = lazy(() => import('@/pages/settings/user/Orders'));
   const Wishlist = lazy(() => import('@/pages/settings/user/Wishlist'));
 

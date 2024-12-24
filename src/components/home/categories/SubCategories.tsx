@@ -18,7 +18,7 @@ function formatCategories(data: SubCategoryWithCategory[]) {
       }
       result[key].listOptions?.push({
         label: item.name,
-        href: `/products/${item._id}`
+        href: `/products?subCategoryId=${item._id}`
       });
       return result;
     }, {});
@@ -41,7 +41,7 @@ const SubCategories = () => {
 
   if (isLoading || isError || !response) {
     return (
-      <div className="flex w-full items-center justify-center border py-8">
+      <div className="flex w-full items-center justify-center md:justify-start h-12">
         <Fallback
           isError={isError}
           isLoading={isLoading}
@@ -55,7 +55,7 @@ const SubCategories = () => {
   const data = formatCategories(response.data);
 
   return (
-    <div className="flex w-full justify-center md:justify-start items-center border-b py-1 md:px-10">
+    <div className="flex w-full justify-center sm:justify-start items-center h-12">
       <div className="flex w-fit items-center gap-4">
         <H4 className='hidden lg:block'>Filter by category</H4>
         <NavOptions

@@ -21,7 +21,7 @@ type Props = {
 
 const Navbar = ({ options }: Props) => {
   return (
-    <div className={`flex h-[70px] items-center border-b px-3 py-3 shadow-sm`}>
+    <div className={`flex h-[70px] items-center border-b px-1 py-3 shadow-sm`}>
       <nav className="flex h-[70px] basis-[50%] items-center">
         <NavLinks options={options} />
         <div className="lg:ml-auto">
