@@ -1,27 +1,31 @@
+import { Cart } from '@/types/cart';
 import { CreateResponse } from '@/types/api';
-import { Product } from '@/types/product';
-import { AxiosInstance, AxiosResponse } from 'axios';
+import { AxiosError, AxiosInstance } from 'axios';
 
-type ProductApiResponse = AxiosResponse<CreateResponse<Partial<Product>>>;
+export type CartUpdateResponse = CreateResponse<Cart>;
 
-export async function addToCart(payload: any, axios: AxiosInstance) {
+export async function updateCart(
+  payload: any,
+  axios: AxiosInstance
+): Promise<CartUpdateResponse | Error> {
   try {
-    const response = (await axios.post(
-      '/api/cart/create',
-      payload
-    )) as ProductApiResponse;
-    return response.data;
+    const response = await axios.put('/api/cart/update', payload);
+    return response?.data;
   } catch (error) {
+    if (error instanceof AxiosError && error.response) {
+      return error;
+    }
     return error as Error;
   }
 }
+
 
 export async function deleteFromCart(payload: any, axios: AxiosInstance) {
   try {
     const response = (await axios.delete(
       '/api/cart/delete',
       payload
-    )) as ProductApiResponse;
+    )) as CartUpdateResponse;
     return response.data;
   } catch (error) {
     return error as Error;
@@ -33,7 +37,7 @@ export async function getCart(payload: any, axios: AxiosInstance) {
     const response = (await axios.get(
       '/api/cart/get',
       payload
-    )) as ProductApiResponse;
+    )) as CartUpdateResponse;
     return response.data;
   } catch (error) {
     return error as Error;

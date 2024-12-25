@@ -1,26 +1,32 @@
-import { Minus, Plus } from 'lucide-react';
 import { Button } from '../ui/button';
+import { Minus, Plus } from 'lucide-react';
 import MutedPara from '../typography/MutedPara';
-import { useState } from 'react';
 
-type Props = {};
+type Props = {
+  isLoading: boolean;
+  quantity: number
+  quantityChangeHandler: (value: number) => void;
+};
 
-const CartButtons = ({}: Props) => {
-  const [quantity, setQuantity] = useState(1);
-
-  const handleCartUpdate = (newValue: number) => {
-    setQuantity(newValue);
-  };
+const CartButtons = ({ isLoading, quantity, quantityChangeHandler }: Props) => {
 
   return (
-    <div className="flex items-center">
-      <Button className='rounded-full' size={"icon"} onClick={() => handleCartUpdate(quantity - 1)}>
+    <div className="flex sm:flex-row flex-col items-center">
+      <Button
+        disabled={isLoading}
+        className="rounded-full h-7 w-7 xl:h-9 xl:w-9 [&_svg]:size-4 xl:[&_svg]:size-5"
+        onClick={() => quantityChangeHandler(quantity - 1)}
+      >
         <Minus size={24} />
       </Button>
-      <div className="min-w-12 px-2 flex items-center justify-center">
+      <div className="flex min-w-12 items-center justify-center px-2">
         <MutedPara className="text-xl">{quantity}</MutedPara>
       </div>
-      <Button className='rounded-full' size={"icon"} onClick={() => handleCartUpdate(quantity + 1)}>
+      <Button
+        disabled={isLoading}
+        className="rounded-full h-7 w-7 xl:h-9 xl:w-9 [&_svg]:size-4 xl:[&_svg]:size-5"
+        onClick={() => quantityChangeHandler(quantity + 1)}
+      >
         <Plus size={24} />
       </Button>
     </div>

@@ -25,7 +25,7 @@ const useAxiosPrivate = () => {
     );
 
     const resposneInterceptors = axiosInstance.interceptors.response.use(
-      (response) => response,
+      (response) => Promise.resolve(response),
       async (error) => {
         const originalRequest = error.config;
 
@@ -51,8 +51,9 @@ const useAxiosPrivate = () => {
               navigate("/auth/login", {state: location})
             }
           }
-
+          return Promise.reject(error)
         }
+        return Promise.reject(error)
       }
     )
 

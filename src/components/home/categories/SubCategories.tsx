@@ -1,10 +1,10 @@
 import Fallback from './Fallback';
 import { GetResponse } from '@/types/api';
+import H4 from '@/components/typography/H4';
 import { NavOption } from './navigation/types';
 import NavOptions from './navigation/NavOptions';
 import { SubCategoryWithCategory } from '@/types/category';
 import useGetQuery, { UseDataQueryOptions } from '@/hooks/useGetQuery';
-import H4 from '@/components/typography/H4';
 
 function formatCategories(data: SubCategoryWithCategory[]) {
   try {

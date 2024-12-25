@@ -1,15 +1,15 @@
 import P from '../typography/P';
+import { AxiosError } from 'axios';
 import Loader from '../ButtonLoader';
 import { Button } from '../ui/button';
-import { addToCart } from '@/api/cart';
+import { updateCart } from '@/api/cart';
 import { toast } from '@/hooks/use-toast';
 import { Product } from '@/types/product';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { numberFormatter } from '@/lib/utils';
 import { useNavigate } from 'react-router-dom';
 import useAxiosPrivate from '@/hooks/useAxiosPrivate';
 import { Card, CardContent, CardFooter } from '../ui/card';
-import { AxiosError } from 'axios';
 
 type Props = {
   product: Product;
@@ -17,22 +17,23 @@ type Props = {
 
 const ProductCard = ({ product }: Props) => {
   const navigate = useNavigate();
+  const client = useQueryClient();
   const axios = useAxiosPrivate();
-  
-  const { mutateAsync: addToCartAsync, isLoading } = useMutation({
+
+  const { mutateAsync: updateCartAsync, isLoading } = useMutation({
     mutationKey: 'cart',
     mutationFn: (product: Product) =>
-      addToCart({ productId: product._id }, axios)
+      updateCart({ items: [{ productId: product._id, quantity: 1 }] }, axios)
   });
 
   const handleAddToCart = async () => {
     if (isLoading) return;
-    const result = await addToCartAsync(product);
+    const result = await updateCartAsync(product);
 
     if (result instanceof AxiosError) {
       return toast({
         title: 'Info',
-        description: result.response?.data.message
+        description: result.response?.data?.message
       });
     }
 
@@ -46,10 +47,12 @@ const ProductCard = ({ product }: Props) => {
     const { status, message } = result;
 
     if (status === 200) {
-      return toast({
+      toast({
         title: 'Success',
         description: message
       });
+      client.invalidateQueries(['cart']);
+      return navigate('/settings/user/cart');
     } else {
       return toast({
         title: 'Info',
@@ -66,10 +69,10 @@ const ProductCard = ({ product }: Props) => {
     <Card className="overflow-hidden rounded-md border-none shadow-none">
       <CardContent
         onClick={handleNavigate}
-        className="cursor-pointer h-[275px] min-w-[100%] p-0 md:p-0"
+        className="h-[275px] min-w-[100%] cursor-pointer p-0 md:p-0"
       >
         <img
-          loading='lazy'
+          loading="lazy"
           alt={product.name}
           src={product.imageLinks.at(0)}
           className="max-h-[275px] min-w-[100%] rounded-2xl object-cover"
