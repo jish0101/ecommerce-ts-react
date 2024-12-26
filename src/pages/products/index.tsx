@@ -11,16 +11,16 @@ import useGetQuery, { Pagination } from '@/hooks/useGetQuery';
 
 type Props = {};
 
-function generateKey (obj: Record<string, string>, prefix: string = "") {
+function generateKey(obj: Record<string, string>, prefix: string = '') {
   return Object.keys(obj).reduce((str, currKey) => {
-    return str += `/${obj[currKey]}`
-  }, prefix)
+    return (str += `/${obj[currKey]}`);
+  }, prefix);
 }
 
 const Products = ({}: Props) => {
   const [params] = useSearchParams();
-  const allParams = Object.fromEntries(params.entries())
-  const key = generateKey(allParams, "products");
+  const allParams = Object.fromEntries(params.entries());
+  const key = generateKey(allParams, 'products');
 
   const [pagination, setPagination] = useState<Pagination>({
     page: 1,

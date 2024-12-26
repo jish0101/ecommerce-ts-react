@@ -9,7 +9,7 @@ const useAxiosPrivate = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const {user,setUser,resetUser} = useUserState();
+  const { user, setUser, resetUser } = useUserState();
 
   useEffect(() => {
     const requestInterceptors = axiosInstance.interceptors.request.use(
@@ -33,29 +33,30 @@ const useAxiosPrivate = () => {
           if (!originalRequest._retry) {
             try {
               originalRequest._retry = true;
-              const {data, status} = await refreshToken({});
+              const { data, status } = await refreshToken({});
 
               if (status === 400) {
-                toast({title: 'Session expired, login again'});
+                toast({ title: 'Session expired, login again' });
                 resetUser();
-                return navigate("/auth/login", {state: location})
+                return navigate('/auth/login', { state: location });
               }
 
               setUser(data.data);
-              originalRequest.headers["Authorization"] = `Bearer ${data.data.accessToken}`;
-              
+              originalRequest.headers['Authorization'] =
+                `Bearer ${data.data.accessToken}`;
+
               return axiosInstance(originalRequest);
             } catch (error) {
-              toast({title: 'Session expired, login again'});
+              toast({ title: 'Session expired, login again' });
               resetUser();
-              navigate("/auth/login", {state: location})
+              navigate('/auth/login', { state: location });
             }
           }
-          return Promise.reject(error)
+          return Promise.reject(error);
         }
-        return Promise.reject(error)
+        return Promise.reject(error);
       }
-    )
+    );
 
     return () => {
       axiosInstance.interceptors.request.eject(requestInterceptors);

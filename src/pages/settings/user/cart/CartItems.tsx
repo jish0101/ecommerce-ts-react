@@ -50,13 +50,13 @@ const CartItems = ({ cartData }: Props) => {
           : null}
       </Ul>
       <div className="flex">
-        <div className="w-full ml-6">
+        <div className="ml-6 w-full">
           <P className="text-base font-medium md:text-lg">Total</P>
         </div>
-        <div className="w-full flex items-start justify-center">
+        <div className="flex w-full items-start justify-center">
           <Equal />
         </div>
-        <div className="w-full flex flex-col items-center gap-4">
+        <div className="flex w-full flex-col items-center gap-4">
           <P className="text-base sm:text-lg md:text-2xl">
             Rs. {numberFormatter(total)}
           </P>

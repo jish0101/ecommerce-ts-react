@@ -49,7 +49,7 @@ const defaultValues = {
 function Login() {
   const navigate = useNavigate();
   const location = useLocation();
-  const redirectTo = location.state?.pathname ? location.state?.pathname: "/"
+  const redirectTo = location.state?.pathname ? location.state?.pathname : '/';
 
   const { toast } = useToast();
   const { setUser } = useUserState();
@@ -79,7 +79,7 @@ function Login() {
           description: result.response?.data.message
         });
       }
-  
+
       if (result instanceof Error) {
         return toast({
           title: 'Failed',

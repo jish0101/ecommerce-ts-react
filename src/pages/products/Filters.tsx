@@ -8,7 +8,7 @@ type Props = {
 
 const Filters = ({ children }: Props) => {
   return (
-    <div className='flex gap-4'>
+    <div className="flex gap-4">
       <div className="basis-[350px]">
         <div className="flex h-[40px] items-center justify-between">
           <H4>Filters</H4>

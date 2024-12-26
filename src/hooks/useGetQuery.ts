@@ -23,7 +23,7 @@ const useGetQuery = <T>(options: UseDataQueryOptions) => {
     getData,
     {
       retry: 1,
-      staleTime: Infinity,
+      staleTime: Infinity
     }
   );
 

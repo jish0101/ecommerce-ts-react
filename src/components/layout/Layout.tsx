@@ -41,7 +41,9 @@ const Layout = () => {
           {isLoading ? <Loader /> : null}
           <Navbar options={NAV_LINKS} />
           <ScrollArea type="scroll" className={`h-[calc(100vh-70px)]`}>
-            <div className={`min-h-[calc(100vh-70px)] max-w-[1480px] p-2 sm:p-0 mx-auto`}>
+            <div
+              className={`mx-auto min-h-[calc(100vh-70px)] max-w-[1480px] p-2 sm:p-0`}
+            >
               <Outlet />
             </div>
             <Footer />

@@ -1,13 +1,14 @@
+import { useState } from 'react';
 import { AxiosError } from 'axios';
 import { Trash } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { updateCart } from '@/api/cart';
+import Loader from '@/components/Loader';
 import { toast } from '@/hooks/use-toast';
 import { Product } from '@/types/product';
 import P from '@/components/typography/P';
-import { useState } from 'react';
 import { numberFormatter } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
 import useAxiosPrivate from '@/hooks/useAxiosPrivate';
 import CartButtons from '@/components/cart/CartButtons';
 import { useMutation, useQueryClient } from 'react-query';
@@ -77,6 +78,12 @@ const CartItem = ({ item }: Props) => {
       });
     }
   };
+
+  if (isLoading) {
+    return (
+      <Loader />
+    )
+  }
 
   return (
     <>

@@ -41,7 +41,7 @@ const SubCategories = () => {
 
   if (isLoading || isError || !response) {
     return (
-      <div className="flex w-full items-center justify-center md:justify-start h-12">
+      <div className="flex h-12 w-full items-center justify-center md:justify-start">
         <Fallback
           isError={isError}
           isLoading={isLoading}
@@ -55,9 +55,9 @@ const SubCategories = () => {
   const data = formatCategories(response.data);
 
   return (
-    <div className="flex w-full justify-center sm:justify-start items-center h-12">
+    <div className="flex h-12 w-full items-center justify-center sm:justify-start">
       <div className="flex w-fit items-center gap-4">
-        <H4 className='hidden lg:block'>Filter by category</H4>
+        <H4 className="hidden lg:block">Filter by category</H4>
         <NavOptions
           navOptions={[
             { label: 'All', href: `/products` },

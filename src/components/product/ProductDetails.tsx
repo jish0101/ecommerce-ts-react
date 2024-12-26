@@ -21,7 +21,7 @@ import { toast } from '@/hooks/use-toast';
 type CartItem = {
   product: ProductT;
   quantity: number;
-}
+};
 
 type Props = {
   product: ProductT;
@@ -35,18 +35,19 @@ const ProductDetails = ({ product }: Props) => {
 
   const { mutateAsync: updateCartAsync, isLoading } = useMutation({
     mutationKey: 'cart',
-    mutationFn: async ({product, quantity}: CartItem) => await updateCart({ items: [{ productId: product._id, quantity }] }, axios)
+    mutationFn: async ({ product, quantity }: CartItem) =>
+      await updateCart({ items: [{ productId: product._id, quantity }] }, axios)
   });
-  
+
   const handleUpdateCart = async (newValue: number) => {
     if (isLoading) return;
     if (product.stock < newValue) return;
-    
+
     const result = await updateCartAsync({
       product: product,
       quantity: newValue
     });
-    
+
     if (result instanceof AxiosError) {
       return toast({
         title: 'Info',
@@ -65,7 +66,7 @@ const ProductDetails = ({ product }: Props) => {
 
     if (status === 200) {
       client.invalidateQueries(['cart']);
-      navigate("/settings/user/cart");
+      navigate('/settings/user/cart');
       toast({
         title: 'Success',
         description: message
@@ -78,15 +79,15 @@ const ProductDetails = ({ product }: Props) => {
     }
   };
 
-  function quantityChangeHandler (value: number) {
-    setQuantity(q => {
+  function quantityChangeHandler(value: number) {
+    setQuantity((q) => {
       if (value === 0 || value === product.stock) return q;
       return value;
-    })
+    });
   }
 
   return (
-    <div className="md:min-h-[70vh] py-10 w-full space-y-5 md:p-16">
+    <div className="w-full space-y-5 py-10 md:min-h-[70vh] md:p-16">
       <H1 className="text-4xl capitalize">{product.name}</H1>
       <P className="text-base md:text-3xl">
         Rs. {product.price.toFixed(2).toLocaleString()}
@@ -129,9 +130,18 @@ const ProductDetails = ({ product }: Props) => {
       </Accordion>
 
       <div className="flex flex-col gap-10">
-        <CartButtons quantity={quantity} quantityChangeHandler={quantityChangeHandler} isLoading={false}  />
-        <div className="grid lg:grid-cols-2 gap-4">
-          <Button onClick={() => handleUpdateCart(quantity)} className='border border-foreground/50' variant={'ghost'} size={'lg'}>
+        <CartButtons
+          quantity={quantity}
+          quantityChangeHandler={quantityChangeHandler}
+          isLoading={false}
+        />
+        <div className="grid gap-4 lg:grid-cols-2">
+          <Button
+            onClick={() => handleUpdateCart(quantity)}
+            className="border border-foreground/50"
+            variant={'ghost'}
+            size={'lg'}
+          >
             <ShoppingCart /> Add to cart
           </Button>
           <Button size={'lg'}>Buy now</Button>

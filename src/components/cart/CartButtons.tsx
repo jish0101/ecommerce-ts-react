@@ -4,17 +4,16 @@ import MutedPara from '../typography/MutedPara';
 
 type Props = {
   isLoading: boolean;
-  quantity: number
+  quantity: number;
   quantityChangeHandler: (value: number) => void;
 };
 
 const CartButtons = ({ isLoading, quantity, quantityChangeHandler }: Props) => {
-
   return (
-    <div className="flex sm:flex-row flex-col items-center">
+    <div className="flex flex-col items-center sm:flex-row">
       <Button
         disabled={isLoading}
-        className="rounded-full h-7 w-7 xl:h-9 xl:w-9 [&_svg]:size-4 xl:[&_svg]:size-5"
+        className="h-7 w-7 rounded-full xl:h-9 xl:w-9 [&_svg]:size-4 xl:[&_svg]:size-5"
         onClick={() => quantityChangeHandler(quantity - 1)}
       >
         <Minus size={24} />
@@ -24,7 +23,7 @@ const CartButtons = ({ isLoading, quantity, quantityChangeHandler }: Props) => {
       </div>
       <Button
         disabled={isLoading}
-        className="rounded-full h-7 w-7 xl:h-9 xl:w-9 [&_svg]:size-4 xl:[&_svg]:size-5"
+        className="h-7 w-7 rounded-full xl:h-9 xl:w-9 [&_svg]:size-4 xl:[&_svg]:size-5"
         onClick={() => quantityChangeHandler(quantity + 1)}
       >
         <Plus size={24} />

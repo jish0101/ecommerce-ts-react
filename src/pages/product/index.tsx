@@ -20,17 +20,17 @@ const Product = () => {
     return (
       <ProductHeader>
         <div className="flex min-w-[300px] lg:col-span-2">
-          <Skeleton className='w-full md:max-h-[500px] min-h-[350px]' />
+          <Skeleton className="min-h-[350px] w-full md:max-h-[500px]" />
         </div>
-        <div className="flex min-w-[300px] lg:col-span-3 justify-center">
-          <div className='md:min-h-[70vh] md:py-10 w-full space-y-5 md:p-10'>
-            <Skeleton className='md:h-12 h-8 w-full' />
-            <Skeleton className='md:h-12 h-8 w-full' />
-            <Skeleton className='md:h-12 h-8 w-full' />
-            <Skeleton className='md:h-12 h-8 w-full' />
-            <Skeleton className='md:h-12 h-8 w-full' />
-            <Skeleton className='md:h-12 h-8 w-full' />
-            <Skeleton className='md:h-12 h-8 w-full' />
+        <div className="flex min-w-[300px] justify-center lg:col-span-3">
+          <div className="w-full space-y-5 md:min-h-[70vh] md:p-10 md:py-10">
+            <Skeleton className="h-8 w-full md:h-12" />
+            <Skeleton className="h-8 w-full md:h-12" />
+            <Skeleton className="h-8 w-full md:h-12" />
+            <Skeleton className="h-8 w-full md:h-12" />
+            <Skeleton className="h-8 w-full md:h-12" />
+            <Skeleton className="h-8 w-full md:h-12" />
+            <Skeleton className="h-8 w-full md:h-12" />
           </div>
         </div>
       </ProductHeader>
@@ -44,7 +44,7 @@ const Product = () => {
       <div className="flex lg:col-span-2">
         <ProductImages images={data[0].imageLinks} />
       </div>
-      <div className="flex lg:col-span-3 justify-center">
+      <div className="flex justify-center lg:col-span-3">
         <ProductDetails product={data[0]} />
       </div>
     </ProductHeader>

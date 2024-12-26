@@ -19,7 +19,6 @@ export async function updateCart(
   }
 }
 
-
 export async function deleteFromCart(payload: any, axios: AxiosInstance) {
   try {
     const response = (await axios.delete(

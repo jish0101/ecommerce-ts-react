@@ -1,9 +1,7 @@
 import { cn } from '@/lib/utils';
 import { Link } from 'react-router-dom';
 import P from '@/components/typography/P';
-import {
-  navigationMenuTriggerStyle
-} from '@/components/ui/navigation-menu';
+import { navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
 import MutedPara from '@/components/typography/MutedPara';
 
 type Props = {
@@ -16,10 +14,11 @@ const NavLink = ({ option }: Props) => {
       {!option.href ? (
         <P className={cn(navigationMenuTriggerStyle())}>{option.label}</P>
       ) : (
-        <Link className={cn(
-          navigationMenuTriggerStyle(),
-          'h-auto w-full flex-col'
-        )} to={option.href} key={option.href}>
+        <Link
+          className={cn(navigationMenuTriggerStyle(), 'h-auto w-full flex-col')}
+          to={option.href}
+          key={option.href}
+        >
           {option.label}
           {option.description && <MutedPara>{option.description}</MutedPara>}
         </Link>

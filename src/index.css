@@ -87,3 +87,7 @@ span {
     @apply bg-background text-foreground selection:bg-primary selection:text-background;
   }
 }
+
+[data-inputWrapper="true"] {
+  @apply rounded-full border [&>svg]:hidden px-0
+}

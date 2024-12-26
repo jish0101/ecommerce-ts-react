@@ -1,4 +1,4 @@
-import { Skeleton } from "../ui/skeleton"
+import { Skeleton } from '../ui/skeleton';
 
 type Props = {
   isError: boolean;
@@ -7,9 +7,14 @@ type Props = {
   fallBackMessaage?: string;
 };
 
-const CardFallback = ({isError, isLoading, errorMessage, fallBackMessaage}: Props) => {
+const CardFallback = ({
+  isError,
+  isLoading,
+  errorMessage,
+  fallBackMessaage
+}: Props) => {
   return (
-    <div className="flex flex-col space-y-3 w-[250px]">
+    <div className="flex w-[250px] flex-col space-y-3">
       {isLoading ? (
         <>
           <Skeleton className="h-[250px] w-[250px] rounded-2xl" />
@@ -19,9 +24,13 @@ const CardFallback = ({isError, isLoading, errorMessage, fallBackMessaage}: Prop
             <Skeleton className="h-4 w-[175px]" />
           </div>
         </>
-      ) : isError ? errorMessage : fallBackMessaage}
+      ) : isError ? (
+        errorMessage
+      ) : (
+        fallBackMessaage
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default CardFallback
+export default CardFallback;

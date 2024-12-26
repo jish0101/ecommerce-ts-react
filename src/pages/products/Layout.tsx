@@ -5,7 +5,7 @@ type Props = {};
 
 const Layout = ({}: Props) => {
   return (
-    <div className='space-y-6'>
+    <div className="space-y-6">
       <SubCategories />
       <div className="w-full">
         <Outlet />

@@ -22,7 +22,7 @@ export function ThemeToggle() {
               variant="ghost"
               className={cn(
                 buttonVariants({ variant: 'ghost' }),
-                'rounded-full h-10 w-10'
+                'h-10 w-10 rounded-full'
               )}
             >
               <Sun className="rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
