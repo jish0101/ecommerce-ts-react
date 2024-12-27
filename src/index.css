@@ -91,3 +91,7 @@ span {
 [data-inputWrapper="true"] {
   @apply rounded-full border [&>svg]:hidden px-0
 }
+
+[data-inputWrapper="true"] input {
+  @apply indent-4
+}

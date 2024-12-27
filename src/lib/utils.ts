@@ -64,3 +64,9 @@ export const makeSelectOptions = <T>(
 export const numberFormatter = (n: number, format: string = 'en-IN') => {
   return new Intl.NumberFormat(format, { useGrouping: true }).format(n);
 };
+
+export function generateKey(obj: Record<string, string>, prefix: string = '') {
+  return Object.keys(obj).reduce((str, currKey) => {
+    return (str += `/${obj[currKey]}`);
+  }, prefix);
+}

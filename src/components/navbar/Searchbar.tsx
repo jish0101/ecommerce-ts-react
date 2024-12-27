@@ -21,6 +21,10 @@ import {
   CommandList
 } from '../ui/command';
 import ProductList from '../product/ProductList';
+import useGetQuery from '@/hooks/useGetQuery';
+import { GetResponse } from '@/types/api';
+import { Product } from '@/types/product';
+import Loader from '../ButtonLoader';
 
 const Searchbar = () => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -29,8 +33,17 @@ const Searchbar = () => {
   const [inputValue, setInputValue] = useState('');
   const [isPopOpen, setIsPopOpen] = useState(false);
 
-  const debouncedValue = useDebounced(inputValue, 300);
   const navigate = useNavigate();
+  const debouncedValue = useDebounced(inputValue, 300);
+  const key = debouncedValue.toLowerCase().trim();
+  const { isLoading, data: response } = useGetQuery<GetResponse<Product>>({
+    endpoint: '/api/products/get',
+    queryKey: `products/${key}`,
+    enabled: !!debouncedValue,
+    params: {
+      search: key
+    }
+  });
 
   const handleSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
@@ -97,28 +110,38 @@ const Searchbar = () => {
           </MutedPara>
         </SheetHeader>
         <form
-          className="relative h-[70vh] w-[225px] md:h-10 md:w-[325px]"
+          className="relative w-[225px] md:h-10 md:w-[325px]"
           onSubmit={handleSubmit}
         >
-          <Command className="min-h-max">
+          <Command className="h-[70vh]">
             <CommandInput
               ref={inputRef}
-              className={'h-10 rounded-full border border-input bg-transparent indent-4 text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring md:text-lg md:placeholder:text-base'}
               placeholder="Search..."
+              className={
+                'h-10 rounded-full border border-input bg-transparent text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring md:text-lg md:placeholder:text-base'
+              }
             />
-            {!debouncedValue ? (
-              <CommandList>
-                <>
-                  <CommandEmpty>No framework found.</CommandEmpty>
-                  <CommandGroup>
-                    <CommandItem className='rounded-none my-2' value={'First'} onSelect={() => {}}>
-                      <ProductList />
-                    </CommandItem>
-                    <CommandItem className='rounded-none my-2' value={'First2'} onSelect={() => {}}>
-                      <ProductList />
-                    </CommandItem>
-                  </CommandGroup>
-                </>
+            {isLoading ? (
+              <div className="my-10 flex items-center justify-center">
+                <Loader className="border-accent-foreground border-t-transparent" />
+              </div>
+            ) : null}
+            {debouncedValue ? (
+              <CommandList className='mt-2 max-h-[100%]'>
+                <CommandEmpty>No products found.</CommandEmpty>
+                <CommandGroup>
+                  {response
+                    ? response.data.map((product) => (
+                        <CommandItem
+                          className="my-2 rounded-full"
+                          value={product._id}
+                          onSelect={() => {}}
+                        >
+                          <ProductList product={product} />
+                        </CommandItem>
+                      ))
+                    : null}
+                </CommandGroup>
               </CommandList>
             ) : null}
           </Command>

@@ -8,14 +8,9 @@ import CardFallback from '@/components/product/CardFallback';
 import ProductCards from '@/components/product/ProductCards';
 import TablePagination from '@/components/tables/Pagination';
 import useGetQuery, { Pagination } from '@/hooks/useGetQuery';
+import { generateKey } from '@/lib/utils';
 
 type Props = {};
-
-function generateKey(obj: Record<string, string>, prefix: string = '') {
-  return Object.keys(obj).reduce((str, currKey) => {
-    return (str += `/${obj[currKey]}`);
-  }, prefix);
-}
 
 const Products = ({}: Props) => {
   const [params] = useSearchParams();
@@ -71,8 +66,8 @@ const Products = ({}: Props) => {
         </ProductsHeader>
         <div className="flex w-full justify-center">
           <TablePagination
-            pageSize={pagination.limit}
-            currentPage={pagination.page}
+            pageSize={pagination.limit ?? 10}
+            currentPage={pagination.page ?? 1}
             total={pagination.total ?? 0}
             onPageChange={(page) => setPagination({ ...pagination, page })}
           />

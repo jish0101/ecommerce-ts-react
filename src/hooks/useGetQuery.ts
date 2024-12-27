@@ -3,8 +3,8 @@ import { AxiosResponse } from 'axios';
 import useAxiosPrivate from './useAxiosPrivate';
 
 export type Pagination = {
-  page: number;
-  limit: number;
+  page?: number;
+  limit?: number;
   total?: number;
 };
 
@@ -12,16 +12,18 @@ export type UseDataQueryOptions = {
   endpoint: string;
   params?: Pagination & Record<string, string | number>;
   queryKey: string;
+  enabled?: boolean;
 };
 
 const useGetQuery = <T>(options: UseDataQueryOptions) => {
   const axiosPrivate = useAxiosPrivate();
-  const { endpoint, params, queryKey } = options;
+  const { endpoint, params, queryKey, enabled=true } = options;
 
   const { data, isLoading, isError, error } = useQuery(
     [queryKey, params],
     getData,
     {
+      enabled,
       retry: 1,
       staleTime: Infinity
     }
