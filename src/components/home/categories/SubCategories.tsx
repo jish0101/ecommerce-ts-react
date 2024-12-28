@@ -56,14 +56,16 @@ const SubCategories = () => {
 
   return (
     <div className="flex h-12 w-full items-center justify-center sm:justify-start">
-      <div className="flex w-fit items-center gap-4">
+      <div className="flex items-center gap-4">
         <H4 className="hidden lg:block">Filter by category</H4>
-        <NavOptions
-          navOptions={[
-            { label: 'All', href: `/products` },
-            ...Object.values(data)
-          ]}
-        />
+        <nav>
+          <NavOptions
+            navOptions={[
+              { label: 'All', href: `/products` },
+              ...Object.values(data)
+            ]}
+          />
+        </nav>
       </div>
     </div>
   );

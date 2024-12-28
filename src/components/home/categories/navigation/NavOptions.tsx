@@ -13,20 +13,23 @@ type Props = {
 
 const NavOptions = ({ navOptions }: Props) => {
   return (
-    <NavigationMenu>
-      <NavigationMenuList>
-        {navOptions.map((opt) => {
-          if (!opt.listOptions) {
-            return (
-              <NavigationMenuItem key={opt.label}>
-                <NavLink option={opt} />
-              </NavigationMenuItem>
-            );
-          }
-          return <NavDropdown key={opt.label} option={opt} />;
-        })}
-      </NavigationMenuList>
-    </NavigationMenu>
+    <>
+      <NavigationMenu>
+        <NavigationMenuList>
+          {navOptions.map((opt) => {
+            if (!opt.listOptions) {
+              return (
+                <NavigationMenuItem key={opt.label}>
+                  <NavLink option={opt} />
+                </NavigationMenuItem>
+              );
+            } else {
+              return <NavDropdown key={opt.label} option={opt} />;
+            }
+          })}
+        </NavigationMenuList>
+      </NavigationMenu>
+    </>
   );
 };
 

@@ -4,7 +4,9 @@ export default function useDebounced<T>(value: T, delay: number = 500): T {
   const [state, setState] = useState<T>(value);
 
   useEffect(() => {
-    if (!value) return;
+    if (!value) {
+      return setState(value);
+    };
 
     const handler = setTimeout(() => setState(value), delay);
 

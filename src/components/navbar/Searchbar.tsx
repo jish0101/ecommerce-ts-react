@@ -14,7 +14,6 @@ import useDebounced from '@/hooks/use-debounced';
 import { useNavigate } from 'react-router-dom';
 import {
   Command,
-  CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
@@ -25,6 +24,7 @@ import useGetQuery from '@/hooks/useGetQuery';
 import { GetResponse } from '@/types/api';
 import { Product } from '@/types/product';
 import Loader from '../ButtonLoader';
+import P from '../typography/P';
 
 const Searchbar = () => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -36,6 +36,7 @@ const Searchbar = () => {
   const navigate = useNavigate();
   const debouncedValue = useDebounced(inputValue, 300);
   const key = debouncedValue.toLowerCase().trim();
+
   const { isLoading, data: response } = useGetQuery<GetResponse<Product>>({
     endpoint: '/api/products/get',
     queryKey: `products/${key}`,
@@ -81,7 +82,10 @@ const Searchbar = () => {
       const timeout = setTimeout(() => {
         inputRef.current?.focus();
       }, 0);
-      return () => clearTimeout(timeout);
+      return () => {
+        setInputValue("")
+        clearTimeout(timeout)
+      };
     }
   }, [isOpen]);
 
@@ -113,41 +117,48 @@ const Searchbar = () => {
           className="relative w-[225px] md:h-10 md:w-[325px]"
           onSubmit={handleSubmit}
         >
-          <Command className="h-[70vh]">
+          <Command shouldFilter={false} className="h-[70vh]">
             <CommandInput
               ref={inputRef}
+              value={inputValue}
+              onValueChange={setInputValue}
               placeholder="Search..."
               className={
-                'h-10 rounded-full border border-input bg-transparent text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring md:text-lg md:placeholder:text-base'
+                'h-10 rounded-full text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring md:text-lg md:placeholder:text-base'
               }
             />
-            {isLoading ? (
-              <div className="my-10 flex items-center justify-center">
-                <Loader className="border-accent-foreground border-t-transparent" />
-              </div>
-            ) : null}
-            {debouncedValue ? (
-              <CommandList className='mt-2 max-h-[100%]'>
-                <CommandEmpty>No products found.</CommandEmpty>
-                <CommandGroup>
-                  {response
-                    ? response.data.map((product) => (
-                        <CommandItem
-                          className="my-2 rounded-full"
-                          value={product._id}
-                          onSelect={() => {}}
-                        >
-                          <ProductList product={product} />
-                        </CommandItem>
-                      ))
-                    : null}
-                </CommandGroup>
-              </CommandList>
-            ) : null}
+            <CommandList className="mt-2 max-h-[100%]">
+              {debouncedValue ? (
+                <>
+                  {isLoading ? (
+                    <div className="my-10 flex items-center justify-center">
+                      <Loader className="border-accent-foreground border-t-transparent" />
+                    </div>
+                  ) : !response ? (
+                    <div className="my-10 flex items-center justify-center">
+                      <P>No products found.</P>
+                    </div>
+                  ): null}
+                  <CommandGroup>
+                    {response
+                      ? response.data.map((product) => (
+                          <CommandItem
+                            className="my-2 rounded-full"
+                            value={product._id}
+                            onSelect={() => {}}
+                          >
+                            <ProductList product={product} />
+                          </CommandItem>
+                        ))
+                      : null}
+                  </CommandGroup>
+                </>
+              ) : null}
+            </CommandList>
           </Command>
           <Button
             type="submit"
-            className="absolute right-0 top-0 flex h-10 rounded-l-none rounded-r-full md:[&_svg]:size-6"
+            className="absolute right-0 top-[1px] flex h-10 rounded-l-none rounded-r-full md:[&_svg]:size-6"
             aria-label="Submit search"
           >
             <Search />
