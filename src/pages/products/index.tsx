@@ -2,13 +2,13 @@ import Filters from './Filters';
 import { useState } from 'react';
 import { GetResponse } from '@/types/api';
 import { Product } from '@/types/product';
+import { generateKey } from '@/lib/utils';
 import ProductsHeader from './ProductsHeader';
 import { useSearchParams } from 'react-router-dom';
 import CardFallback from '@/components/product/CardFallback';
 import ProductCards from '@/components/product/ProductCards';
 import TablePagination from '@/components/tables/Pagination';
-import useGetQuery, { Pagination } from '@/hooks/useGetQuery';
-import { generateKey } from '@/lib/utils';
+import useGetQuery, { Pagination } from '@/hooks/useGetQueryPublic';
 
 type Props = {};
 

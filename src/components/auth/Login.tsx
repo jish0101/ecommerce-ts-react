@@ -25,6 +25,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Eye, EyeClosed } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import MutedPara from '../typography/MutedPara';
+import GoogleAuthButton from './GoogleAuthButton';
 import useUserState from '@/store/user/useUserState';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -115,101 +116,105 @@ function Login() {
   };
 
   return (
-    <main>
-      <div className="flex items-center justify-center p-2 md:min-h-[calc(90vh-70px)]">
-        <Card className="min-w-[calc(100%-2rem)] md:max-w-[375px]">
-          <CardHeader>
-            <CardTitle>
-              <H2>Login</H2>
-            </CardTitle>
-            <CardDescription>
-              <MutedPara>Login to your account.</MutedPara>
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-8"
-              >
-                {/* Email Field */}
-                <FormField
-                  name="email"
-                  control={form.control}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Email</FormLabel>
-                      <FormControl>
-                        <Input type="email" placeholder="Email" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                {/* Password Field */}
-                <FormField
-                  name="password"
-                  control={form.control}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Password</FormLabel>
-                      <FormControl>
-                        <div className="relative">
-                          <Input
-                            type={inputType}
-                            placeholder="Password"
-                            {...field}
-                          />
-                          <Button
-                            type="button"
-                            variant={'link'}
-                            className="absolute right-0 top-0"
-                            onClick={handlePasswordView}
-                          >
-                            {inputType === 'password' ? <EyeClosed /> : <Eye />}
-                          </Button>
-                        </div>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <Button disabled={isLoading} type="submit" className="w-full">
-                  {isLoading ? 'Please Wait..' : 'Login'}
-                </Button>
-              </form>
-            </Form>
-          </CardContent>
-          <CardFooter className="flex-col">
-            <div className="flex items-center gap-2">
-              <P>Forgot password ?</P>
-              <Link
-                to={'/auth/reset-password'}
-                className={cn(
-                  buttonVariants({ variant: 'link' }),
-                  'h-0 p-0 text-xs font-semibold'
+    <main className="flex items-center justify-center p-2 md:min-h-[calc(90vh-70px)]">
+      <Card className="min-w-[calc(100%-2rem)] md:max-w-[375px]">
+        <CardHeader className='md:pt-6 md:pb-2 space-y-3'>
+          <CardTitle>
+            <H2>Login</H2>
+          </CardTitle>
+          <CardDescription>
+            <MutedPara>Login to your account.</MutedPara>
+          </CardDescription>
+        </CardHeader>
+        <CardContent className='md:py-4'>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              {/* Email Field */}
+              <FormField
+                name="email"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input type="email" placeholder="Email" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
                 )}
-              >
-                Click here
-              </Link>
-            </div>
-            <div className="flex items-center gap-2">
-              <P>Does not have an account ?</P>
-              <Link
-                to={'/auth/signup'}
-                className={cn(
-                  buttonVariants({ variant: 'link' }),
-                  'h-0 p-0 text-xs font-semibold'
+              />
+
+              {/* Password Field */}
+              <FormField
+                name="password"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <Input
+                          type={inputType}
+                          placeholder="Password"
+                          {...field}
+                        />
+                        <Button
+                          type="button"
+                          variant={'link'}
+                          className="absolute right-0 top-0"
+                          onClick={handlePasswordView}
+                        >
+                          {inputType === 'password' ? <EyeClosed /> : <Eye />}
+                        </Button>
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
                 )}
-              >
-                Click here
-              </Link>
-            </div>
-          </CardFooter>
-        </Card>
-      </div>
+              />
+
+              <Button disabled={isLoading} type="submit" className="w-full">
+                {isLoading ? 'Please Wait..' : 'Login'}
+              </Button>
+              
+              <div className='flex flex-col space-y-4'>
+                <div className='flex items-center gap-2'>
+                  <span className='w-full border' />
+                    OR
+                  <span className='w-full border' />
+                </div>
+                <GoogleAuthButton />
+              </div>
+            </form>
+          </Form>
+        </CardContent>
+        <CardFooter className="flex-col">
+          <div className="flex items-center gap-2">
+            <P>Forgot password ?</P>
+            <Link
+              to={'/auth/reset-password'}
+              className={cn(
+                buttonVariants({ variant: 'link' }),
+                'h-0 p-0 text-xs font-semibold'
+              )}
+            >
+              Click here
+            </Link>
+          </div>
+          <div className="flex items-center gap-2">
+            <P>Does not have an account ?</P>
+            <Link
+              to={'/auth/signup'}
+              className={cn(
+                buttonVariants({ variant: 'link' }),
+                'h-0 p-0 text-xs font-semibold'
+              )}
+            >
+              Click here
+            </Link>
+          </div>
+        </CardFooter>
+      </Card>
     </main>
   );
 }

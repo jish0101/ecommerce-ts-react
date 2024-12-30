@@ -29,6 +29,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { createUser } from '@/api/user';
 import { useToast } from '@/hooks/use-toast';
+import GoogleAuthButton from './GoogleAuthButton';
 
 const formSchema = z.object({
   firstName: z
@@ -138,7 +139,7 @@ function Signup() {
     <main>
       <div className="flex items-center justify-center p-2 md:min-h-[calc(90vh-70px)]">
         <Card className="min-w-[calc(100%-2rem)] md:max-w-[375px]">
-          <CardHeader>
+          <CardHeader className='md:pt-6 md:pb-2 space-y-3'>
             <CardTitle>
               <H2>Register</H2>
             </CardTitle>
@@ -146,13 +147,13 @@ function Signup() {
               <MutedPara>Signup for a new account.</MutedPara>
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className='md:py-4'>
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-6"
+                className="space-y-4"
               >
-                <div className="my-6 grid gap-4 md:grid-cols-2">
+                <div className="grid gap-4 md:grid-cols-2">
                   {/* First Name */}
                   <FormField
                     name="firstName"
@@ -235,6 +236,14 @@ function Signup() {
                 <Button disabled={isLoading} type="submit" className="w-full">
                   {isLoading ? 'Signing up..' : 'Sign up'}
                 </Button>
+                <div className="flex flex-col space-y-4">
+                  <div className="flex items-center gap-2">
+                    <span className="w-full border" />
+                    OR
+                    <span className="w-full border" />
+                  </div>
+                  <GoogleAuthButton />
+                </div>
               </form>
             </Form>
           </CardContent>
