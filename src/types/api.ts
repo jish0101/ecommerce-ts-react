@@ -1,3 +1,9 @@
+export type Pagination = {
+  page?: number;
+  limit?: number;
+  total?: number;
+}
+
 export type GetResponse<T> = {
   status: number;
   message: string;
@@ -8,5 +14,5 @@ export type CreateResponse<T> = {
   status: number;
   message: string;
   data: T;
-  details?: any;
+  details?: any | Pagination;
 };

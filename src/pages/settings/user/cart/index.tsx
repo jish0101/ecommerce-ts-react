@@ -45,7 +45,7 @@ const Cart = ({}: Props) => {
   }
 
   return (
-    <div className="space-y-6">
+    <div>
       <H2 className="border-none">Your Cart</H2>
 
       <div className="flex flex-col xl:flex-row">

@@ -15,7 +15,7 @@ export async function updateCart(
     if (error instanceof AxiosError && error.response) {
       return error;
     }
-    return error as Error;
+    return error as AxiosError;
   }
 }
 

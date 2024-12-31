@@ -49,9 +49,10 @@ const ProductDetails = ({ product }: Props) => {
     });
 
     if (result instanceof AxiosError) {
+      let msg = result.status === 401 ? "Login to proceed" : result.response?.data?.message ?? result.message;
       return toast({
         title: 'Info',
-        description: result.response?.data.message
+        description: msg
       });
     }
 

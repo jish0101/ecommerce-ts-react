@@ -1,9 +1,12 @@
+import axios from 'axios';
 import { useEffect } from 'react';
 import { toast } from './use-toast';
-import axiosInstance from '@/api/axios';
+import getEnv from '@/lib/envConfig';
 import { refreshToken } from '@/api/auth';
 import useUserState from '@/store/user/useUserState';
 import { useLocation, useNavigate } from 'react-router-dom';
+
+const axiosInstance = axios.create({ baseURL: getEnv('VITE_APP_BASE_API') });
 
 const useAxiosPrivate = () => {
   const navigate = useNavigate();

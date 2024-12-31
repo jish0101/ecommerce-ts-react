@@ -26,7 +26,7 @@ const CartItems = ({ cartData }: Props) => {
   }
 
   return (
-    <div className="xl:basis-[75%]">
+    <div className="xl:basis-[75%] py-3">
       <Ul>
         <div className="flex justify-between border-b">
           <div className="w-full">
@@ -56,7 +56,7 @@ const CartItems = ({ cartData }: Props) => {
         <div className="flex w-full items-start justify-center">
           <Equal />
         </div>
-        <div className="flex w-full flex-col items-center gap-4">
+        <div className="flex w-full flex-col items-center gap-8">
           <P className="text-base sm:text-lg md:text-2xl">
             Rs. {numberFormatter(total)}
           </P>
