@@ -38,10 +38,11 @@ function App() {
   const Settings = lazy(() => import('@/pages/settings'));
 
   // Settings/User
-  const User = lazy(() => import('@/pages/settings/user'));
   const Cart = lazy(() => import('@/pages/settings/user/cart'));
-  const Orders = lazy(() => import('@/pages/settings/user/Orders'));
-  const Wishlist = lazy(() => import('@/pages/settings/user/Wishlist'));
+  const Orders = lazy(() => import('@/pages/settings/user/order'));
+  const Address = lazy(() => import('@/pages/settings/user/address'));
+  const Wishlist = lazy(() => import('@/pages/settings/user/wishlist'));
+  const UserProfile = lazy(() => import('@/pages/settings/user/profile'));
 
   return (
     <Routes>
@@ -63,24 +64,29 @@ function App() {
           </Route>
 
           {/* SETTINGS ROUTES */}
-          <Route path="/settings" element={<SuspenseWrapper />}>
-            <Route element={<CheckAuth roles={['ADMIN', 'USER']} />}>
+          <Route element={<SuspenseWrapper />}>
+            <Route
+              path="/settings"
+              element={<CheckAuth roles={['ADMIN', 'USER']} />}
+            >
               <Route element={<SettingsWrapper />}>
                 <Route element={<SuspenseWrapper />}>
                   <Route index element={<Settings />} />
-                  <Route path=":sub_settings" element={<Settings />} />
-                  <Route element={<SuspenseWrapper />}>
-                    <Route path="user/profile" element={<User />} />
-                  </Route>
-                  <Route element={<SuspenseWrapper />}>
-                    <Route path="user/cart" element={<Cart />} />
-                  </Route>
-                  <Route element={<SuspenseWrapper />}>
-                    <Route path="user/orders" element={<Orders />} />
-                  </Route>
-                  <Route element={<SuspenseWrapper />}>
-                    <Route path="user/wishlist" element={<Wishlist />} />
-                  </Route>
+                </Route>
+                <Route element={<SuspenseWrapper />}>
+                  <Route path="user/cart" element={<Cart />} />
+                </Route>
+                <Route element={<SuspenseWrapper />}>
+                  <Route path="user/orders" element={<Orders />} />
+                </Route>
+                <Route element={<SuspenseWrapper />}>
+                  <Route path="user/wishlist" element={<Wishlist />} />
+                </Route>
+                <Route element={<SuspenseWrapper />}>
+                  <Route path="user/address" element={<Address />} />
+                </Route>
+                <Route element={<SuspenseWrapper />}>
+                  <Route path="user/profile" element={<UserProfile />} />
                 </Route>
               </Route>
             </Route>

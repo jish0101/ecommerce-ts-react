@@ -1,20 +1,27 @@
-import { Product } from "@/types/product"
-import P from "../typography/P"
+import P from '../typography/P';
+import { cn } from '@/lib/utils';
+import { Product } from '@/types/product';
+import { FC, HTMLAttributes } from 'react';
 
-type Props = {
-  product: Product
+interface Props extends HTMLAttributes<HTMLDivElement> {
+  product: Product;
 }
 
-const ProductList = ({product}: Props) => {
+const ProductList: FC<Props> = ({ product, className, ...props }) => {
   return (
-    <div>
-      <div className="flex gap-4 items-center">
-        <img src={product.imageLinks[0]} className="w-[48px] h-[48px] rounded-full" alt={product.name} />
+    <div
+      {...props}
+      className={cn('flex cursor-pointer items-center gap-4', className)}
+    >
+      <img
+        src={product.imageLinks[0]}
+        className="h-[48px] w-[48px] rounded-full"
+        alt={product.name}
+      />
 
-        <P className="capitalize">{product.name}</P>
-      </div>
+      <P className="capitalize">{product.name}</P>
     </div>
-  )
-}
+  );
+};
 
-export default ProductList
+export default ProductList;

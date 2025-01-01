@@ -46,6 +46,11 @@ const Searchbar = () => {
     }
   });
 
+  const handleSheetToggle = (value: boolean) => {
+    if (value === false) setIsPopOpen(value);
+    toggleSheet();
+  };
+
   const handleSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -83,21 +88,14 @@ const Searchbar = () => {
         inputRef.current?.focus();
       }, 0);
       return () => {
-        setInputValue("")
-        clearTimeout(timeout)
+        setInputValue('');
+        clearTimeout(timeout);
       };
     }
   }, [isOpen]);
 
   return (
-    <Sheet
-      open={isOpen}
-      modal={true}
-      onOpenChange={(value) => {
-        if (!value) setIsPopOpen(false);
-        toggleSheet();
-      }}
-    >
+    <Sheet open={isOpen} modal={true} onOpenChange={handleSheetToggle}>
       <SheetTrigger
         className={cn(
           buttonVariants({ variant: 'ghost' }),
@@ -138,16 +136,21 @@ const Searchbar = () => {
                     <div className="my-10 flex items-center justify-center">
                       <P>No products found.</P>
                     </div>
-                  ): null}
+                  ) : null}
                   <CommandGroup>
                     {response
                       ? response.data.map((product) => (
                           <CommandItem
-                            className="my-2 rounded-full"
                             value={product._id}
-                            onSelect={() => {}}
+                            className="my-2 rounded-full"
                           >
-                            <ProductList product={product} />
+                            <ProductList
+                              onClick={() => {
+                                handleSheetToggle(false);
+                                navigate(`/product/${product._id}`);
+                              }}
+                              product={product}
+                            />
                           </CommandItem>
                         ))
                       : null}

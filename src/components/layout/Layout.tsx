@@ -42,7 +42,7 @@ const Layout = () => {
           <Navbar options={NAV_LINKS} />
           <ScrollArea type="scroll" className={`h-[calc(100vh-70px)]`}>
             <div
-              className={`mx-auto min-h-[calc(100vh-70px)] max-w-[1480px] p-2 sm:p-0`}
+              className={`mx-auto min-h-[calc(100vh-70px)] max-w-[1180px] p-2`}
             >
               <Outlet />
             </div>

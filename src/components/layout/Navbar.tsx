@@ -21,18 +21,16 @@ type Props = {
 
 const Navbar = ({ options }: Props) => {
   return (
-    <div className={`flex h-[70px] items-center border-b px-1 py-3 shadow-sm`}>
-      <nav className="flex h-[70px] basis-[50%] items-center">
-        <NavLinks options={options} />
-        <div className="lg:ml-auto">
+    <div className="flex h-[70px] items-center border-b px-1 py-3 shadow-sm">
+      <div className={`mx-auto flex w-full max-w-[1280px] items-center`}>
+        <nav className="flex h-[70px] w-full items-center justify-between">
           <Link to={'/'}>
             <img src={'/logo.svg'} className="w-12 md:mx-2" loading="eager" />
           </Link>
-        </div>
-      </nav>
+          <NavLinks options={options} />
 
-      <div className="flex basis-[50%] justify-end">
-        <NavExtras />
+          <NavExtras />
+        </nav>
       </div>
     </div>
   );
