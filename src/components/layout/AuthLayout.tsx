@@ -10,7 +10,11 @@ const AuthLayout = ({}: Props) => {
         className={`flex h-[50px] items-center justify-between p-3 md:h-[70px]`}
       >
         <Link to={'/'}>
-          <img src={'/logo.svg'} className="w-12 md:mx-2" loading="eager" />
+          <img
+            src={'/logo.svg'}
+            className="mx-2 w-12 md:mx-10"
+            loading="eager"
+          />
         </Link>
       </div>
 

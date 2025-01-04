@@ -8,7 +8,7 @@ export default function H1({ children, className, ...rest }: Props) {
     <h1
       {...rest}
       className={cn(
-        'scroll-m-20 text-3xl font-[800] tracking-tight xl:text-4xl 2xl:text-5xl',
+        'scroll-m-20 text-2xl font-[800] tracking-tight sm:text-3xl xl:text-4xl 2xl:text-5xl',
         className
       )}
     >
