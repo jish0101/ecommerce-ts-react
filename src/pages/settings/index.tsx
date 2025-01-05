@@ -38,9 +38,8 @@ const Settings = ({}: Props) => {
 
   return (
     <div className="space-y-6">
-      <H1>Settings</H1>
-
-      <div className="mx-auto flex w-fit flex-wrap justify-center gap-4 bg-muted/50 p-8">
+      <H1 className="mx-auto w-fit p-2 md:px-8">Settings</H1>
+      <div className="mx-auto flex w-fit flex-wrap justify-center gap-4 bg-muted/50 p-2 md:p-8">
         {items.map((item) => (
           <div
             key={item.value}

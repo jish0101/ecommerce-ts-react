@@ -109,7 +109,7 @@ const UserAvatar = ({ options }: Props) => {
             <Avatar
               className={cn(
                 buttonVariants({ variant: 'ghost', size: 'icon' }),
-                'h-10 w-10 rounded-full'
+                'flex h-8 w-8 items-center rounded-full'
               )}
             >
               <AvatarFallback>

@@ -28,7 +28,7 @@ const NavExtras = ({ isSheet }: Props) => {
   return (
     <div className={isSheet ? 'flex h-[70px] items-center justify-center' : ''}>
       <div
-        className={`${isSheet ? 'flex flex-wrap' : 'hidden lg:flex'} items-center justify-center gap-1`}
+        className={`${isSheet ? 'flex flex-wrap items-center justify-center gap-1' : 'hidden lg:flex lg:items-center lg:justify-center lg:gap-1'}`}
       >
         <Searchbar />
         <ThemeToggle />
